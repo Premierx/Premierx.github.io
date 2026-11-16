@@ -429,6 +429,7 @@
       <button class="filter-btn" data-filter="untested">Built - Untested</button>
       <button class="filter-btn" data-filter="failed">Built - Failed</button>
       <button class="filter-btn" data-filter="concept">Concepts</button>
+      <button class="filter-btn" data-filter="failed">Built - Worked</button>
     </div>
 
     <div class="section-title">Hardware, Avionics & Embedded Builds</div>
@@ -672,6 +673,45 @@
             <span class="tag">Power Electronics</span>
             <span class="tag">eFuse</span>
             <span class="tag">Failure Analysis</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           PROJECT: ESP32 N2O DECOMPRESSION DATA LOGGER
+           To add a card background image, change --bg-image: none
+           to: --bg-image: url('images/esp32-logger.jpg')
+           =================================================================== -->
+      <article class="project-card" data-status="worked redesign" style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>ESP32 Nitrous Oxide Decompression Data Logger</h3>
+              <div class="card-subtitle">CTU Space Research — High-Speed Propulsion Test Instrumentation</div>
+            </div>
+            <div style="display: flex; gap: 0.45rem; flex-wrap: wrap;">
+              <span class="badge badge-worked">Built - Worked</span>
+              <span class="badge badge-redesign">Redesign</span>
+            </div>
+          </div>
+          <p class="card-desc">
+            ESP32-based data acquisition system built for CTU Space Research to capture high-resolution pressure and temperature transients during nitrous oxide ($\text{N}_2\text{O}$) decompression testing.
+          </p>
+          <div class="eng-note amber">
+            <strong>Validation &amp; Next Revision:</strong> Successfully logged full decompression profiles during live test runs, though raw sensor channels exhibited noise requiring tighter analog/digital signal conditioning—currently undergoing a redesign to integrate improved front-end hardware filtration.
+          </div>
+          <div class="specs-grid">
+            <div class="spec-box"><span>Affiliation</span><strong>CTU Space Research</strong></div>
+            <div class="spec-box"><span>MCU</span><strong>ESP32</strong></div>
+            <div class="spec-box"><span>Sensors</span><strong>Pressure &amp; Temperature</strong></div>
+            <div class="spec-box"><span>Application</span><strong>N₂O Decompression Testing</strong></div>
+          </div>
+          <div class="tags">
+            <span class="tag">CTU Space Research</span>
+            <span class="tag">ESP32</span>
+            <span class="tag">DAQ</span>
+            <span class="tag">Signal Filtering</span>
+            <span class="tag">N₂O Propulsion</span>
           </div>
         </div>
       </article>
