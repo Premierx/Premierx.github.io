@@ -104,8 +104,8 @@
 
     .tagline {
       color: var(--muted);
-      font-size: 1.1rem;
-      max-width: 650px;
+      font-size: 1.08rem;
+      max-width: 680px;
       margin-bottom: 1.5rem;
     }
 
@@ -198,7 +198,6 @@
       transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
     }
 
-    /* Background Image Layer for Each Card */
     .project-card::before {
       content: "";
       position: absolute;
@@ -278,7 +277,7 @@
       margin-bottom: 1.35rem;
     }
 
-    /* Engineering Note Callout (e.g., Failure Analysis / Redesign Note) */
+    /* Engineering Note Callout */
     .eng-note {
       background: rgba(8, 12, 20, 0.65);
       border-left: 3px solid var(--accent);
@@ -292,6 +291,51 @@
     .eng-note.warn { border-left-color: var(--st-failed); }
     .eng-note.amber { border-left-color: var(--st-redesign); }
     .eng-note strong { color: var(--text); }
+
+    /* Collapsible State Machine Diagram */
+    details.fsm-details {
+      margin-bottom: 1.35rem;
+      background: rgba(5, 8, 15, 0.82);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    details.fsm-details summary {
+      padding: 0.65rem 1rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.82rem;
+      color: var(--accent);
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    details.fsm-details summary::-webkit-details-marker { display: none; }
+
+    details.fsm-details summary::after {
+      content: "[ + Expand ]";
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    details.fsm-details[open] summary::after {
+      content: "[ − Collapse ]";
+    }
+
+    pre.fsm-diagram {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.76rem;
+      line-height: 1.45;
+      color: #cbd5e1;
+      overflow-x: auto;
+      white-space: pre;
+    }
 
     /* Spec Grid */
     .specs-grid {
@@ -368,7 +412,7 @@
       <div class="eyebrow">Hardware // Avionics // Embedded Systems</div>
       <h1>Premierx</h1>
       <p class="tagline">
-        Mechanical & embedded hardware builder designing custom CoreXY kinematics, FPV/autonomous airframes, and sensor/power PCBs.
+        Mechanical & embedded hardware builder designing custom CoreXY kinematics, FPV/autonomous airframes, and rocket avionics/PCBs (Avionics & PR member at CTU Space Research).
       </p>
       <div class="header-links">
         <a class="btn-link" href="https://github.com/Premierx" target="_blank" rel="noopener">GitHub ↗</a>
@@ -387,7 +431,7 @@
       <button class="filter-btn" data-filter="concept">Concepts</button>
     </div>
 
-    <div class="section-title">Hardware & Embedded Builds</div>
+    <div class="section-title">Hardware, Avionics & Embedded Builds</div>
 
     <section class="projects-list">
 
@@ -435,12 +479,12 @@
           <div class="card-top">
             <div>
               <h3>Active Pressure Regulation Board</h3>
-              <div class="card-subtitle">Multi-Sensor Embedded Control PCB</div>
+              <div class="card-subtitle">CTU Space Research — Multi-Sensor Embedded Control PCB</div>
             </div>
             <span class="badge badge-progress">Build in Progress</span>
           </div>
           <p class="card-desc">
-            Custom embedded controller designed for real-time closed-loop pressure monitoring and actuation, integrating high-density analog/digital sensor acquisition with industrial bus communication.
+            Custom embedded controller developed within CTU Space Research for real-time closed-loop pressure monitoring and regulation, integrating multi-channel sensor acquisition with industrial bus communication.
           </p>
           <div class="specs-grid">
             <div class="spec-box"><span>Interfaces</span><strong>USB & CAN Bus</strong></div>
@@ -449,6 +493,7 @@
             <div class="spec-box"><span>Feedback</span><strong>1× Position Sensor</strong></div>
           </div>
           <div class="tags">
+            <span class="tag">CTU Space Research</span>
             <span class="tag">PCB Design</span>
             <span class="tag">CAN Bus</span>
             <span class="tag">USB</span>
@@ -523,8 +568,83 @@
         </div>
       </article>
 
+     <!-- ===================================================================
+           PROJECT 5: EUROC METRO PAYLOAD DEMONSTRATOR
+           =================================================================== -->
+      <article class="project-card" data-status="failed" style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>EuRoC METRO Experiment Demonstrator Payload</h3>
+              <div class="card-subtitle">CTU Space Research — Flight Electronics &amp; 50 Hz G-Sensing Firmware</div>
+            </div>
+            <span class="badge badge-failed">Built - Failed</span>
+          </div>
+          <p class="card-desc">
+            Implemented the payload electronics and deterministic flight state machine for the METRO biological experiment demonstrator at the European Rocketry Challenge (EuRoC). Built around flight trajectory simulations provided by the team, the firmware combined 50 Hz accelerometer thresholds (≥ 3.0 g launch trigger, &lt; 0.5 g microgravity entry) with simulation-derived forced timeout overrides (10 s and 25 s) to guarantee motor spin-up, Raspberry Pi imaging pulses, and CSV telemetry logging even under degraded sensor data.
+          </p>
+
+          <details class="fsm-details">
+            <summary>View 50 Hz Flight State Machine Architecture</summary>
+            <pre class="fsm-diagram">        reset / setup()
+              │
+              ▼
+      ┌───────────────┐
+      │    WAITING    │  50 Hz sensing, no logging
+      └───────┬───────┘
+              │ |a| ≥ 3.0 g for 3 samples (60 ms)
+              │ / t=0, green LED on, strip on,
+              │   create LOGxxx.CSV, log TRIGGER
+              ▼
+      ┌───────────────┐
+      │    ACTIVE     │  logging @ 50 Hz
+      └───────┬───────┘
+              │ [t ≥ 5 s AND |a| &lt; 1.5 g for 3 samples]
+              │   OR [t ≥ 10 s]  &lt;-- sim-derived failsafe
+              │ / motor PWM = 63 (1/4 power), Pi pulse 1 s,
+              │   log MOTOR_ON_PI_PULSE
+              ▼
+      ┌───────────────┐
+      │ MOTOR_RUNNING │  logging @ 50 Hz
+      └───────┬───────┘
+              │ [t ≥ 2 s AND |a| &lt; 0.5 g for 3 samples]
+              │ / red LED on, log ZERO_G_DETECTED
+              │
+              │   ┌─ forced: t ≥ 25 s (sim-derived), from ACTIVE or MOTOR_RUNNING
+              │   │  / red LED on, log ZERO_G_FORCED_TIMEOUT
+              ▼   ▼
+      ┌──────────────────┐
+      │ ZERO_G_DETECTED  │  still logging, motor still on
+      └────────┬─────────┘
+               │ 100 s after entry
+               │ / log SYSTEM_SHUTDOWN, all outputs off, close file
+               ▼
+      ┌───────────────┐
+      │   INACTIVE    │  loop returns early; only power cycle exits.
+      └───────────────┘</pre>
+          </details>
+
+          <div class="eng-note warn">
+            <strong>Post-Mortem &amp; Root Cause:</strong> Payload failed due to a hardware sensor failure that could not be repaired in time prior to launch, compounded by fluid leakage from the mechanical algae containment subsystem. Highlighted the importance of modular, easily replaceable sensor daughterboards and early integrated leak testing.
+          </div>
+          <div class="specs-grid">
+            <div class="spec-box"><span>Competition</span><strong>EuRoC (CTU Space Research)</strong></div>
+            <div class="spec-box"><span>Sample Rate</span><strong>50 Hz CSV Telemetry</strong></div>
+            <div class="spec-box"><span>Triggers</span><strong>3g Launch / &lt;0.5g Zero-G</strong></div>
+            <div class="spec-box"><span>Sim Guardrails</span><strong>10s &amp; 25s Forced Timeouts</strong></div>
+          </div>
+          <div class="tags">
+            <span class="tag">EuRoC</span>
+            <span class="tag">CTU Space Research</span>
+            <span class="tag">Embedded C++</span>
+            <span class="tag">State Machine</span>
+            <span class="tag">Rocket Payload</span>
+          </div>
+        </div>
+      </article>
+
       <!-- ===================================================================
-           PROJECT 5: CTU SPACE RESEARCH PCB
+           PROJECT 6: CTU SPACE RESEARCH POWER / EFUSE PCB
            =================================================================== -->
       <article class="project-card" data-status="failed" style="--bg-image: none;">
         <div class="card-content">
