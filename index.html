@@ -223,6 +223,41 @@
       padding-bottom: 0.25rem;
     }
 
+    /* Custom Dark Scrollbars (Page, Timeline & Code Blocks) */
+    html,
+    .gantt-wrapper,
+    pre.fsm-diagram {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(56, 189, 248, 0.35) rgba(8, 12, 20, 0.85);
+    }
+
+    html::-webkit-scrollbar,
+    .gantt-wrapper::-webkit-scrollbar,
+    pre.fsm-diagram::-webkit-scrollbar {
+      width: 8px;
+      height: 6px;
+    }
+
+    html::-webkit-scrollbar-track,
+    .gantt-wrapper::-webkit-scrollbar-track,
+    pre.fsm-diagram::-webkit-scrollbar-track {
+      background: rgba(8, 12, 20, 0.85);
+      border-radius: 999px;
+    }
+
+    html::-webkit-scrollbar-thumb,
+    .gantt-wrapper::-webkit-scrollbar-thumb,
+    pre.fsm-diagram::-webkit-scrollbar-thumb {
+      background: rgba(56, 189, 248, 0.35);
+      border-radius: 999px;
+    }
+
+    html::-webkit-scrollbar-thumb:hover,
+    .gantt-wrapper::-webkit-scrollbar-thumb:hover,
+    pre.fsm-diagram::-webkit-scrollbar-thumb:hover {
+      background: rgba(56, 189, 248, 0.65);
+    }
+    
     .gantt-chart {
       min-width: 650px;
     }
