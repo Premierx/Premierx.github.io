@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Natanael Čandík — Hardware, Avionics & Embedded Systems</title>
+  <title>Natanael Čandík — Hardware, Avionics &amp; Embedded Systems</title>
   <style>
     :root {
       /* =====================================================================
@@ -32,6 +32,8 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -70,15 +72,15 @@
     }
 
     .container {
-      max-width: 980px;
+      max-width: 1020px;
       margin: 0 auto;
-      padding: 4.5rem 1.5rem 3rem;
+      padding: 4.25rem 1.5rem 3rem;
     }
 
     /* Header */
     header {
-      margin-bottom: 3rem;
-      padding-bottom: 2.25rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
       border-bottom: 1px solid var(--border);
     }
 
@@ -104,28 +106,28 @@
 
     .tagline {
       color: var(--muted);
-      font-size: 1.08rem;
-      max-width: 680px;
+      font-size: 1.06rem;
+      max-width: 720px;
       margin-bottom: 1.5rem;
     }
 
     .header-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
+      gap: 0.65rem;
     }
 
     .btn-link {
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      padding: 0.5rem 1rem;
+      padding: 0.5rem 0.95rem;
       border-radius: 6px;
       background: rgba(30, 41, 59, 0.7);
       border: 1px solid var(--border);
       color: var(--text);
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 500;
       transition: all 0.2s ease;
     }
@@ -135,6 +137,179 @@
       color: var(--accent);
       transform: translateY(-1px);
     }
+
+    /* 1. Core Capabilities Strip */
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .cap-card {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.15rem 1.25rem;
+    }
+
+    .cap-card h2 {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 0.45rem;
+    }
+
+    .cap-card p {
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    /* 2. Multi-Segment Interactive Project Timeline */
+    .timeline-box {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.35rem 1.5rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .timeline-header h2 {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text);
+    }
+
+    .timeline-legend {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.76rem;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .legend-paused {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .legend-paused::before {
+      content: "";
+      display: inline-block;
+      width: 18px;
+      border-top: 2px dashed rgba(148, 163, 184, 0.5);
+    }
+
+    .gantt-wrapper {
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+    }
+
+    .gantt-chart {
+      min-width: 650px;
+    }
+
+    .gantt-axis {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      margin-bottom: 0.5rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .gantt-ticks {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.35rem;
+    }
+
+    .gantt-row {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      align-items: center;
+      padding: 0.42rem 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.15s ease;
+    }
+
+    .gantt-row:hover {
+      background: rgba(56, 189, 248, 0.06);
+    }
+
+    .gantt-label {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #e2e8f0;
+      padding-right: 0.75rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .gantt-track {
+      position: relative;
+      height: 20px;
+      background: rgba(8, 12, 20, 0.55);
+      border-radius: 4px;
+    }
+
+    /* Dashed connector for paused gaps between active build phases */
+    .gantt-pause-line {
+      position: absolute;
+      top: 50%;
+      height: 0;
+      border-top: 2px dashed rgba(148, 163, 184, 0.38);
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .gantt-bar {
+      position: absolute;
+      top: 2px;
+      bottom: 2px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      padding: 0 0.45rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.66rem;
+      font-weight: 700;
+      color: #080c14;
+      white-space: nowrap;
+      overflow: hidden;
+      transition: filter 0.2s ease;
+    }
+
+    .gantt-row:hover .gantt-bar {
+      filter: brightness(1.15);
+    }
+
+    .bar-worked   { background: var(--st-worked); }
+    .bar-untested { background: var(--st-untested); }
+    .bar-progress { background: var(--st-progress); }
+    .bar-redesign { background: var(--st-redesign); }
+    .bar-failed   { background: var(--st-failed); color: #fff; }
+    .bar-concept  { background: var(--st-concept); color: #fff; }
 
     /* Filter Bar */
     .filter-bar {
@@ -195,6 +370,7 @@
       border: 1px solid var(--border);
       overflow: hidden;
       background-color: var(--surface-solid);
+      scroll-margin-top: 2rem;
       transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
     }
 
@@ -219,6 +395,11 @@
 
     .project-card:hover::before {
       transform: scale(1.02);
+    }
+
+    .project-card.highlight-pulse {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.35);
     }
 
     .card-content {
@@ -429,7 +610,15 @@
       font-weight: 600;
     }
 
-    /* Tags */
+    /* Card Bottom Row (Tags + Artifact Links) */
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
     .tags {
       display: flex;
       flex-wrap: wrap;
@@ -444,6 +633,28 @@
       border: 1px solid var(--border);
       padding: 0.2rem 0.6rem;
       border-radius: 4px;
+    }
+
+    .artifact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .artifact-link {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.78rem;
+      color: var(--accent);
+      text-decoration: none;
+      padding: 0.22rem 0.6rem;
+      border-radius: 4px;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      transition: background 0.15s ease;
+    }
+
+    .artifact-link:hover {
+      background: rgba(56, 189, 248, 0.18);
     }
 
     /* Concepts Grid */
@@ -522,9 +733,33 @@
     .lb-prev { left: 1rem; }
     .lb-next { right: 1rem; }
 
-    footer {
+    /* Contact Panel & Footer */
+    .contact-panel {
       margin-top: 4.5rem;
-      padding-top: 2rem;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+
+    .contact-panel h2 {
+      font-size: 1.15rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-panel p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 1.75rem;
+      padding-top: 1.25rem;
       border-top: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
@@ -538,17 +773,48 @@
 <body>
   <div class="container">
     <header>
-      <div class="eyebrow">Hardware // Avionics // Embedded Systems</div>
+      <div class="eyebrow">Prague, CZ // Hardware // Avionics // Embedded Systems</div>
       <h1>Natanael Čandík</h1>
       <p class="tagline">
-        Cybernetics and Robotics student at CTU FEE. Member of Avionics and PR subsections of CTU Space research. 3D modelling and 3D printer design.
+        Cybernetics and Robotics student at CTU FEE. Member of Avionics and PR subsections of CTU Space Research. 3D modelling and 3D printer design.
       </p>
       <div class="header-links">
         <a class="btn-link" href="https://github.com/Premierx" target="_blank" rel="noopener">GitHub ↗</a>
-        <!-- Replace # below with your Printables profile URL -->
+        <!-- Replace with your exact Printables profile URL -->
         <a class="btn-link" href="https://www.printables.com/" target="_blank" rel="noopener">Printables ↗</a>
+        <a class="btn-link" href="#contact">Contact &amp; Links ↓</a>
       </div>
     </header>
+
+    <!-- 1. CORE CAPABILITIES STRIP -->
+    <section class="capabilities-grid" aria-label="Core engineering capabilities">
+      <div class="cap-card">
+        <h2>01 // Mechanical &amp; CAD</h2>
+        <p>CoreXY kinematics, enclosed high-temp 3D printers, custom linear motion systems, high-CFM cooling shrouds, and composite UAV airframes.</p>
+      </div>
+      <div class="cap-card">
+        <h2>02 // Embedded &amp; Firmware</h2>
+        <p>STM32 &amp; ESP32 development, deterministic flight state machines, 50 Hz high-G telemetry logging, CAN bus, USB, and Klipper/SBC integration.</p>
+      </div>
+      <div class="cap-card">
+        <h2>03 // PCB &amp; Instrumentation</h2>
+        <p>Multi-sensor DAQ boards, closed-loop pressure regulation, analog/digital signal filtration, eFuse power protection, and root-cause failure analysis.</p>
+      </div>
+    </section>
+
+    <!-- 2. MULTI-SEGMENT INTERACTIVE PROJECT TIMELINE -->
+    <section class="timeline-box" aria-label="Project timeline">
+      <div class="timeline-header">
+        <h2>Build Timeline // Active Phases &amp; Pauses</h2>
+        <div class="timeline-legend">
+          <span class="legend-paused">Paused / On Hold</span>
+          <span>Click bar to jump ↓</span>
+        </div>
+      </div>
+      <div class="gantt-wrapper">
+        <div class="gantt-chart" id="gantt-chart"></div>
+      </div>
+    </section>
 
     <!-- Status Filter Buttons -->
     <div class="filter-bar" role="group" aria-label="Filter projects by status">
@@ -567,8 +833,13 @@
 
       <!-- ===================================================================
            PROJECT 1: HEXCORE
+           Timeline segments format: "YYYY-MM:YYYY-MM:bar-class:Label | YYYY-MM:YYYY-MM:bar-class:Label"
            =================================================================== -->
-      <article class="project-card" data-status="progress redesign" style="--bg-image: url('pictures/obrazek.png');">
+      <article id="proj-hexcore" class="project-card"
+               data-status="progress redesign"
+               data-title="Hexcore CoreXY"
+               data-segments="2025-09:2026-02:bar-progress:Frame &amp; Gantry | 2026-07:2026-11:bar-progress:Toolhead &amp; Enclosure"
+               style="--bg-image: url('pictures/obrazek.png');">
         <div class="card-content">
           <div class="card-top">
             <div>
@@ -596,7 +867,6 @@
           <details class="panel-details">
             <summary>Photo Album (Hexcore Build)</summary>
             <div class="album-grid">
-              <!-- Copy/paste an .album-item block for each photo you upload to pictures/ -->
               <figure class="album-item">
                 <img src="pictures/obrazek.png" alt="Hexcore Frame & Gantry" loading="lazy">
                 <figcaption class="album-caption">Hexcore Assembly</figcaption>
@@ -604,12 +874,17 @@
             </div>
           </details>
 
-          <div class="tags">
-            <span class="tag">CoreXY</span>
-            <span class="tag">Klipper</span>
-            <span class="tag">Dual Meanwell PSU</span>
-            <span class="tag">Carbon Filtration</span>
-            <span class="tag">Nickel-Plated Copper</span>
+          <div class="card-footer">
+            <div class="tags">
+              <span class="tag">CoreXY</span>
+              <span class="tag">Klipper</span>
+              <span class="tag">Dual Meanwell PSU</span>
+              <span class="tag">Carbon Filtration</span>
+              <span class="tag">Nickel-Plated Copper</span>
+            </div>
+            <div class="artifact-links">
+              <a class="artifact-link" href="https://www.printables.com/" target="_blank" rel="noopener">Printables CAD ↗</a>
+            </div>
           </div>
         </div>
       </article>
@@ -617,7 +892,11 @@
       <!-- ===================================================================
            PROJECT 2: ACTIVE PRESSURE REGULATION BOARD
            =================================================================== -->
-      <article class="project-card" data-status="progress" style="--bg-image: none;">
+      <article id="proj-pressure" class="project-card"
+               data-status="progress"
+               data-title="Pressure Reg. PCB"
+               data-segments="2026-06:2026-11:bar-progress:In Progress"
+               style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
@@ -644,12 +923,14 @@
             <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
           </details>
 
-          <div class="tags">
-            <span class="tag">CTU Space Research</span>
-            <span class="tag">PCB Design</span>
-            <span class="tag">CAN Bus</span>
-            <span class="tag">USB</span>
-            <span class="tag">Sensor Fusion</span>
+          <div class="card-footer">
+            <div class="tags">
+              <span class="tag">CTU Space Research</span>
+              <span class="tag">PCB Design</span>
+              <span class="tag">CAN Bus</span>
+              <span class="tag">USB</span>
+              <span class="tag">Sensor Fusion</span>
+            </div>
           </div>
         </div>
       </article>
@@ -657,7 +938,11 @@
       <!-- ===================================================================
            PROJECT 3: ESP32 N2O DECOMPRESSION DATA LOGGER
            =================================================================== -->
-      <article class="project-card" data-status="worked redesign" style="--bg-image: none;">
+      <article id="proj-esp32-daq" class="project-card"
+               data-status="worked redesign"
+               data-title="ESP32 N₂O Logger"
+               data-segments="2026-01:2026-04:bar-worked:v1 Tested | 2026-08:2026-11:bar-redesign:v2 Filter Redesign"
+               style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
@@ -688,20 +973,26 @@
             <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
           </details>
 
-          <div class="tags">
-            <span class="tag">CTU Space Research</span>
-            <span class="tag">ESP32</span>
-            <span class="tag">DAQ</span>
-            <span class="tag">Signal Filtering</span>
-            <span class="tag">N₂O Propulsion</span>
+          <div class="card-footer">
+            <div class="tags">
+              <span class="tag">CTU Space Research</span>
+              <span class="tag">ESP32</span>
+              <span class="tag">DAQ</span>
+              <span class="tag">Signal Filtering</span>
+              <span class="tag">N₂O Propulsion</span>
+            </div>
           </div>
         </div>
       </article>
 
       <!-- ===================================================================
-           PROJECT 4: SUNLU T3 OVERHAUL
+           PROJECT 4: SUNLU T3 OVERHAUL (Split into v1 Build -> Paused -> Redesign)
            =================================================================== -->
-      <article class="project-card" data-status="redesign progress" style="--bg-image: none;">
+      <article id="proj-sunlu" class="project-card"
+               data-status="redesign progress"
+               data-title="Sunlu T3 Overhaul"
+               data-segments="2024-06:2024-11:bar-worked:v1 Operational | 2026-07:2026-11:bar-redesign:v2 Redesign"
+               style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
@@ -731,11 +1022,16 @@
             <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
           </details>
 
-          <div class="tags">
-            <span class="tag">Klipper</span>
-            <span class="tag">Custom Chassis</span>
-            <span class="tag">Z-Braces</span>
-            <span class="tag">High-CFM Cooling</span>
+          <div class="card-footer">
+            <div class="tags">
+              <span class="tag">Klipper</span>
+              <span class="tag">Custom Chassis</span>
+              <span class="tag">Z-Braces</span>
+              <span class="tag">High-CFM Cooling</span>
+            </div>
+            <div class="artifact-links">
+              <a class="artifact-link" href="https://www.printables.com/" target="_blank" rel="noopener">Printables Mods ↗</a>
+            </div>
           </div>
         </div>
       </article>
@@ -743,7 +1039,11 @@
       <!-- ===================================================================
            PROJECT 5: 5" FPV DRONE
            =================================================================== -->
-      <article class="project-card" data-status="untested" style="--bg-image: none;">
+      <article id="proj-fpv" class="project-card"
+               data-status="untested"
+               data-title="5&quot; FPV Quadcopter"
+               data-segments="2025-03:2025-07:bar-untested:Bench Verified"
+               style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
@@ -773,11 +1073,13 @@
             <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
           </details>
 
-          <div class="tags">
-            <span class="tag">FPV</span>
-            <span class="tag">UAV</span>
-            <span class="tag">4S LiPo</span>
-            <span class="tag">GPS</span>
+          <div class="card-footer">
+            <div class="tags">
+              <span class="tag">FPV</span>
+              <span class="tag">UAV</span>
+              <span class="tag">4S LiPo</span>
+              <span class="tag">GPS</span>
+            </div>
           </div>
         </div>
       </article>
@@ -785,7 +1087,11 @@
       <!-- ===================================================================
            PROJECT 6: EUROC METRO PAYLOAD DEMONSTRATOR
            =================================================================== -->
-      <article class="project-card" data-status="failed" style="--bg-image: none;">
+      <article id="proj-euroc" class="project-card"
+               data-status="failed"
+               data-title="EuRoC METRO Payload"
+               data-segments="2025-02:2025-10:bar-failed:EuRoC Campaign"
+               style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
@@ -872,12 +1178,15 @@
             <div class="spec-box"><span>Triggers</span><strong>3g Launch / &lt;0.5g Zero-G</strong></div>
             <div class="spec-box"><span>Sim Guardrails</span><strong>10s &amp; 25s Forced Timeouts</strong></div>
           </div>
-          <div class="tags">
-            <span class="tag">EuRoC</span>
-            <span class="tag">CTU Space Research</span>
-            <span class="tag">Embedded C++</span>
-            <span class="tag">State Machine</span>
-            <span class="tag">Rocket Payload</span>
+
+          <div class="card-footer">
+            <div class="tags">
+              <span class="tag">EuRoC</span>
+              <span class="tag">CTU Space Research</span>
+              <span class="tag">Embedded C++</span>
+              <span class="tag">State Machine</span>
+              <span class="tag">Rocket Payload</span>
+            </div>
           </div>
         </div>
       </article>
@@ -885,7 +1194,11 @@
       <!-- ===================================================================
            PROJECT 7: CTU SPACE RESEARCH POWER / EFUSE PCB
            =================================================================== -->
-      <article class="project-card" data-status="failed" style="--bg-image: none;">
+      <article id="proj-efuse" class="project-card"
+               data-status="failed"
+               data-title="CTU eFuse Power PCB"
+               data-segments="2025-04:2025-07:bar-failed:Prototype &amp; Test"
+               style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
@@ -915,11 +1228,13 @@
             <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
           </details>
 
-          <div class="tags">
-            <span class="tag">CTU Space</span>
-            <span class="tag">Power Electronics</span>
-            <span class="tag">eFuse</span>
-            <span class="tag">Failure Analysis</span>
+          <div class="card-footer">
+            <div class="tags">
+              <span class="tag">CTU Space</span>
+              <span class="tag">Power Electronics</span>
+              <span class="tag">eFuse</span>
+              <span class="tag">Failure Analysis</span>
+            </div>
           </div>
         </div>
       </article>
@@ -933,7 +1248,11 @@
       <!-- ===================================================================
            CONCEPT 1: X65 AETHER
            =================================================================== -->
-      <article class="project-card" data-status="concept" style="--bg-image: none;">
+      <article id="proj-aether" class="project-card"
+               data-status="concept"
+               data-title="X65 Aether UAV"
+               data-segments="2026-08:2026-11:bar-concept:Airfoil Study"
+               style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
@@ -954,12 +1273,14 @@
             <div class="album-empty">No renders uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
           </details>
 
-          <div class="tags">
-            <span class="tag">STM32F401RET6</span>
-            <span class="tag">65cm Span</span>
-            <span class="tag">Aerodynamics</span>
-            <span class="tag">Composites</span>
-            <span class="tag">Prop vs. EDF</span>
+          <div class="card-footer">
+            <div class="tags">
+              <span class="tag">STM32F401RET6</span>
+              <span class="tag">65cm Span</span>
+              <span class="tag">Aerodynamics</span>
+              <span class="tag">Composites</span>
+              <span class="tag">Prop vs. EDF</span>
+            </div>
           </div>
         </div>
       </article>
@@ -967,7 +1288,11 @@
       <!-- ===================================================================
            CONCEPT 2: LIQUID ROCKET MOTOR
            =================================================================== -->
-      <article class="project-card" data-status="concept" style="--bg-image: none;">
+      <article id="proj-liquid" class="project-card"
+               data-status="concept"
+               data-title="Liquid Rocket Motor"
+               data-segments="2026-10:2026-11:bar-concept:Exploratory"
+               style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
@@ -988,18 +1313,34 @@
             <div class="album-empty">No images uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
           </details>
 
-          <div class="tags">
-            <span class="tag">Propulsion</span>
-            <span class="tag">Thermodynamics</span>
-            <span class="tag">Early R&amp;D</span>
+          <div class="card-footer">
+            <div class="tags">
+              <span class="tag">Propulsion</span>
+              <span class="tag">Thermodynamics</span>
+              <span class="tag">Early R&amp;D</span>
+            </div>
           </div>
         </div>
       </article>
 
     </section>
 
+    <!-- 4. CONTACT & AFFILIATIONS PANEL -->
+    <section id="contact" class="contact-panel">
+      <div>
+        <h2>Get in Touch</h2>
+        <p>Cybernetics &amp; Robotics at CTU FEE · Avionics &amp; PR at CTU Space Research · Prague, CZ</p>
+      </div>
+      <div class="header-links">
+        <a class="btn-link" href="https://github.com/Premierx" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn-link" href="https://www.printables.com/" target="_blank" rel="noopener">Printables ↗</a>
+        <!-- Replace with your real email / LinkedIn when ready -->
+        <a class="btn-link" href="mailto:natanael@example.com">Email ↗</a>
+      </div>
+    </section>
+
     <footer>
-      <span>© 2026 Premierx</span>
+      <span>© 2026 Natanael Čandík (Premierx)</span>
       <span>Built on GitHub Pages</span>
     </footer>
   </div>
@@ -1016,7 +1357,84 @@
   </div>
 
   <script>
-    // Status Filter Logic
+    // 1. Multi-Segment Dynamic Gantt Timeline Generator
+    // Supports multiple active phases per project separated by '|' with dashed paused gaps
+    (function buildTimeline() {
+      const container = document.getElementById('gantt-chart');
+      const cards = Array.from(document.querySelectorAll('.project-card[data-segments]'));
+      if (!container || !cards.length) return;
+
+      const parseMonth = (str) => {
+        const [y, m] = str.trim().split('-').map(Number);
+        return y * 12 + (m - 1);
+      };
+
+      const parsedProjects = cards.map(card => {
+        const segments = card.dataset.segments.split('|').map(seg => {
+          const [startStr, endStr, barClass, label] = seg.split(':').map(s => s.trim());
+          return {
+            start: parseMonth(startStr),
+            end: parseMonth(endStr) + 1,
+            barClass: barClass || 'bar-progress',
+            label: label || ''
+          };
+        }).sort((a, b) => a.start - b.start);
+        return { card, segments };
+      });
+
+      const allStarts = parsedProjects.flatMap(p => p.segments.map(s => s.start));
+      const allEnds = parsedProjects.flatMap(p => p.segments.map(s => s.end));
+      const minM = Math.min(...allStarts);
+      const maxM = Math.max(...allEnds);
+      const totalSpan = Math.max(maxM - minM, 1);
+
+      // Axis Header
+      const axis = document.createElement('div');
+      axis.className = 'gantt-axis';
+      const ticksHtml = [];
+      const minYear = Math.floor(minM / 12);
+      const maxYear = Math.floor((maxM - 1) / 12);
+      for (let y = minYear; y <= maxYear; y++) {
+        ticksHtml.push(`<span>${y}</span>`);
+      }
+      axis.innerHTML = `<div>PROJECT</div><div class="gantt-ticks">${ticksHtml.join('')}</div>`;
+      container.appendChild(axis);
+
+      // Rows
+      parsedProjects.forEach(({ card, segments }) => {
+        const row = document.createElement('div');
+        row.className = 'gantt-row';
+        row.dataset.status = card.dataset.status;
+
+        let trackInnerHtml = '';
+        segments.forEach((seg, idx) => {
+          // Draw dashed paused connector line if there is a gap from the previous segment
+          if (idx > 0 && seg.start > segments[idx - 1].end) {
+            const gapLeft = ((segments[idx - 1].end - minM) / totalSpan) * 100;
+            const gapWidth = ((seg.start - segments[idx - 1].end) / totalSpan) * 100;
+            trackInnerHtml += `<div class="gantt-pause-line" style="left: ${gapLeft.toFixed(2)}%; width: ${gapWidth.toFixed(2)}%;" title="Paused"></div>`;
+          }
+          const leftPct = ((seg.start - minM) / totalSpan) * 100;
+          const widthPct = Math.max(((seg.end - seg.start) / totalSpan) * 100, 3.5);
+          trackInnerHtml += `<div class="gantt-bar ${seg.barClass}" style="left: ${leftPct.toFixed(2)}%; width: ${widthPct.toFixed(2)}%;">${seg.label}</div>`;
+        });
+
+        row.innerHTML = `
+          <div class="gantt-label" title="${card.dataset.title}">${card.dataset.title}</div>
+          <div class="gantt-track">${trackInnerHtml}</div>
+        `;
+
+        row.addEventListener('click', () => {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.classList.add('highlight-pulse');
+          setTimeout(() => card.classList.remove('highlight-pulse'), 1400);
+        });
+
+        container.appendChild(row);
+      });
+    })();
+
+    // 2. Status Filter Logic (Filters both Cards and Timeline Rows)
     const buttons = document.querySelectorAll('.filter-btn');
     const cards = document.querySelectorAll('.project-card');
 
@@ -1026,18 +1444,20 @@
         btn.classList.add('active');
 
         const filter = btn.dataset.filter;
-        cards.forEach(card => {
-          const statuses = card.dataset.status.split(' ');
+        const rows = document.querySelectorAll('.gantt-row');
+
+        [...cards, ...rows].forEach(el => {
+          const statuses = el.dataset.status.split(' ');
           if (filter === 'all' || statuses.includes(filter)) {
-            card.classList.remove('hidden');
+            el.classList.remove('hidden');
           } else {
-            card.classList.add('hidden');
+            el.classList.add('hidden');
           }
         });
       });
     });
 
-    // Photo Album Lightbox Logic (Scoped per project album)
+    // 3. Photo Album Lightbox Logic (Scoped per project album)
     const lightbox = document.getElementById('lightbox');
     const lbImg = document.getElementById('lb-img');
     const lbCaption = document.getElementById('lb-caption');
