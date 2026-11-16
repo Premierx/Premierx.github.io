@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Premierx — Hardware, Avionics & Embedded Systems</title>
+  <title>Natanael Čandík — Hardware, Avionics & Embedded Systems</title>
   <style>
     :root {
       /* =====================================================================
          PAGE BACKGROUND IMAGE:
-         To add a page background image, upload it to your repo (e.g. images/bg.jpg)
-         and replace 'none' below with: url('images/bg.jpg')
+         Upload an image to your pictures/ folder and set:
+         --page-bg-image: url('pictures/bg.jpg');
          ===================================================================== */
       --page-bg-image: none;
 
@@ -182,7 +182,7 @@
       background: var(--border);
     }
 
-    /* Project Cards with Optional Background Images */
+    /* Project Cards */
     .projects-list {
       display: flex;
       flex-direction: column;
@@ -251,6 +251,12 @@
       margin-top: 0.15rem;
     }
 
+    .badge-group {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
     /* Color-Coded Status Badges */
     .badge {
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -292,8 +298,8 @@
     .eng-note.amber { border-left-color: var(--st-redesign); }
     .eng-note strong { color: var(--text); }
 
-    /* Collapsible State Machine Diagram */
-    details.fsm-details {
+    /* Collapsible Panels (State Machine & Photo Album) */
+    details.panel-details {
       margin-bottom: 1.35rem;
       background: rgba(5, 8, 15, 0.82);
       border: 1px solid var(--border);
@@ -301,7 +307,7 @@
       overflow: hidden;
     }
 
-    details.fsm-details summary {
+    details.panel-details summary {
       padding: 0.65rem 1rem;
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: 0.82rem;
@@ -312,17 +318,22 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      transition: background 0.15s ease;
     }
 
-    details.fsm-details summary::-webkit-details-marker { display: none; }
+    details.panel-details summary:hover {
+      background: rgba(56, 189, 248, 0.06);
+    }
 
-    details.fsm-details summary::after {
+    details.panel-details summary::-webkit-details-marker { display: none; }
+
+    details.panel-details summary::after {
       content: "[ + Expand ]";
       font-size: 0.75rem;
       color: var(--muted);
     }
 
-    details.fsm-details[open] summary::after {
+    details.panel-details[open] summary::after {
       content: "[ − Collapse ]";
     }
 
@@ -335,6 +346,57 @@
       color: #cbd5e1;
       overflow-x: auto;
       white-space: pre;
+    }
+
+    /* Photo Album Grid */
+    .album-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0.75rem;
+      padding: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .album-item {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #0b111e;
+      cursor: zoom-in;
+    }
+
+    .album-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.25s ease;
+    }
+
+    .album-item:hover img {
+      transform: scale(1.06);
+    }
+
+    .album-caption {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 0.35rem 0.5rem;
+      background: linear-gradient(transparent, rgba(8, 12, 20, 0.92));
+      font-size: 0.72rem;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .album-empty {
+      padding: 1rem;
+      border-top: 1px solid var(--border);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
     }
 
     /* Spec Grid */
@@ -393,6 +455,73 @@
 
     .hidden { display: none !important; }
 
+    /* Lightbox Modal */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(5, 8, 15, 0.94);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .lightbox.hidden { display: none; }
+
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 78vh;
+      border-radius: 8px;
+      border: 1px solid var(--border-hover);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    }
+
+    .lightbox-caption {
+      margin-top: 0.85rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.88rem;
+      color: var(--text);
+      text-align: center;
+    }
+
+    .lightbox-controls {
+      position: fixed;
+      top: 1.25rem;
+      right: 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .lb-btn {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.9rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .lb-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .lb-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.25rem;
+      padding: 0.75rem 1rem;
+    }
+
+    .lb-prev { left: 1rem; }
+    .lb-next { right: 1rem; }
+
     footer {
       margin-top: 4.5rem;
       padding-top: 2rem;
@@ -412,56 +541,69 @@
       <div class="eyebrow">Hardware // Avionics // Embedded Systems</div>
       <h1>Premierx</h1>
       <p class="tagline">
-        Student of Cybernetics and Robotics at CTU FEE. Member of Avionics and PR subsection of CTU Space research.
+        Cybernetics and Robotics student at CTU FEE. Member of Avionics and PR subsections of CTU Space research. 3D modelling and 3D printer design.
       </p>
       <div class="header-links">
         <a class="btn-link" href="https://github.com/Premierx" target="_blank" rel="noopener">GitHub ↗</a>
         <!-- Replace # below with your Printables profile URL -->
-        <a class="btn-link" href="https://www.printables.com/@NC_760641" target="_blank" rel="noopener">Printables ↗</a>
+        <a class="btn-link" href="https://www.printables.com/" target="_blank" rel="noopener">Printables ↗</a>
       </div>
     </header>
 
     <!-- Status Filter Buttons -->
     <div class="filter-bar" role="group" aria-label="Filter projects by status">
       <button class="filter-btn active" data-filter="all">All Projects</button>
+      <button class="filter-btn" data-filter="worked">Built - Worked</button>
       <button class="filter-btn" data-filter="progress">Build in Progress</button>
       <button class="filter-btn" data-filter="redesign">Redesign</button>
       <button class="filter-btn" data-filter="untested">Built - Untested</button>
       <button class="filter-btn" data-filter="failed">Built - Failed</button>
       <button class="filter-btn" data-filter="concept">Concepts</button>
-      <button class="filter-btn" data-filter="failed">Built - Worked</button>
     </div>
 
-    <div class="section-title">Hardware, Avionics & Embedded Builds</div>
+    <div class="section-title">Hardware, Avionics &amp; Embedded Builds</div>
 
     <section class="projects-list">
 
       <!-- ===================================================================
            PROJECT 1: HEXCORE
-           To add a card background image, change --bg-image: none
-           to: --bg-image: url('images/hexcore.jpg')
            =================================================================== -->
-    <article class="project-card" data-status="progress redesign" style="--bg-image: url('pictures/obrázek.png');">    
+      <article class="project-card" data-status="progress redesign" style="--bg-image: url('pictures/obrazek.png');">
         <div class="card-content">
           <div class="card-top">
             <div>
               <h3>Hexcore — Enclosed CoreXY 3D Printer</h3>
-              <div class="card-subtitle">Custom Kinematics & High-Temp Enclosure</div>
+              <div class="card-subtitle">Custom Kinematics &amp; High-Temp Enclosure</div>
             </div>
-            <span class="badge badge-progress">Build in Progress</span>
+            <div class="badge-group">
+              <span class="badge badge-progress">Build in Progress</span>
+            </div>
           </div>
           <p class="card-desc">
             A compact, enclosed 180×180mm CoreXY printer built for high-flow extrusion and engineering polymers. Features a carbon-filtered exhaust system, dual Meanwell power supplies, and triple independent Z-axis motors paired with a BTT Microprobe for automated tramming and bed leveling.
           </p>
           <div class="eng-note amber">
-            <strong>Status & Next Steps:</strong> Frame, XY gantry, and custom toolhead are assembled. Planning a structural redesign to address several early mechanical design choices—plus adding an active chamber heater—before final commissioning.
+            <strong>Status &amp; Next Steps:</strong> Frame, XY gantry, and custom toolhead are assembled. Planning a structural redesign to address several early mechanical design choices—plus adding an active chamber heater—before final commissioning.
           </div>
           <div class="specs-grid">
             <div class="spec-box"><span>Build Volume</span><strong>180 × 180 mm Enclosed</strong></div>
             <div class="spec-box"><span>Toolhead</span><strong>HGX-Lite + CR10 Cu Block</strong></div>
             <div class="spec-box"><span>Electronics</span><strong>Mellow FLY D7 + Orange Pi</strong></div>
-            <div class="spec-box"><span>Z & Probing</span><strong>Triple Z + BTT Microprobe</strong></div>
+            <div class="spec-box"><span>Z &amp; Probing</span><strong>Triple Z + BTT Microprobe</strong></div>
           </div>
+
+          <!-- PHOTO ALBUM: HEXCORE -->
+          <details class="panel-details">
+            <summary>Photo Album (Hexcore Build)</summary>
+            <div class="album-grid">
+              <!-- Copy/paste an .album-item block for each photo you upload to pictures/ -->
+              <figure class="album-item">
+                <img src="pictures/obrazek.png" alt="Hexcore Frame & Gantry" loading="lazy">
+                <figcaption class="album-caption">Hexcore Assembly</figcaption>
+              </figure>
+            </div>
+          </details>
+
           <div class="tags">
             <span class="tag">CoreXY</span>
             <span class="tag">Klipper</span>
@@ -475,24 +617,33 @@
       <!-- ===================================================================
            PROJECT 2: ACTIVE PRESSURE REGULATION BOARD
            =================================================================== -->
-      <article class="project-card" data-status="progress" style="--bg-image: url('pictures/UBB_v1_frontside.png');">
+      <article class="project-card" data-status="progress" style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
               <h3>Active Pressure Regulation Board</h3>
               <div class="card-subtitle">CTU Space Research — Multi-Sensor Embedded Control PCB</div>
             </div>
-            <span class="badge badge-progress">Build in Progress</span>
+            <div class="badge-group">
+              <span class="badge badge-progress">Build in Progress</span>
+            </div>
           </div>
           <p class="card-desc">
             Custom embedded controller developed within CTU Space Research for real-time closed-loop pressure monitoring and regulation, integrating multi-channel sensor acquisition with industrial bus communication.
           </p>
           <div class="specs-grid">
-            <div class="spec-box"><span>Interfaces</span><strong>USB & CAN Bus</strong></div>
+            <div class="spec-box"><span>Interfaces</span><strong>USB &amp; CAN Bus</strong></div>
             <div class="spec-box"><span>Pressure Inputs</span><strong>6× Pressure Transceivers</strong></div>
             <div class="spec-box"><span>Thermal</span><strong>2× Temperature Sensors</strong></div>
             <div class="spec-box"><span>Feedback</span><strong>1× Position Sensor</strong></div>
           </div>
+
+          <!-- PHOTO ALBUM: ACTIVE PRESSURE REGULATION BOARD -->
+          <details class="panel-details">
+            <summary>Photo Album (PCB Layout &amp; Bench)</summary>
+            <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
+          </details>
+
           <div class="tags">
             <span class="tag">CTU Space Research</span>
             <span class="tag">PCB Design</span>
@@ -504,16 +655,62 @@
       </article>
 
       <!-- ===================================================================
-           PROJECT 3: SUNLU T3 OVERHAUL
+           PROJECT 3: ESP32 N2O DECOMPRESSION DATA LOGGER
+           =================================================================== -->
+      <article class="project-card" data-status="worked redesign" style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>ESP32 Nitrous Oxide Decompression Data Logger</h3>
+              <div class="card-subtitle">CTU Space Research — Propulsion Test Instrumentation</div>
+            </div>
+            <div class="badge-group">
+              <span class="badge badge-worked">Built - Worked</span>
+              <span class="badge badge-redesign">Redesign</span>
+            </div>
+          </div>
+          <p class="card-desc">
+            ESP32-based data acquisition system built for CTU Space Research to log pressure and temperature transients during nitrous oxide (N₂O) decompression testing.
+          </p>
+          <div class="eng-note amber">
+            <strong>Validation &amp; Next Revision:</strong> Successfully captured full decompression profiles during live runs, though raw sensor lines picked up noise requiring tighter signal conditioning—currently undergoing a redesign to integrate improved front-end hardware filtration.
+          </div>
+          <div class="specs-grid">
+            <div class="spec-box"><span>Affiliation</span><strong>CTU Space Research</strong></div>
+            <div class="spec-box"><span>MCU</span><strong>ESP32</strong></div>
+            <div class="spec-box"><span>Sensors</span><strong>Pressure &amp; Temperature</strong></div>
+            <div class="spec-box"><span>Application</span><strong>N₂O Decompression Testing</strong></div>
+          </div>
+
+          <!-- PHOTO ALBUM: ESP32 LOGGER -->
+          <details class="panel-details">
+            <summary>Photo Album (DAQ Hardware &amp; Test Setup)</summary>
+            <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
+          </details>
+
+          <div class="tags">
+            <span class="tag">CTU Space Research</span>
+            <span class="tag">ESP32</span>
+            <span class="tag">DAQ</span>
+            <span class="tag">Signal Filtering</span>
+            <span class="tag">N₂O Propulsion</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           PROJECT 4: SUNLU T3 OVERHAUL
            =================================================================== -->
       <article class="project-card" data-status="redesign progress" style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
-              <h3>Sunlu T3 — Heavy Mechanical & Cooling Overhaul</h3>
-              <div class="card-subtitle">Custom Motion System & High-Static-Pressure Cooling</div>
+              <h3>Sunlu T3 — Heavy Mechanical &amp; Cooling Overhaul</h3>
+              <div class="card-subtitle">Custom Motion System &amp; High-Static-Pressure Cooling</div>
             </div>
-            <span class="badge badge-redesign">Redesign</span>
+            <div class="badge-group">
+              <span class="badge badge-redesign">Redesign</span>
+            </div>
           </div>
           <p class="card-desc">
             Extensive ground-up rebuild of a Sunlu T3 featuring a custom Y-axis linear rod system, X-axis linear rail, Z-axis frame bracing, a custom electronics chassis, and extreme part cooling driven by a 120mm 6,000 RPM Arctic auxiliary fan alongside a 40mm 12,000 RPM hotend fan.
@@ -527,6 +724,13 @@
             <div class="spec-box"><span>Cooling</span><strong>120mm 6k RPM + 40mm 12k RPM</strong></div>
             <div class="spec-box"><span>Host / MCU</span><strong>Orange Pi Zero 2W (Klipper)</strong></div>
           </div>
+
+          <!-- PHOTO ALBUM: SUNLU T3 -->
+          <details class="panel-details">
+            <summary>Photo Album (Sunlu T3 Mods)</summary>
+            <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
+          </details>
+
           <div class="tags">
             <span class="tag">Klipper</span>
             <span class="tag">Custom Chassis</span>
@@ -537,16 +741,18 @@
       </article>
 
       <!-- ===================================================================
-           PROJECT 4: 5" FPV DRONE
+           PROJECT 5: 5" FPV DRONE
            =================================================================== -->
       <article class="project-card" data-status="untested" style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
               <h3>5" Custom FPV Quadcopter</h3>
-              <div class="card-subtitle">4S Freestyle & GPS-Equipped Airframe</div>
+              <div class="card-subtitle">4S Freestyle &amp; GPS-Equipped Airframe</div>
             </div>
-            <span class="badge badge-untested">Built - Untested</span>
+            <div class="badge-group">
+              <span class="badge badge-untested">Built - Untested</span>
+            </div>
           </div>
           <p class="card-desc">
             Custom-built 5-inch FPV quadcopter outfitted with RS2205 brushless motors, 4S LiPo power system, and onboard GPS module for telemetry and return-to-home fail-safes.
@@ -560,6 +766,13 @@
             <div class="spec-box"><span>Battery</span><strong>4S LiPo</strong></div>
             <div class="spec-box"><span>Navigation</span><strong>Onboard GPS Telemetry</strong></div>
           </div>
+
+          <!-- PHOTO ALBUM: FPV DRONE -->
+          <details class="panel-details">
+            <summary>Photo Album (5" Quad Build)</summary>
+            <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
+          </details>
+
           <div class="tags">
             <span class="tag">FPV</span>
             <span class="tag">UAV</span>
@@ -569,8 +782,8 @@
         </div>
       </article>
 
-     <!-- ===================================================================
-           PROJECT 5: EUROC METRO PAYLOAD DEMONSTRATOR
+      <!-- ===================================================================
+           PROJECT 6: EUROC METRO PAYLOAD DEMONSTRATOR
            =================================================================== -->
       <article class="project-card" data-status="failed" style="--bg-image: none;">
         <div class="card-content">
@@ -579,13 +792,15 @@
               <h3>EuRoC METRO Experiment Demonstrator Payload</h3>
               <div class="card-subtitle">CTU Space Research — Flight Electronics &amp; 50 Hz G-Sensing Firmware</div>
             </div>
-            <span class="badge badge-failed">Built - Failed</span>
+            <div class="badge-group">
+              <span class="badge badge-failed">Built - Failed</span>
+            </div>
           </div>
           <p class="card-desc">
             Implemented the payload electronics and deterministic flight state machine for the METRO biological experiment demonstrator at the European Rocketry Challenge (EuRoC). Built around flight trajectory simulations provided by the team, the firmware combined 50 Hz accelerometer thresholds (≥ 3.0 g launch trigger, &lt; 0.5 g microgravity entry) with simulation-derived forced timeout overrides (10 s and 25 s) to guarantee motor spin-up, Raspberry Pi imaging pulses, and CSV telemetry logging even under degraded sensor data.
           </p>
 
-          <details class="fsm-details">
+          <details class="panel-details">
             <summary>View 50 Hz Flight State Machine Architecture</summary>
             <pre class="fsm-diagram">        reset / setup()
               │
@@ -625,6 +840,12 @@
       └───────────────┘</pre>
           </details>
 
+          <!-- PHOTO ALBUM: EUROC PAYLOAD -->
+          <details class="panel-details">
+            <summary>Photo Album (EuRoC Payload Integration)</summary>
+            <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
+          </details>
+
           <div class="eng-note warn">
             <strong>Post-Mortem &amp; Root Cause:</strong> Payload failed due to a hardware sensor failure that could not be repaired in time prior to launch, compounded by fluid leakage from the mechanical algae containment subsystem. Highlighted the importance of modular, easily replaceable sensor daughterboards and early integrated leak testing.
           </div>
@@ -645,22 +866,24 @@
       </article>
 
       <!-- ===================================================================
-           PROJECT 6: CTU SPACE RESEARCH POWER / EFUSE PCB
+           PROJECT 7: CTU SPACE RESEARCH POWER / EFUSE PCB
            =================================================================== -->
       <article class="project-card" data-status="failed" style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
-              <h3>CTU Space Research — Custom Power & eFuse PCB</h3>
+              <h3>CTU Space Research — Custom Power &amp; eFuse PCB</h3>
               <div class="card-subtitle">Fault-Tolerant Power Distribution Prototype</div>
             </div>
-            <span class="badge badge-failed">Built - Failed</span>
+            <div class="badge-group">
+              <span class="badge badge-failed">Built - Failed</span>
+            </div>
           </div>
           <p class="card-desc">
             Custom power-management PCB developed for CTU Space Research, integrating electronic fuse (eFuse) protection alongside an intentional hardware bypass jumper for test-bench resilience.
           </p>
           <div class="eng-note warn">
-            <strong>Post-Mortem & Lesson Learned:</strong> Board functioned initially before the eFuse burned out—likely due to an improperly configured latch-off current threshold during transient load. Because a physical power jumper was designed into the board upfront, testing was able to proceed without scrapping the hardware. Retired without revision.
+            <strong>Post-Mortem &amp; Lesson Learned:</strong> Board functioned initially before the eFuse burned out—likely due to an improperly configured latch-off current threshold during transient load. Because a physical power jumper was designed into the board upfront, testing was able to proceed without scrapping the hardware. Retired without revision.
           </div>
           <div class="specs-grid">
             <div class="spec-box"><span>Affiliation</span><strong>CTU Space Research</strong></div>
@@ -668,6 +891,13 @@
             <div class="spec-box"><span>Fallback</span><strong>Onboard Power Bypass Jumper</strong></div>
             <div class="spec-box"><span>Disposition</span><strong>Retired (No Rev 2)</strong></div>
           </div>
+
+          <!-- PHOTO ALBUM: EFUSE PCB -->
+          <details class="panel-details">
+            <summary>Photo Album (Power / eFuse PCB)</summary>
+            <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
+          </details>
+
           <div class="tags">
             <span class="tag">CTU Space</span>
             <span class="tag">Power Electronics</span>
@@ -677,48 +907,9 @@
         </div>
       </article>
 
-      <!-- ===================================================================
-           PROJECT: ESP32 N2O DECOMPRESSION DATA LOGGER
-           To add a card background image, change --bg-image: none
-           to: --bg-image: url('images/esp32-logger.jpg')
-           =================================================================== -->
-      <article class="project-card" data-status="worked redesign" style="--bg-image: none;">
-        <div class="card-content">
-          <div class="card-top">
-            <div>
-              <h3>ESP32 Nitrous Oxide Decompression Data Logger</h3>
-              <div class="card-subtitle">CTU Space Research — High-Speed Propulsion Test Instrumentation</div>
-            </div>
-            <div style="display: flex; gap: 0.45rem; flex-wrap: wrap;">
-              <span class="badge badge-worked">Built - Worked</span>
-              <span class="badge badge-redesign">Redesign</span>
-            </div>
-          </div>
-          <p class="card-desc">
-            ESP32-based data acquisition system built for CTU Space Research to capture high-resolution pressure and temperature transients during nitrous oxide ($\text{N}_2\text{O}$) decompression testing.
-          </p>
-          <div class="eng-note amber">
-            <strong>Validation &amp; Next Revision:</strong> Successfully logged full decompression profiles during live test runs, though raw sensor channels exhibited noise requiring tighter analog/digital signal conditioning—currently undergoing a redesign to integrate improved front-end hardware filtration.
-          </div>
-          <div class="specs-grid">
-            <div class="spec-box"><span>Affiliation</span><strong>CTU Space Research</strong></div>
-            <div class="spec-box"><span>MCU</span><strong>ESP32</strong></div>
-            <div class="spec-box"><span>Sensors</span><strong>Pressure &amp; Temperature</strong></div>
-            <div class="spec-box"><span>Application</span><strong>N₂O Decompression Testing</strong></div>
-          </div>
-          <div class="tags">
-            <span class="tag">CTU Space Research</span>
-            <span class="tag">ESP32</span>
-            <span class="tag">DAQ</span>
-            <span class="tag">Signal Filtering</span>
-            <span class="tag">N₂O Propulsion</span>
-          </div>
-        </div>
-      </article>
-
     </section>
 
-    <div class="section-title">Conceptual R&D // On the Drawing Board</div>
+    <div class="section-title">Conceptual R&amp;D // On the Drawing Board</div>
 
     <section class="concepts-grid">
 
@@ -732,11 +923,20 @@
               <h3>X65 Aether</h3>
               <div class="card-subtitle">65cm Tailless Flying-Wing UAV</div>
             </div>
-            <span class="badge badge-concept">Concept</span>
+            <div class="badge-group">
+              <span class="badge badge-concept">Concept</span>
+            </div>
           </div>
           <p class="card-desc">
             Compact 65cm wingspan tailless UAV currently in early aerodynamic trade studies (airfoil selection). Planned architecture pairs a custom <strong>STM32F401RET6</strong> flight computer with a COTS ESC, exploring composite airframe construction and evaluating pusher-prop vs. EDF propulsion.
           </p>
+
+          <!-- PHOTO ALBUM: X65 AETHER -->
+          <details class="panel-details">
+            <summary>Photo Album (CAD / Airfoil Studies)</summary>
+            <div class="album-empty">No renders uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
+          </details>
+
           <div class="tags">
             <span class="tag">STM32F401RET6</span>
             <span class="tag">65cm Span</span>
@@ -757,15 +957,24 @@
               <h3>Liquid Rocket Propulsion</h3>
               <div class="card-subtitle">Early Exploratory Study</div>
             </div>
-            <span class="badge badge-concept">Concept</span>
+            <div class="badge-group">
+              <span class="badge badge-concept">Concept</span>
+            </div>
           </div>
           <p class="card-desc">
             Long-term exploratory concept investigating small-scale liquid rocket motor thermodynamics, injector geometry, and propellant feed architectures. Currently in early theoretical consideration.
           </p>
+
+          <!-- PHOTO ALBUM: LIQUID ROCKET -->
+          <details class="panel-details">
+            <summary>Photo Album (Sketches / Schematics)</summary>
+            <div class="album-empty">No images uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
+          </details>
+
           <div class="tags">
             <span class="tag">Propulsion</span>
             <span class="tag">Thermodynamics</span>
-            <span class="tag">Early R&D</span>
+            <span class="tag">Early R&amp;D</span>
           </div>
         </div>
       </article>
@@ -778,8 +987,19 @@
     </footer>
   </div>
 
-  <!-- Interactive Filter Script -->
+  <!-- Fullscreen Photo Lightbox -->
+  <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <div class="lightbox-controls">
+      <button class="lb-btn" id="lb-close">ESC / Close ✕</button>
+    </div>
+    <button class="lb-btn lb-nav lb-prev" id="lb-prev" aria-label="Previous photo">‹</button>
+    <img id="lb-img" src="" alt="">
+    <div id="lb-caption" class="lightbox-caption"></div>
+    <button class="lb-btn lb-nav lb-next" id="lb-next" aria-label="Next photo">›</button>
+  </div>
+
   <script>
+    // Status Filter Logic
     const buttons = document.querySelectorAll('.filter-btn');
     const cards = document.querySelectorAll('.project-card');
 
@@ -798,6 +1018,58 @@
           }
         });
       });
+    });
+
+    // Photo Album Lightbox Logic (Scoped per project album)
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbCaption = document.getElementById('lb-caption');
+    let currentAlbumImages = [];
+    let currentIndex = 0;
+
+    function openLightbox(images, index) {
+      currentAlbumImages = images;
+      currentIndex = index;
+      updateLightbox();
+      lightbox.classList.remove('hidden');
+    }
+
+    function updateLightbox() {
+      const img = currentAlbumImages[currentIndex];
+      lbImg.src = img.src;
+      lbImg.alt = img.alt || '';
+      const captionText = img.closest('figure')?.querySelector('figcaption')?.textContent || img.alt || '';
+      lbCaption.textContent = `${captionText} (${currentIndex + 1} / ${currentAlbumImages.length})`;
+    }
+
+    document.addEventListener('click', (e) => {
+      const item = e.target.closest('.album-item');
+      if (item) {
+        const grid = item.closest('.album-grid');
+        const imgs = Array.from(grid.querySelectorAll('img'));
+        const clickedImg = item.querySelector('img');
+        openLightbox(imgs, imgs.indexOf(clickedImg));
+      }
+    });
+
+    document.getElementById('lb-close').addEventListener('click', () => lightbox.classList.add('hidden'));
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.add('hidden'); });
+
+    document.getElementById('lb-prev').addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + currentAlbumImages.length) % currentAlbumImages.length;
+      updateLightbox();
+    });
+
+    document.getElementById('lb-next').addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % currentAlbumImages.length;
+      updateLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.classList.contains('hidden')) return;
+      if (e.key === 'Escape') lightbox.classList.add('hidden');
+      if (e.key === 'ArrowLeft') document.getElementById('lb-prev').click();
+      if (e.key === 'ArrowRight') document.getElementById('lb-next').click();
     });
   </script>
 </body>
