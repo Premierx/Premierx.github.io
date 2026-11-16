@@ -151,6 +151,8 @@
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 1.15rem 1.25rem;
+      min-width: 0;
+      overflow-wrap: break-word;
     }
 
     .cap-card h2 {
@@ -288,8 +290,8 @@
       top: 2px;
       bottom: 2px;
       border-radius: 4px;
-      display: flex;
-      align-items: center;
+      display: block;
+      line-height: 16px;
       padding: 0 0.45rem;
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: 0.66rem;
@@ -297,6 +299,7 @@
       color: #080c14;
       white-space: nowrap;
       overflow: hidden;
+      text-overflow: ellipsis;
       transition: filter 0.2s ease;
     }
 
@@ -407,6 +410,8 @@
       z-index: 1;
       padding: 1.85rem;
       backdrop-filter: blur(4px);
+      min-width: 0;
+      overflow-wrap: break-word;
     }
 
     .card-top {
@@ -416,6 +421,11 @@
       flex-wrap: wrap;
       gap: 0.75rem;
       margin-bottom: 0.9rem;
+    }
+
+    .card-top > div:first-child {
+      min-width: 0;
+      flex: 1 1 260px;
     }
 
     .card-top h3 {
@@ -499,6 +509,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 0.5rem;
       transition: background 0.15s ease;
     }
 
@@ -512,6 +523,7 @@
       content: "[ + Expand ]";
       font-size: 0.75rem;
       color: var(--muted);
+      white-space: nowrap;
     }
 
     details.panel-details[open] summary::after {
@@ -593,6 +605,8 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 0.65rem 0.85rem;
+      min-width: 0;
+      overflow-wrap: break-word;
     }
 
     .spec-box span {
@@ -776,11 +790,11 @@
       <div class="eyebrow">Prague, CZ // Hardware // Avionics // Embedded Systems</div>
       <h1>Natanael Čandík</h1>
       <p class="tagline">
-        Cybernetics and Robotics student at CTU FEE. Member of Avionics and PR subsections of CTU Space Research. 3D modelling and 3D printer design.
+        Cybernetics and Robotics student at CTU FEE. Member of Avionics and PR subsections of CTU Space research. 3D modelling and 3D printer design.
       </p>
       <div class="header-links">
         <a class="btn-link" href="https://github.com/Premierx" target="_blank" rel="noopener">GitHub ↗</a>
-        <!-- Replace with your exact Printables profile URL -->
+        <!-- Replace # below with your Printables profile URL -->
         <a class="btn-link" href="https://www.printables.com/" target="_blank" rel="noopener">Printables ↗</a>
         <a class="btn-link" href="#contact">Contact &amp; Links ↓</a>
       </div>
@@ -808,7 +822,7 @@
         <h2>Build Timeline // Active Phases &amp; Pauses</h2>
         <div class="timeline-legend">
           <span class="legend-paused">Paused / On Hold</span>
-          <span>Click bar to jump ↓</span>
+          <span>Hover bar for details · Click to jump ↓</span>
         </div>
       </div>
       <div class="gantt-wrapper">
@@ -833,7 +847,6 @@
 
       <!-- ===================================================================
            PROJECT 1: HEXCORE
-           Timeline segments format: "YYYY-MM:YYYY-MM:bar-class:Label | YYYY-MM:YYYY-MM:bar-class:Label"
            =================================================================== -->
       <article id="proj-hexcore" class="project-card"
                data-status="progress redesign"
@@ -986,7 +999,7 @@
       </article>
 
       <!-- ===================================================================
-           PROJECT 4: SUNLU T3 OVERHAUL (Split into v1 Build -> Paused -> Redesign)
+           PROJECT 4: SUNLU T3 OVERHAUL
            =================================================================== -->
       <article id="proj-sunlu" class="project-card"
                data-status="redesign progress"
@@ -1358,7 +1371,6 @@
 
   <script>
     // 1. Multi-Segment Dynamic Gantt Timeline Generator
-    // Supports multiple active phases per project separated by '|' with dashed paused gaps
     (function buildTimeline() {
       const container = document.getElementById('gantt-chart');
       const cards = Array.from(document.querySelectorAll('.project-card[data-segments]'));
@@ -1373,6 +1385,8 @@
         const segments = card.dataset.segments.split('|').map(seg => {
           const [startStr, endStr, barClass, label] = seg.split(':').map(s => s.trim());
           return {
+            startStr,
+            endStr,
             start: parseMonth(startStr),
             end: parseMonth(endStr) + 1,
             barClass: barClass || 'bar-progress',
@@ -1408,15 +1422,16 @@
 
         let trackInnerHtml = '';
         segments.forEach((seg, idx) => {
-          // Draw dashed paused connector line if there is a gap from the previous segment
           if (idx > 0 && seg.start > segments[idx - 1].end) {
             const gapLeft = ((segments[idx - 1].end - minM) / totalSpan) * 100;
             const gapWidth = ((seg.start - segments[idx - 1].end) / totalSpan) * 100;
-            trackInnerHtml += `<div class="gantt-pause-line" style="left: ${gapLeft.toFixed(2)}%; width: ${gapWidth.toFixed(2)}%;" title="Paused"></div>`;
+            trackInnerHtml += `<div class="gantt-pause-line" style="left: ${gapLeft.toFixed(2)}%; width: ${gapWidth.toFixed(2)}%;" title="Paused (${segments[idx - 1].endStr} → ${seg.startStr})"></div>`;
           }
           const leftPct = ((seg.start - minM) / totalSpan) * 100;
           const widthPct = Math.max(((seg.end - seg.start) / totalSpan) * 100, 3.5);
-          trackInnerHtml += `<div class="gantt-bar ${seg.barClass}" style="left: ${leftPct.toFixed(2)}%; width: ${widthPct.toFixed(2)}%;">${seg.label}</div>`;
+          const displayLabel = widthPct < 9 ? '' : seg.label;
+          const tooltip = `${seg.label} (${seg.startStr} – ${seg.endStr})`;
+          trackInnerHtml += `<div class="gantt-bar ${seg.barClass}" title="${tooltip}" style="left: ${leftPct.toFixed(2)}%; width: ${widthPct.toFixed(2)}%;">${displayLabel}</div>`;
         });
 
         row.innerHTML = `
