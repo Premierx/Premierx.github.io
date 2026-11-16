@@ -3,86 +3,642 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Premierx — Portfolio</title>
+  <title>Premierx — Hardware, Avionics & Embedded Systems</title>
   <style>
     :root {
-      --bg: #0f172a;
-      --surface: #1e293b;
-      --text: #f8fafc;
+      /* =====================================================================
+         PAGE BACKGROUND IMAGE:
+         To add a page background image, upload it to your repo (e.g. images/bg.jpg)
+         and replace 'none' below with: url('images/bg.jpg')
+         ===================================================================== */
+      --page-bg-image: none;
+
+      --bg: #080c14;
+      --surface: rgba(15, 23, 42, 0.85);
+      --surface-solid: #0f172a;
+      --border: rgba(148, 163, 184, 0.14);
+      --border-hover: rgba(56, 189, 248, 0.45);
+      --text: #f1f5f9;
       --muted: #94a3b8;
       --accent: #38bdf8;
+
+      /* Status Colors */
+      --st-worked: #10b981;
+      --st-untested: #06b6d4;
+      --st-progress: #f59e0b;
+      --st-redesign: #f97316;
+      --st-failed: #ef4444;
+      --st-concept: #a855f7;
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
       color: var(--text);
       line-height: 1.6;
-      max-width: 800px;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Full-Page Background Image + Technical Blueprint Grid Overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        linear-gradient(to bottom, rgba(8, 12, 20, 0.82), rgba(8, 12, 20, 0.96)),
+        var(--page-bg-image);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+      background-size: 36px 36px;
+      pointer-events: none;
+    }
+
+    .container {
+      max-width: 980px;
       margin: 0 auto;
-      padding: 4rem 1.5rem;
+      padding: 4.5rem 1.5rem 3rem;
     }
-    header { margin-bottom: 3.5rem; }
-    h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-    .tagline { color: var(--muted); font-size: 1.2rem; margin-bottom: 1.25rem; }
-    .links a {
+
+    /* Header */
+    header {
+      margin-bottom: 3rem;
+      padding-bottom: 2.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
       color: var(--accent);
-      text-decoration: none;
-      margin-right: 1.25rem;
-      font-weight: 500;
+      margin-bottom: 0.5rem;
     }
-    .links a:hover { text-decoration: underline; }
-    h2 {
-      font-size: 1.4rem;
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.1rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .tagline {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 650px;
       margin-bottom: 1.5rem;
-      border-bottom: 1px solid var(--surface);
-      padding-bottom: 0.5rem;
     }
-    .grid {
+
+    .header-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .btn-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .filter-btn {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      color: var(--text);
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.12);
+    }
+
+    /* Section Titles */
+    .section-title {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin: 2.5rem 0 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Project Cards with Optional Background Images */
+    .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      position: relative;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background-color: var(--surface-solid);
+      transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    /* Background Image Layer for Each Card */
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(125deg, rgba(11, 17, 30, 0.94) 35%, rgba(15, 23, 42, 0.76) 100%),
+        var(--bg-image, none);
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.4s ease;
+    }
+
+    .project-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.65);
+    }
+
+    .project-card:hover::before {
+      transform: scale(1.02);
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 1;
+      padding: 1.85rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .card-top h3 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .card-subtitle {
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      margin-top: 0.15rem;
+    }
+
+    /* Color-Coded Status Badges */
+    .badge {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      border-radius: 6px;
+      border: 1px solid currentColor;
+      white-space: nowrap;
+    }
+
+    .badge-worked   { color: var(--st-worked);   background: rgba(16, 185, 129, 0.12); }
+    .badge-untested { color: var(--st-untested); background: rgba(6, 182, 212, 0.12); }
+    .badge-progress { color: var(--st-progress); background: rgba(245, 158, 11, 0.12); }
+    .badge-redesign { color: var(--st-redesign); background: rgba(249, 115, 22, 0.12); }
+    .badge-failed   { color: var(--st-failed);   background: rgba(239, 68, 68, 0.12); }
+    .badge-concept  { color: var(--st-concept);  background: rgba(168, 85, 247, 0.12); }
+
+    .card-desc {
+      color: #cbd5e1;
+      font-size: 0.96rem;
+      margin-bottom: 1.35rem;
+    }
+
+    /* Engineering Note Callout (e.g., Failure Analysis / Redesign Note) */
+    .eng-note {
+      background: rgba(8, 12, 20, 0.65);
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1rem;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 1.35rem;
+    }
+
+    .eng-note.warn { border-left-color: var(--st-failed); }
+    .eng-note.amber { border-left-color: var(--st-redesign); }
+    .eng-note strong { color: var(--text); }
+
+    /* Spec Grid */
+    .specs-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 3.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
     }
-    .card {
-      background: var(--surface);
-      padding: 1.5rem;
+
+    .spec-box {
+      background: rgba(8, 12, 20, 0.6);
+      border: 1px solid var(--border);
       border-radius: 8px;
+      padding: 0.65rem 0.85rem;
     }
-    .card h3 { margin-bottom: 0.5rem; }
-    .card p { color: var(--muted); font-size: 0.95rem; margin-bottom: 1rem; }
-    .card a { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
-    footer { color: var(--muted); font-size: 0.9rem; text-align: center; }
+
+    .spec-box span {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 0.15rem;
+    }
+
+    .spec-box strong {
+      font-size: 0.88rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* Tags */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .tag {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.76rem;
+      color: var(--muted);
+      background: rgba(30, 41, 59, 0.65);
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    /* Concepts Grid */
+    .concepts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .hidden { display: none !important; }
+
+    footer {
+      margin-top: 4.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Premierx</h1>
-    <p class="tagline">Developer & Builder — Crafting clean, functional web experiences.</p>
-    <div class="links">
-      <a href="https://github.com/Premierx" target="_blank">GitHub</a>
-      <a href="mailto:you@example.com">Email</a>
-    </div>
-  </header>
-
-  <main>
-    <h2>Projects</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Project One</h3>
-        <p>A brief summary of what this project does and the tools you used to build it.</p>
-        <a href="#">View Repository →</a>
+  <div class="container">
+    <header>
+      <div class="eyebrow">Hardware // Avionics // Embedded Systems</div>
+      <h1>Premierx</h1>
+      <p class="tagline">
+        Mechanical & embedded hardware builder designing custom CoreXY kinematics, FPV/autonomous airframes, and sensor/power PCBs.
+      </p>
+      <div class="header-links">
+        <a class="btn-link" href="https://github.com/Premierx" target="_blank" rel="noopener">GitHub ↗</a>
+        <!-- Replace # below with your Printables profile URL -->
+        <a class="btn-link" href="https://www.printables.com/" target="_blank" rel="noopener">Printables ↗</a>
       </div>
-      <div class="card">
-        <h3>Project Two</h3>
-        <p>Highlight a problem you solved, a tool you built, or an experiment you ran.</p>
-        <a href="#">View Live Demo →</a>
-      </div>
-    </div>
-  </main>
+    </header>
 
-  <footer>
-    <p>© 2026 Premierx</p>
-  </footer>
+    <!-- Status Filter Buttons -->
+    <div class="filter-bar" role="group" aria-label="Filter projects by status">
+      <button class="filter-btn active" data-filter="all">All Projects</button>
+      <button class="filter-btn" data-filter="progress">Build in Progress</button>
+      <button class="filter-btn" data-filter="redesign">Redesign</button>
+      <button class="filter-btn" data-filter="untested">Built - Untested</button>
+      <button class="filter-btn" data-filter="failed">Built - Failed</button>
+      <button class="filter-btn" data-filter="concept">Concepts</button>
+    </div>
+
+    <div class="section-title">Hardware & Embedded Builds</div>
+
+    <section class="projects-list">
+
+      <!-- ===================================================================
+           PROJECT 1: HEXCORE
+           To add a card background image, change --bg-image: none
+           to: --bg-image: url('images/hexcore.jpg')
+           =================================================================== -->
+      <article class="project-card" data-status="progress redesign" style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>Hexcore — Enclosed CoreXY 3D Printer</h3>
+              <div class="card-subtitle">Custom Kinematics & High-Temp Enclosure</div>
+            </div>
+            <span class="badge badge-progress">Build in Progress</span>
+          </div>
+          <p class="card-desc">
+            A compact, enclosed 180×180mm CoreXY printer built for high-flow extrusion and engineering polymers. Features a carbon-filtered exhaust system, dual Meanwell power supplies, and triple independent Z-axis motors paired with a BTT Microprobe for automated tramming and bed leveling.
+          </p>
+          <div class="eng-note amber">
+            <strong>Status & Next Steps:</strong> Frame, XY gantry, and custom toolhead are assembled. Planning a structural redesign to address several early mechanical design choices—plus adding an active chamber heater—before final commissioning.
+          </div>
+          <div class="specs-grid">
+            <div class="spec-box"><span>Build Volume</span><strong>180 × 180 mm Enclosed</strong></div>
+            <div class="spec-box"><span>Toolhead</span><strong>HGX-Lite + CR10 Cu Block</strong></div>
+            <div class="spec-box"><span>Electronics</span><strong>Mellow FLY D7 + Orange Pi</strong></div>
+            <div class="spec-box"><span>Z & Probing</span><strong>Triple Z + BTT Microprobe</strong></div>
+          </div>
+          <div class="tags">
+            <span class="tag">CoreXY</span>
+            <span class="tag">Klipper</span>
+            <span class="tag">Dual Meanwell PSU</span>
+            <span class="tag">Carbon Filtration</span>
+            <span class="tag">Nickel-Plated Copper</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           PROJECT 2: ACTIVE PRESSURE REGULATION BOARD
+           =================================================================== -->
+      <article class="project-card" data-status="progress" style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>Active Pressure Regulation Board</h3>
+              <div class="card-subtitle">Multi-Sensor Embedded Control PCB</div>
+            </div>
+            <span class="badge badge-progress">Build in Progress</span>
+          </div>
+          <p class="card-desc">
+            Custom embedded controller designed for real-time closed-loop pressure monitoring and actuation, integrating high-density analog/digital sensor acquisition with industrial bus communication.
+          </p>
+          <div class="specs-grid">
+            <div class="spec-box"><span>Interfaces</span><strong>USB & CAN Bus</strong></div>
+            <div class="spec-box"><span>Pressure Inputs</span><strong>6× Pressure Transceivers</strong></div>
+            <div class="spec-box"><span>Thermal</span><strong>2× Temperature Sensors</strong></div>
+            <div class="spec-box"><span>Feedback</span><strong>1× Position Sensor</strong></div>
+          </div>
+          <div class="tags">
+            <span class="tag">PCB Design</span>
+            <span class="tag">CAN Bus</span>
+            <span class="tag">USB</span>
+            <span class="tag">Sensor Fusion</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           PROJECT 3: SUNLU T3 OVERHAUL
+           =================================================================== -->
+      <article class="project-card" data-status="redesign progress" style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>Sunlu T3 — Heavy Mechanical & Cooling Overhaul</h3>
+              <div class="card-subtitle">Custom Motion System & High-Static-Pressure Cooling</div>
+            </div>
+            <span class="badge badge-redesign">Redesign</span>
+          </div>
+          <p class="card-desc">
+            Extensive ground-up rebuild of a Sunlu T3 featuring a custom Y-axis linear rod system, X-axis linear rail, Z-axis frame bracing, a custom electronics chassis, and extreme part cooling driven by a 120mm 6,000 RPM Arctic auxiliary fan alongside a 40mm 12,000 RPM hotend fan.
+          </p>
+          <div class="eng-note amber">
+            <strong>Current Phase:</strong> Previously fully operational; currently disassembled for a visual redesign, mechanical optimization, and control board migration (evaluating Mellow FLY D5 vs. BTT Pico alongside an Orange Pi Zero 2W).
+          </div>
+          <div class="specs-grid">
+            <div class="spec-box"><span>Extruder</span><strong>BIQU H2 V2S Lite</strong></div>
+            <div class="spec-box"><span>Motion</span><strong>X Linear Rail / Custom Y Rods</strong></div>
+            <div class="spec-box"><span>Cooling</span><strong>120mm 6k RPM + 40mm 12k RPM</strong></div>
+            <div class="spec-box"><span>Host / MCU</span><strong>Orange Pi Zero 2W (Klipper)</strong></div>
+          </div>
+          <div class="tags">
+            <span class="tag">Klipper</span>
+            <span class="tag">Custom Chassis</span>
+            <span class="tag">Z-Braces</span>
+            <span class="tag">High-CFM Cooling</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           PROJECT 4: 5" FPV DRONE
+           =================================================================== -->
+      <article class="project-card" data-status="untested" style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>5" Custom FPV Quadcopter</h3>
+              <div class="card-subtitle">4S Freestyle & GPS-Equipped Airframe</div>
+            </div>
+            <span class="badge badge-untested">Built - Untested</span>
+          </div>
+          <p class="card-desc">
+            Custom-built 5-inch FPV quadcopter outfitted with RS2205 brushless motors, 4S LiPo power system, and onboard GPS module for telemetry and return-to-home fail-safes.
+          </p>
+          <div class="eng-note">
+            <strong>Bench Verification:</strong> Wiring, motor direction, receiver binding, and GPS satellite lock verified on the bench—awaiting weather and schedule window for maiden flight.
+          </div>
+          <div class="specs-grid">
+            <div class="spec-box"><span>Frame Class</span><strong>5-Inch FPV</strong></div>
+            <div class="spec-box"><span>Propulsion</span><strong>RS2205 Brushless Motors</strong></div>
+            <div class="spec-box"><span>Battery</span><strong>4S LiPo</strong></div>
+            <div class="spec-box"><span>Navigation</span><strong>Onboard GPS Telemetry</strong></div>
+          </div>
+          <div class="tags">
+            <span class="tag">FPV</span>
+            <span class="tag">UAV</span>
+            <span class="tag">4S LiPo</span>
+            <span class="tag">GPS</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           PROJECT 5: CTU SPACE RESEARCH PCB
+           =================================================================== -->
+      <article class="project-card" data-status="failed" style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>CTU Space Research — Custom Power & eFuse PCB</h3>
+              <div class="card-subtitle">Fault-Tolerant Power Distribution Prototype</div>
+            </div>
+            <span class="badge badge-failed">Built - Failed</span>
+          </div>
+          <p class="card-desc">
+            Custom power-management PCB developed for CTU Space Research, integrating electronic fuse (eFuse) protection alongside an intentional hardware bypass jumper for test-bench resilience.
+          </p>
+          <div class="eng-note warn">
+            <strong>Post-Mortem & Lesson Learned:</strong> Board functioned initially before the eFuse burned out—likely due to an improperly configured latch-off current threshold during transient load. Because a physical power jumper was designed into the board upfront, testing was able to proceed without scrapping the hardware. Retired without revision.
+          </div>
+          <div class="specs-grid">
+            <div class="spec-box"><span>Affiliation</span><strong>CTU Space Research</strong></div>
+            <div class="spec-box"><span>Protection</span><strong>Integrated eFuse IC</strong></div>
+            <div class="spec-box"><span>Fallback</span><strong>Onboard Power Bypass Jumper</strong></div>
+            <div class="spec-box"><span>Disposition</span><strong>Retired (No Rev 2)</strong></div>
+          </div>
+          <div class="tags">
+            <span class="tag">CTU Space</span>
+            <span class="tag">Power Electronics</span>
+            <span class="tag">eFuse</span>
+            <span class="tag">Failure Analysis</span>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <div class="section-title">Conceptual R&D // On the Drawing Board</div>
+
+    <section class="concepts-grid">
+
+      <!-- ===================================================================
+           CONCEPT 1: X65 AETHER
+           =================================================================== -->
+      <article class="project-card" data-status="concept" style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>X65 Aether</h3>
+              <div class="card-subtitle">65cm Tailless Flying-Wing UAV</div>
+            </div>
+            <span class="badge badge-concept">Concept</span>
+          </div>
+          <p class="card-desc">
+            Compact 65cm wingspan tailless UAV currently in early aerodynamic trade studies (airfoil selection). Planned architecture pairs a custom <strong>STM32F401RET6</strong> flight computer with a COTS ESC, exploring composite airframe construction and evaluating pusher-prop vs. EDF propulsion.
+          </p>
+          <div class="tags">
+            <span class="tag">STM32F401RET6</span>
+            <span class="tag">65cm Span</span>
+            <span class="tag">Aerodynamics</span>
+            <span class="tag">Composites</span>
+            <span class="tag">Prop vs. EDF</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           CONCEPT 2: LIQUID ROCKET MOTOR
+           =================================================================== -->
+      <article class="project-card" data-status="concept" style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>Liquid Rocket Propulsion</h3>
+              <div class="card-subtitle">Early Exploratory Study</div>
+            </div>
+            <span class="badge badge-concept">Concept</span>
+          </div>
+          <p class="card-desc">
+            Long-term exploratory concept investigating small-scale liquid rocket motor thermodynamics, injector geometry, and propellant feed architectures. Currently in early theoretical consideration.
+          </p>
+          <div class="tags">
+            <span class="tag">Propulsion</span>
+            <span class="tag">Thermodynamics</span>
+            <span class="tag">Early R&D</span>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <footer>
+      <span>© 2026 Premierx</span>
+      <span>Built on GitHub Pages</span>
+    </footer>
+  </div>
+
+  <!-- Interactive Filter Script -->
+  <script>
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.project-card');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        cards.forEach(card => {
+          const statuses = card.dataset.status.split(' ');
+          if (filter === 'all' || statuses.includes(filter)) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
