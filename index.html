@@ -23,7 +23,7 @@
       --muted: #a1a1aa;
       --accent: #f59e0b;
 
-      /* Status Colors (Tuned for Carbon + Amber Contrast) */
+      /* Status Colors */
       --st-worked: #10b981;
       --st-untested: #06b6d4;
       --st-progress: #3b82f6;
@@ -46,14 +46,14 @@
       overflow-x: hidden;
     }
 
-    /* Full-Page Background Image + Technical Blueprint Grid Overlay */
+    /* Full-Page Background Image + Subtle Amber Grid */
     body::before {
       content: "";
       position: fixed;
       inset: 0;
       z-index: -2;
       background-image:
-        linear-gradient(to bottom, rgba(8, 12, 20, 0.82), rgba(8, 12, 20, 0.96)),
+        linear-gradient(to bottom, rgba(9, 9, 11, 0.84), rgba(9, 9, 11, 0.97)),
         var(--page-bg-image);
       background-size: cover;
       background-position: center;
@@ -66,8 +66,8 @@
       inset: 0;
       z-index: -1;
       background-image:
-        linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+        linear-gradient(rgba(245, 158, 11, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245, 158, 11, 0.035) 1px, transparent 1px);
       background-size: 36px 36px;
       pointer-events: none;
     }
@@ -100,7 +100,7 @@
       letter-spacing: -0.03em;
       line-height: 1.1;
       margin-bottom: 0.75rem;
-      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      background: linear-gradient(135deg, #ffffff 30%, #a1a1aa 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -124,7 +124,7 @@
       gap: 0.45rem;
       padding: 0.5rem 0.95rem;
       border-radius: 6px;
-      background: rgba(30, 41, 59, 0.7);
+      background: rgba(24, 24, 29, 0.8);
       border: 1px solid var(--border);
       color: var(--text);
       text-decoration: none;
@@ -148,7 +148,7 @@
     }
 
     .cap-card {
-      background: rgba(15, 23, 42, 0.65);
+      background: rgba(18, 18, 22, 0.82);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 1.15rem 1.25rem;
@@ -162,20 +162,31 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--accent);
-      margin-bottom: 0.45rem;
+      margin-bottom: 0.65rem;
     }
 
-    .cap-card p {
-      font-size: 0.88rem;
-      color: #cbd5e1;
-      line-height: 1.55;
-      text-align: justify;
-      hyphens: auto;
+    .cap-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.84rem;
+      color: #d4d4d8;
+      line-height: 1.45;
+    }
+
+    .cap-list li strong {
+      color: var(--text);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: block;
     }
 
     /* 2. Multi-Segment Interactive Project Timeline */
     .timeline-box {
-      background: rgba(15, 23, 42, 0.75);
+      background: rgba(18, 18, 22, 0.82);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 1.35rem 1.5rem;
@@ -218,7 +229,7 @@
       content: "";
       display: inline-block;
       width: 18px;
-      border-top: 2px dashed rgba(148, 163, 184, 0.5);
+      border-top: 2px dashed rgba(161, 161, 170, 0.5);
     }
 
     .gantt-wrapper {
@@ -231,7 +242,7 @@
     .gantt-wrapper,
     pre.fsm-diagram {
       scrollbar-width: thin;
-      scrollbar-color: rgba(56, 189, 248, 0.35) rgba(8, 12, 20, 0.85);
+      scrollbar-color: rgba(245, 158, 11, 0.4) rgba(9, 9, 11, 0.9);
     }
 
     html::-webkit-scrollbar,
@@ -244,23 +255,23 @@
     html::-webkit-scrollbar-track,
     .gantt-wrapper::-webkit-scrollbar-track,
     pre.fsm-diagram::-webkit-scrollbar-track {
-      background: rgba(8, 12, 20, 0.85);
+      background: rgba(9, 9, 11, 0.9);
       border-radius: 999px;
     }
 
     html::-webkit-scrollbar-thumb,
     .gantt-wrapper::-webkit-scrollbar-thumb,
     pre.fsm-diagram::-webkit-scrollbar-thumb {
-      background: rgba(56, 189, 248, 0.35);
+      background: rgba(245, 158, 11, 0.4);
       border-radius: 999px;
     }
 
     html::-webkit-scrollbar-thumb:hover,
     .gantt-wrapper::-webkit-scrollbar-thumb:hover,
     pre.fsm-diagram::-webkit-scrollbar-thumb:hover {
-      background: rgba(56, 189, 248, 0.65);
+      background: rgba(245, 158, 11, 0.7);
     }
-    
+
     .gantt-chart {
       min-width: 650px;
     }
@@ -286,20 +297,20 @@
       grid-template-columns: 210px 1fr;
       align-items: center;
       padding: 0.42rem 0;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+      border-bottom: 1px solid rgba(244, 244, 245, 0.06);
       cursor: pointer;
       border-radius: 4px;
       transition: background 0.15s ease;
     }
 
     .gantt-row:hover {
-      background: rgba(56, 189, 248, 0.06);
+      background: rgba(245, 158, 11, 0.07);
     }
 
     .gantt-label {
       font-size: 0.82rem;
       font-weight: 500;
-      color: #e2e8f0;
+      color: #e4e4e7;
       padding-right: 0.75rem;
       white-space: nowrap;
       overflow: hidden;
@@ -309,16 +320,15 @@
     .gantt-track {
       position: relative;
       height: 20px;
-      background: rgba(8, 12, 20, 0.55);
+      background: rgba(9, 9, 11, 0.65);
       border-radius: 4px;
     }
 
-    /* Dashed connector for paused gaps between active build phases */
     .gantt-pause-line {
       position: absolute;
       top: 50%;
       height: 0;
-      border-top: 2px dashed rgba(148, 163, 184, 0.38);
+      border-top: 2px dashed rgba(161, 161, 170, 0.38);
       transform: translateY(-50%);
       pointer-events: none;
     }
@@ -334,7 +344,7 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: 0.66rem;
       font-weight: 700;
-      color: #080c14;
+      color: #09090b;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -347,7 +357,7 @@
 
     .bar-worked   { background: var(--st-worked); }
     .bar-untested { background: var(--st-untested); }
-    .bar-progress { background: var(--st-progress); }
+    .bar-progress { background: var(--st-progress); color: #fff; }
     .bar-redesign { background: var(--st-redesign); }
     .bar-failed   { background: var(--st-failed); color: #fff; }
     .bar-concept  { background: var(--st-concept); color: #fff; }
@@ -361,7 +371,7 @@
     }
 
     .filter-btn {
-      background: rgba(15, 23, 42, 0.75);
+      background: rgba(18, 18, 22, 0.82);
       border: 1px solid var(--border);
       color: var(--muted);
       padding: 0.4rem 0.85rem;
@@ -375,7 +385,7 @@
     .filter-btn:hover, .filter-btn.active {
       color: var(--text);
       border-color: var(--accent);
-      background: rgba(56, 189, 248, 0.12);
+      background: rgba(245, 158, 11, 0.14);
     }
 
     /* Section Titles */
@@ -421,7 +431,7 @@
       inset: 0;
       z-index: 0;
       background-image:
-        linear-gradient(125deg, rgba(11, 17, 30, 0.94) 35%, rgba(15, 23, 42, 0.76) 100%),
+        linear-gradient(125deg, rgba(12, 12, 15, 0.95) 35%, rgba(18, 18, 22, 0.78) 100%),
         var(--bg-image, none);
       background-size: cover;
       background-position: center;
@@ -431,7 +441,7 @@
     .project-card:hover {
       border-color: var(--border-hover);
       transform: translateY(-2px);
-      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.65);
+      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.7);
     }
 
     .project-card:hover::before {
@@ -440,7 +450,7 @@
 
     .project-card.highlight-pulse {
       border-color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.35);
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.35);
     }
 
     .card-content {
@@ -501,20 +511,20 @@
 
     .badge-worked   { color: var(--st-worked);   background: rgba(16, 185, 129, 0.12); }
     .badge-untested { color: var(--st-untested); background: rgba(6, 182, 212, 0.12); }
-    .badge-progress { color: var(--st-progress); background: rgba(245, 158, 11, 0.12); }
+    .badge-progress { color: var(--st-progress); background: rgba(59, 130, 246, 0.14); }
     .badge-redesign { color: var(--st-redesign); background: rgba(249, 115, 22, 0.12); }
     .badge-failed   { color: var(--st-failed);   background: rgba(239, 68, 68, 0.12); }
     .badge-concept  { color: var(--st-concept);  background: rgba(168, 85, 247, 0.12); }
 
     .card-desc {
-      color: #cbd5e1;
+      color: #d4d4d8;
       font-size: 0.96rem;
       margin-bottom: 1.35rem;
     }
 
     /* Engineering Note Callout */
     .eng-note {
-      background: rgba(8, 12, 20, 0.65);
+      background: rgba(9, 9, 11, 0.65);
       border-left: 3px solid var(--accent);
       padding: 0.75rem 1rem;
       border-radius: 0 6px 6px 0;
@@ -527,109 +537,6 @@
     .eng-note.amber { border-left-color: var(--st-redesign); }
     .eng-note strong { color: var(--text); }
 
-    /* Collapsible Panels (State Machine & Photo Album) */
-    details.panel-details {
-      margin-bottom: 1.35rem;
-      background: rgba(5, 8, 15, 0.82);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    details.panel-details summary {
-      padding: 0.65rem 1rem;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.82rem;
-      color: var(--accent);
-      cursor: pointer;
-      user-select: none;
-      list-style: none;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      transition: background 0.15s ease;
-    }
-
-    details.panel-details summary:hover {
-      background: rgba(56, 189, 248, 0.06);
-    }
-
-    details.panel-details summary::-webkit-details-marker { display: none; }
-
-    details.panel-details summary::after {
-      content: "[ + Expand ]";
-      font-size: 0.75rem;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    details.panel-details[open] summary::after {
-      content: "[ − Collapse ]";
-    }
-
-    pre.fsm-diagram {
-      padding: 1rem 1.25rem;
-      border-top: 1px solid var(--border);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.76rem;
-      line-height: 1.45;
-      color: #cbd5e1;
-      overflow-x: auto;
-      white-space: pre;
-    }
-
-    /* Photo Album Grid */
-    .album-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 0.75rem;
-      padding: 1rem;
-      border-top: 1px solid var(--border);
-    }
-
-    .album-item {
-      position: relative;
-      aspect-ratio: 4 / 3;
-      border-radius: 6px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: #0b111e;
-      cursor: zoom-in;
-    }
-
-    .album-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.25s ease;
-    }
-
-    .album-item:hover img {
-      transform: scale(1.06);
-    }
-
-    .album-caption {
-      position: absolute;
-      inset: auto 0 0 0;
-      padding: 0.35rem 0.5rem;
-      background: linear-gradient(transparent, rgba(8, 12, 20, 0.92));
-      font-size: 0.72rem;
-      color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .album-empty {
-      padding: 1rem;
-      border-top: 1px solid var(--border);
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
     /* Spec Grid */
     .specs-grid {
       display: grid;
@@ -639,7 +546,7 @@
     }
 
     .spec-box {
-      background: rgba(8, 12, 20, 0.6);
+      background: rgba(9, 9, 11, 0.65);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 0.65rem 0.85rem;
@@ -662,51 +569,111 @@
       font-weight: 600;
     }
 
-    /* Card Bottom Row (Tags + Artifact Links) */
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-    }
-
-    .tag {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.76rem;
-      color: var(--muted);
-      background: rgba(30, 41, 59, 0.65);
+    /* Collapsible Panels (State Machine & Photo Album) */
+    details.panel-details {
+      margin-top: 0.75rem;
+      background: rgba(7, 7, 9, 0.88);
       border: 1px solid var(--border);
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
+      border-radius: 8px;
+      overflow: hidden;
     }
 
-    .artifact-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
+    details.panel-details:last-child {
+      margin-bottom: 0;
     }
 
-    .artifact-link {
+    details.panel-details summary {
+      padding: 0.65rem 1rem;
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.78rem;
+      font-size: 0.82rem;
       color: var(--accent);
-      text-decoration: none;
-      padding: 0.22rem 0.6rem;
-      border-radius: 4px;
-      background: rgba(56, 189, 248, 0.08);
-      border: 1px solid rgba(56, 189, 248, 0.25);
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
       transition: background 0.15s ease;
     }
 
-    .artifact-link:hover {
-      background: rgba(56, 189, 248, 0.18);
+    details.panel-details summary:hover {
+      background: rgba(245, 158, 11, 0.07);
+    }
+
+    details.panel-details summary::-webkit-details-marker { display: none; }
+
+    details.panel-details summary::after {
+      content: "[ + Expand ]";
+      font-size: 0.75rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    details.panel-details[open] summary::after {
+      content: "[ − Collapse ]";
+    }
+
+    pre.fsm-diagram {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.76rem;
+      line-height: 1.45;
+      color: #d4d4d8;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    /* Photo Album Grid */
+    .album-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0.75rem;
+      padding: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .album-item {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #0c0c0f;
+      cursor: zoom-in;
+    }
+
+    .album-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.25s ease;
+    }
+
+    .album-item:hover img {
+      transform: scale(1.06);
+    }
+
+    .album-caption {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 0.35rem 0.5rem;
+      background: linear-gradient(transparent, rgba(9, 9, 11, 0.94));
+      font-size: 0.72rem;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .album-empty {
+      padding: 1rem;
+      border-top: 1px solid var(--border);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
     }
 
     /* Concepts Grid */
@@ -723,7 +690,7 @@
       position: fixed;
       inset: 0;
       z-index: 999;
-      background: rgba(5, 8, 15, 0.94);
+      background: rgba(6, 6, 8, 0.95);
       backdrop-filter: blur(8px);
       display: flex;
       flex-direction: column;
@@ -739,7 +706,7 @@
       max-height: 78vh;
       border-radius: 8px;
       border: 1px solid var(--border-hover);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
     }
 
     .lightbox-caption {
@@ -759,7 +726,7 @@
     }
 
     .lb-btn {
-      background: rgba(30, 41, 59, 0.85);
+      background: rgba(24, 24, 29, 0.88);
       border: 1px solid var(--border);
       color: var(--text);
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -788,7 +755,7 @@
     /* Contact Panel & Footer */
     .contact-panel {
       margin-top: 4.5rem;
-      background: rgba(15, 23, 42, 0.75);
+      background: rgba(18, 18, 22, 0.82);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 1.75rem;
@@ -832,7 +799,7 @@
       </p>
       <div class="header-links">
         <a class="btn-link" href="https://github.com/Premierx" target="_blank" rel="noopener">GitHub ↗</a>
-        <!-- Replace # below with your Printables profile URL -->
+        <!-- Replace with your exact Printables profile URL -->
         <a class="btn-link" href="https://www.printables.com/" target="_blank" rel="noopener">Printables ↗</a>
         <a class="btn-link" href="#contact">Contact &amp; Links ↓</a>
       </div>
@@ -842,19 +809,35 @@
     <section class="capabilities-grid" aria-label="Core engineering capabilities">
       <div class="cap-card">
         <h2>01 // CAD &amp; Additive Mfg.</h2>
-        <p>Functional parts, custom enclosures, and high-CFM cooling ducts designed in <strong>Fusion 360</strong> (with <strong>Blender</strong> for mesh repair). Extensive experience printing GF/CF engineering polymers and freelance small-batch production.</p>
+        <ul class="cap-list">
+          <li><strong>Design &amp; Mesh</strong>Fusion 360 (parts, enclosures, ducts) &amp; Blender</li>
+          <li><strong>Materials</strong>GF/CF engineering polymers &amp; high-temp filaments</li>
+          <li><strong>Production</strong>Additive optimization &amp; freelance small-batch runs</li>
+        </ul>
       </div>
       <div class="cap-card">
         <h2>02 // Embedded &amp; Linux SBCs</h2>
-        <p>Rapid prototyping with <strong>STM32, ESP32, and Arduino</strong>. Interfacing closed-loop, analog, and digital sensors, displays, and CAN/USB telemetry, alongside <strong>Klipper</strong> and Raspberry Pi / Orange Pi systems.</p>
+        <ul class="cap-list">
+          <li><strong>Platforms</strong>STM32, ESP32, Arduino &amp; Raspberry / Orange Pi</li>
+          <li><strong>Interfacing</strong>Closed-loop, analog &amp; digital sensors, displays</li>
+          <li><strong>Firmware</strong>Klipper kinematics, CAN/USB &amp; state machines</li>
+        </ul>
       </div>
       <div class="cap-card">
         <h2>03 // PCBs &amp; Power Systems</h2>
-        <p>Designing and bringing up custom power distribution boards, PSUs, eFuse protection circuits, multi-sensor pressure regulation boards, and protoboard test rigs—actively expanding my PCB layout skillset.</p>
+        <ul class="cap-list">
+          <li><strong>Custom Boards</strong>Active pressure regulation &amp; eFuse protection PCBs</li>
+          <li><strong>Power &amp; Test</strong>Custom PSUs, distribution boards &amp; protoboard rigs</li>
+          <li><strong>Focus</strong>Sensor conditioning &amp; iterative board layout</li>
+        </ul>
       </div>
       <div class="cap-card">
         <h2>04 // Hands-On Fabrication</h2>
-        <p>Practical workshop and assembly skills including fine-pitch <strong>SMT soldering</strong>, welding, and woodworking, with upcoming builds branching into composite layups and manual lathe machining.</p>
+        <ul class="cap-list">
+          <li><strong>Electronics</strong>Fine-pitch SMT soldering &amp; harness assembly</li>
+          <li><strong>Workshop</strong>Welding &amp; woodworking</li>
+          <li><strong>Next Up</strong>Composite layups &amp; manual lathe machining</li>
+        </ul>
       </div>
     </section>
 
@@ -893,7 +876,7 @@
       <article id="proj-hexcore" class="project-card"
                data-status="progress redesign"
                data-title="Hexcore CoreXY"
-               data-segments="2024-05:2024-07:bar-progress:Frame &amp; Gantry | 2024-11:2025-1:bar-progress:Toolhead &amp; Print head | 2026-10:2026-11:bar-redesign:Toolhead &amp; Partial frame redesign"
+               data-segments="2025-09:2026-02:bar-progress:Frame &amp; Gantry | 2026-07:2026-11:bar-progress:Toolhead &amp; Enclosure"
                style="--bg-image: url('pictures/obrazek.png');">
         <div class="card-content">
           <div class="card-top">
@@ -918,7 +901,6 @@
             <div class="spec-box"><span>Z &amp; Probing</span><strong>Triple Z + BTT Microprobe</strong></div>
           </div>
 
-          <!-- PHOTO ALBUM: HEXCORE -->
           <details class="panel-details">
             <summary>Photo Album (Hexcore Build)</summary>
             <div class="album-grid">
@@ -928,19 +910,6 @@
               </figure>
             </div>
           </details>
-
-          <div class="card-footer">
-            <div class="tags">
-              <span class="tag">CoreXY</span>
-              <span class="tag">Klipper</span>
-              <span class="tag">Dual Meanwell PSU</span>
-              <span class="tag">Carbon Filtration</span>
-              <span class="tag">Nickel-Plated Copper</span>
-            </div>
-            <div class="artifact-links">
-              <a class="artifact-link" href="https://www.printables.com/" target="_blank" rel="noopener">Printables CAD ↗</a>
-            </div>
-          </div>
         </div>
       </article>
 
@@ -950,7 +919,7 @@
       <article id="proj-pressure" class="project-card"
                data-status="progress"
                data-title="Pressure Reg. PCB"
-               data-segments="2026-10:2026-11:bar-progress:In Progress"
+               data-segments="2026-06:2026-11:bar-progress:In Progress"
                style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
@@ -972,21 +941,10 @@
             <div class="spec-box"><span>Feedback</span><strong>1× Position Sensor</strong></div>
           </div>
 
-          <!-- PHOTO ALBUM: ACTIVE PRESSURE REGULATION BOARD -->
           <details class="panel-details">
             <summary>Photo Album (PCB Layout &amp; Bench)</summary>
             <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
           </details>
-
-          <div class="card-footer">
-            <div class="tags">
-              <span class="tag">CTU Space Research</span>
-              <span class="tag">PCB Design</span>
-              <span class="tag">CAN Bus</span>
-              <span class="tag">USB</span>
-              <span class="tag">Sensor Fusion</span>
-            </div>
-          </div>
         </div>
       </article>
 
@@ -996,7 +954,7 @@
       <article id="proj-esp32-daq" class="project-card"
                data-status="worked redesign"
                data-title="ESP32 N₂O Logger"
-               data-segments="2026-04:2026-06:bar-worked:v1 Tested | 2026-11:2026-11:bar-redesign:v2 Filter Redesign"
+               data-segments="2026-01:2026-04:bar-worked:v1 Tested | 2026-08:2026-11:bar-redesign:v2 Filter Redesign"
                style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
@@ -1022,21 +980,10 @@
             <div class="spec-box"><span>Application</span><strong>N₂O Decompression Testing</strong></div>
           </div>
 
-          <!-- PHOTO ALBUM: ESP32 LOGGER -->
           <details class="panel-details">
             <summary>Photo Album (DAQ Hardware &amp; Test Setup)</summary>
             <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
           </details>
-
-          <div class="card-footer">
-            <div class="tags">
-              <span class="tag">CTU Space Research</span>
-              <span class="tag">ESP32</span>
-              <span class="tag">DAQ</span>
-              <span class="tag">Signal Filtering</span>
-              <span class="tag">N₂O Propulsion</span>
-            </div>
-          </div>
         </div>
       </article>
 
@@ -1071,23 +1018,10 @@
             <div class="spec-box"><span>Host / MCU</span><strong>Orange Pi Zero 2W (Klipper)</strong></div>
           </div>
 
-          <!-- PHOTO ALBUM: SUNLU T3 -->
           <details class="panel-details">
             <summary>Photo Album (Sunlu T3 Mods)</summary>
             <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
           </details>
-
-          <div class="card-footer">
-            <div class="tags">
-              <span class="tag">Klipper</span>
-              <span class="tag">Custom Chassis</span>
-              <span class="tag">Z-Braces</span>
-              <span class="tag">High-CFM Cooling</span>
-            </div>
-            <div class="artifact-links">
-              <a class="artifact-link" href="https://www.printables.com/" target="_blank" rel="noopener">Printables Mods ↗</a>
-            </div>
-          </div>
         </div>
       </article>
 
@@ -1096,8 +1030,8 @@
            =================================================================== -->
       <article id="proj-fpv" class="project-card"
                data-status="untested"
-               data-title="5&quot; FPV Drone"
-               data-segments="2025-05:2025-07:bar-untested:Bench Verified"
+               data-title="5&quot; FPV Quadcopter"
+               data-segments="2025-03:2025-07:bar-untested:Bench Verified"
                style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
@@ -1122,29 +1056,10 @@
             <div class="spec-box"><span>Navigation</span><strong>Onboard GPS Telemetry</strong></div>
           </div>
 
-          <!-- PHOTO ALBUM: FPV DRONE -->
           <details class="panel-details">
-            <summary>Photo Album (FPV Drone)</summary>
-            <div class="album-grid">
-              <figure class="album-item">
-                <img src="pictures/drone/drone1.jpeg" alt="Top view" loading="lazy">
-                <figcaption class="album-caption">Top view</figcaption>
-              </figure>
-              <figure class="album-item">
-                <img src="pictures/drone/drone2.jpeg" alt="Side view" loading="lazy">
-                <figcaption class="album-caption">Side view</figcaption>
-              </figure>
-            </div>
+            <summary>Photo Album (5" Quad Build)</summary>
+            <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
           </details>
-
-          <div class="card-footer">
-            <div class="tags">
-              <span class="tag">FPV</span>
-              <span class="tag">UAV</span>
-              <span class="tag">4S LiPo</span>
-              <span class="tag">GPS</span>
-            </div>
-          </div>
         </div>
       </article>
 
@@ -1154,7 +1069,7 @@
       <article id="proj-euroc" class="project-card"
                data-status="failed"
                data-title="EuRoC METRO Payload"
-               data-segments="2026-09:2026-10:bar-failed:EuRoC"
+               data-segments="2025-02:2025-10:bar-failed:EuRoC Campaign"
                style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
@@ -1210,7 +1125,6 @@
       └───────────────┘</pre>
           </details>
 
-          <!-- PHOTO ALBUM: EUROC PAYLOAD -->
           <details class="panel-details">
             <summary>Photo Album (EuRoC Payload Integration)</summary>
             <div class="album-grid">
@@ -1233,24 +1147,14 @@
             </div>
           </details>
 
-          <div class="eng-note warn">
+          <div class="eng-note warn" style="margin-top: 1.25rem; margin-bottom: 1.25rem;">
             <strong>Post-Mortem &amp; Root Cause:</strong> Payload failed due to a hardware sensor failure that could not be repaired in time prior to launch, compounded by fluid leakage from the mechanical algae containment subsystem. Highlighted the importance of modular, easily replaceable sensor daughterboards and early integrated leak testing.
           </div>
-          <div class="specs-grid">
+          <div class="specs-grid" style="margin-bottom: 0;">
             <div class="spec-box"><span>Competition</span><strong>EuRoC (CTU Space Research)</strong></div>
             <div class="spec-box"><span>Sample Rate</span><strong>50 Hz CSV Telemetry</strong></div>
             <div class="spec-box"><span>Triggers</span><strong>3g Launch / &lt;0.5g Zero-G</strong></div>
             <div class="spec-box"><span>Sim Guardrails</span><strong>10s &amp; 25s Forced Timeouts</strong></div>
-          </div>
-
-          <div class="card-footer">
-            <div class="tags">
-              <span class="tag">EuRoC</span>
-              <span class="tag">CTU Space Research</span>
-              <span class="tag">Embedded C++</span>
-              <span class="tag">State Machine</span>
-              <span class="tag">Rocket Payload</span>
-            </div>
           </div>
         </div>
       </article>
@@ -1261,7 +1165,7 @@
       <article id="proj-efuse" class="project-card"
                data-status="failed"
                data-title="CTU eFuse Power PCB"
-               data-segments="2026-04:2026-05:bar-worked:Prototype &amp; Test | 2026-10:2026-11:bar-failed:Installed &amp; Failed"
+               data-segments="2025-04:2025-07:bar-failed:Prototype &amp; Test"
                style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
@@ -1286,33 +1190,10 @@
             <div class="spec-box"><span>Disposition</span><strong>Retired (No Rev 2)</strong></div>
           </div>
 
-          <!-- PHOTO ALBUM: EFUSE PCB -->
           <details class="panel-details">
-            <summary>Photo Album (Umbilical Battery Board)</summary>
-            <div class="album-grid">
-              <figure class="album-item">
-                <img src="pictures/UBB/UBB_front.png" alt="UBB board-front" loading="lazy">
-                <figcaption class="album-caption">UBB board-front</figcaption>
-              </figure>
-              <figure class="album-item">
-                <img src="pictures/UBB/UBB_back.png" alt="UBB board-back" loading="lazy">
-                <figcaption class="album-caption">UBB board-back</figcaption>
-              </figure>
-              <figure class="album-item">
-                <img src="pictures/UAB/UAB.png" alt="UAB sister board" loading="lazy">
-                <figcaption class="album-caption">UAB sister board</figcaption>
-              </figure>
-            </div>
+            <summary>Photo Album (Power / eFuse PCB)</summary>
+            <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
           </details>
-
-          <div class="card-footer">
-            <div class="tags">
-              <span class="tag">CTU Space</span>
-              <span class="tag">Power Electronics</span>
-              <span class="tag">eFuse</span>
-              <span class="tag">Failure Analysis</span>
-            </div>
-          </div>
         </div>
       </article>
 
@@ -1344,21 +1225,10 @@
             Compact 65cm wingspan tailless UAV currently in early aerodynamic trade studies (airfoil selection). Planned architecture pairs a custom <strong>STM32F401RET6</strong> flight computer with a COTS ESC, exploring composite airframe construction and evaluating pusher-prop vs. EDF propulsion.
           </p>
 
-          <!-- PHOTO ALBUM: X65 AETHER -->
           <details class="panel-details">
             <summary>Photo Album (CAD / Airfoil Studies)</summary>
             <div class="album-empty">No renders uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
           </details>
-
-          <div class="card-footer">
-            <div class="tags">
-              <span class="tag">STM32F401RET6</span>
-              <span class="tag">65cm Span</span>
-              <span class="tag">Aerodynamics</span>
-              <span class="tag">Composites</span>
-              <span class="tag">Prop vs. EDF</span>
-            </div>
-          </div>
         </div>
       </article>
 
@@ -1384,19 +1254,10 @@
             Long-term exploratory concept investigating small-scale liquid rocket motor thermodynamics, injector geometry, and propellant feed architectures. Currently in early theoretical consideration.
           </p>
 
-          <!-- PHOTO ALBUM: LIQUID ROCKET -->
           <details class="panel-details">
             <summary>Photo Album (Sketches / Schematics)</summary>
             <div class="album-empty">No images uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
           </details>
-
-          <div class="card-footer">
-            <div class="tags">
-              <span class="tag">Propulsion</span>
-              <span class="tag">Thermodynamics</span>
-              <span class="tag">Early R&amp;D</span>
-            </div>
-          </div>
         </div>
       </article>
 
