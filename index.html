@@ -6,7 +6,7 @@
   <title>Natanael Čandík — Hardware, Avionics &amp; Embedded Systems</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500;600;700;800&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
       /* =====================================================================
@@ -16,23 +16,24 @@
          ===================================================================== */
       --page-bg-image: none;
 
-      /* Avionics Telemetry & Carbon Palette */
-      --bg: #09090b;
-      --surface: rgba(18, 18, 22, 0.88);
-      --surface-solid: #121216;
-      --border: rgba(244, 244, 245, 0.11);
-      --border-hover: rgba(245, 158, 11, 0.5);
-      --text: #fafafa;
-      --muted: #a1a1aa;
-      --accent: #8c0e3a;
+      /* Matte Carbon + Pastel Earthy Palette */
+      --bg: #0b0b0c;
+      --surface: rgba(20, 20, 22, 0.88);
+      --surface-solid: #141416;
+      --border: rgba(231, 229, 228, 0.11);
+      --border-hover: rgba(163, 184, 153, 0.45);
+      --text: #f5f5f4;
+      --muted: #a8a29e;
+      --accent: #a3b899;         /* Pastel Sage */
+      --accent-warm: #d4a373;    /* Soft Sand / Clay */
 
-      /* Status Colors */
-      --st-worked: #10b981;
-      --st-untested: #06b6d4;
-      --st-progress: #3b82f6;
-      --st-redesign: #f97316;
-      --st-failed: #ef4444;
-      --st-concept: #a855f7;
+      /* Pastel Earthy Status Colors */
+      --st-worked: #84a98c;      /* Sage Moss */
+      --st-untested: #7fb3a6;    /* Lichen Teal */
+      --st-progress: #7f9eb2;    /* Dusty Slate */
+      --st-redesign: #d49a79;    /* Terracotta Clay */
+      --st-failed: #c97b74;      /* Muted Rust */
+      --st-concept: #a899b5;     /* Heather Stone */
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,29 +41,37 @@
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Orbitron', 'Chakra Petch', sans-serif;
+      font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.65;
-      letter-spacing: 0.02em;
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
     }
 
-    button,
-    input {
-      font-family: 'Orbitron', 'Chakra Petch', sans-serif;
+    /* Engineered Display Font (Full Czech Diacritic Support) */
+    h1,
+    .eyebrow,
+    .cap-card h2,
+    .timeline-header h2,
+    .section-title,
+    .card-top h3,
+    .badge,
+    .filter-btn,
+    .contact-panel h2,
+    button {
+      font-family: 'Oxanium', 'Ubuntu', sans-serif;
     }
 
-    /* Full-Page Background Image + Subtle Amber Grid */
+    /* Full-Page Background Image + Subtle Earthy Sage Grid */
     body::before {
       content: "";
       position: fixed;
       inset: 0;
       z-index: -2;
       background-image:
-        linear-gradient(to bottom, rgba(9, 9, 11, 0.84), rgba(9, 9, 11, 0.97)),
+        linear-gradient(to bottom, rgba(11, 11, 12, 0.85), rgba(11, 11, 12, 0.97)),
         var(--page-bg-image);
       background-size: cover;
       background-position: center;
@@ -75,8 +84,8 @@
       inset: 0;
       z-index: -1;
       background-image:
-        linear-gradient(rgba(245, 158, 11, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(245, 158, 11, 0.035) 1px, transparent 1px);
+        linear-gradient(rgba(163, 184, 153, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(163, 184, 153, 0.035) 1px, transparent 1px);
       background-size: 36px 36px;
       pointer-events: none;
     }
@@ -95,29 +104,30 @@
     }
 
     .eyebrow {
-      font-size: 0.76rem;
+      font-size: 0.82rem;
+      font-weight: 600;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.6rem;
+      color: var(--accent-warm);
+      margin-bottom: 0.5rem;
     }
 
     h1 {
-      font-size: clamp(2rem, 4.8vw, 3rem);
+      font-size: clamp(2.3rem, 5vw, 3.25rem);
       font-weight: 800;
-      letter-spacing: 0.03em;
-      line-height: 1.15;
+      letter-spacing: 0.01em;
+      line-height: 1.12;
       margin-bottom: 0.85rem;
-      background: linear-gradient(135deg, #ffffff 30%, #a1a1aa 100%);
+      background: linear-gradient(135deg, #f5f5f4 35%, #d6d3d1 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .tagline {
       color: var(--muted);
-      font-size: 0.94rem;
-      line-height: 1.75;
-      max-width: 760px;
+      font-size: 1.02rem;
+      line-height: 1.7;
+      max-width: 740px;
       margin-bottom: 1.5rem;
     }
 
@@ -133,11 +143,11 @@
       gap: 0.45rem;
       padding: 0.5rem 0.95rem;
       border-radius: 6px;
-      background: rgba(24, 24, 29, 0.8);
+      background: rgba(28, 27, 29, 0.85);
       border: 1px solid var(--border);
       color: var(--text);
       text-decoration: none;
-      font-size: 0.8rem;
+      font-size: 0.88rem;
       font-weight: 500;
       transition: all 0.2s ease;
     }
@@ -157,7 +167,7 @@
     }
 
     .cap-card {
-      background: rgba(18, 18, 22, 0.82);
+      background: rgba(20, 20, 22, 0.84);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 1.15rem 1.25rem;
@@ -166,7 +176,8 @@
     }
 
     .cap-card h2 {
-      font-size: 0.74rem;
+      font-size: 0.82rem;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--accent);
@@ -178,23 +189,24 @@
       display: flex;
       flex-direction: column;
       gap: 0.55rem;
-      font-size: 0.76rem;
-      color: #d4d4d8;
-      line-height: 1.6;
+      font-size: 0.85rem;
+      color: #d6d3d1;
+      line-height: 1.5;
     }
 
     .cap-list li strong {
-      color: var(--text);
-      font-size: 0.7rem;
+      color: var(--accent-warm);
+      font-family: 'Oxanium', sans-serif;
+      font-size: 0.74rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       display: block;
-      margin-bottom: 0.1rem;
+      margin-bottom: 0.05rem;
     }
 
     /* 2. Multi-Segment Interactive Project Timeline */
     .timeline-box {
-      background: rgba(18, 18, 22, 0.82);
+      background: rgba(20, 20, 22, 0.84);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 1.35rem 1.5rem;
@@ -211,9 +223,10 @@
     }
 
     .timeline-header h2 {
-      font-size: 0.82rem;
+      font-size: 0.88rem;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.09em;
       color: var(--text);
     }
 
@@ -221,7 +234,7 @@
       display: flex;
       align-items: center;
       gap: 1rem;
-      font-size: 0.7rem;
+      font-size: 0.76rem;
       color: var(--muted);
     }
 
@@ -235,7 +248,7 @@
       content: "";
       display: inline-block;
       width: 18px;
-      border-top: 2px dashed rgba(161, 161, 170, 0.5);
+      border-top: 2px dashed rgba(168, 162, 158, 0.5);
     }
 
     .gantt-wrapper {
@@ -243,12 +256,12 @@
       padding-bottom: 0.25rem;
     }
 
-    /* Custom Dark Scrollbars (Page, Timeline & Code Blocks) */
+    /* Custom Dark Sage Scrollbars */
     html,
     .gantt-wrapper,
     pre.fsm-diagram {
       scrollbar-width: thin;
-      scrollbar-color: rgba(245, 158, 11, 0.4) rgba(9, 9, 11, 0.9);
+      scrollbar-color: rgba(163, 184, 153, 0.4) rgba(11, 11, 12, 0.9);
     }
 
     html::-webkit-scrollbar,
@@ -261,32 +274,33 @@
     html::-webkit-scrollbar-track,
     .gantt-wrapper::-webkit-scrollbar-track,
     pre.fsm-diagram::-webkit-scrollbar-track {
-      background: rgba(9, 9, 11, 0.9);
+      background: rgba(11, 11, 12, 0.9);
       border-radius: 999px;
     }
 
     html::-webkit-scrollbar-thumb,
     .gantt-wrapper::-webkit-scrollbar-thumb,
     pre.fsm-diagram::-webkit-scrollbar-thumb {
-      background: rgba(245, 158, 11, 0.4);
+      background: rgba(163, 184, 153, 0.4);
       border-radius: 999px;
     }
 
     html::-webkit-scrollbar-thumb:hover,
     .gantt-wrapper::-webkit-scrollbar-thumb:hover,
     pre.fsm-diagram::-webkit-scrollbar-thumb:hover {
-      background: rgba(245, 158, 11, 0.7);
+      background: rgba(163, 184, 153, 0.7);
     }
 
     .gantt-chart {
-      min-width: 670px;
+      min-width: 650px;
     }
 
     .gantt-axis {
       display: grid;
-      grid-template-columns: 225px 1fr;
+      grid-template-columns: 210px 1fr;
       margin-bottom: 0.5rem;
-      font-size: 0.68rem;
+      font-family: 'Oxanium', sans-serif;
+      font-size: 0.74rem;
       color: var(--muted);
     }
 
@@ -299,23 +313,23 @@
 
     .gantt-row {
       display: grid;
-      grid-template-columns: 225px 1fr;
+      grid-template-columns: 210px 1fr;
       align-items: center;
       padding: 0.44rem 0;
-      border-bottom: 1px solid rgba(244, 244, 245, 0.06);
+      border-bottom: 1px solid rgba(231, 229, 228, 0.06);
       cursor: pointer;
       border-radius: 4px;
       transition: background 0.15s ease;
     }
 
     .gantt-row:hover {
-      background: rgba(245, 158, 11, 0.07);
+      background: rgba(163, 184, 153, 0.08);
     }
 
     .gantt-label {
-      font-size: 0.74rem;
+      font-size: 0.84rem;
       font-weight: 500;
-      color: #e4e4e7;
+      color: #e7e5e4;
       padding-right: 0.75rem;
       white-space: nowrap;
       overflow: hidden;
@@ -325,7 +339,7 @@
     .gantt-track {
       position: relative;
       height: 20px;
-      background: rgba(9, 9, 11, 0.65);
+      background: rgba(11, 11, 12, 0.7);
       border-radius: 4px;
     }
 
@@ -333,7 +347,7 @@
       position: absolute;
       top: 50%;
       height: 0;
-      border-top: 2px dashed rgba(161, 161, 170, 0.38);
+      border-top: 2px dashed rgba(168, 162, 158, 0.38);
       transform: translateY(-50%);
       pointer-events: none;
     }
@@ -346,10 +360,10 @@
       display: block;
       line-height: 16px;
       padding: 0 0.45rem;
-      font-size: 0.58rem;
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 0.68rem;
       font-weight: 700;
-      letter-spacing: 0.01em;
-      color: #09090b;
+      color: #141416;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -357,15 +371,15 @@
     }
 
     .gantt-row:hover .gantt-bar {
-      filter: brightness(1.15);
+      filter: brightness(1.1);
     }
 
     .bar-worked   { background: var(--st-worked); }
     .bar-untested { background: var(--st-untested); }
-    .bar-progress { background: var(--st-progress); color: #fff; }
+    .bar-progress { background: var(--st-progress); }
     .bar-redesign { background: var(--st-redesign); }
-    .bar-failed   { background: var(--st-failed); color: #fff; }
-    .bar-concept  { background: var(--st-concept); color: #fff; }
+    .bar-failed   { background: var(--st-failed); }
+    .bar-concept  { background: var(--st-concept); }
 
     /* Filter Bar */
     .filter-bar {
@@ -376,12 +390,14 @@
     }
 
     .filter-btn {
-      background: rgba(18, 18, 22, 0.82);
+      background: rgba(20, 20, 22, 0.84);
       border: 1px solid var(--border);
       color: var(--muted);
-      padding: 0.42rem 0.85rem;
+      padding: 0.4rem 0.9rem;
       border-radius: 999px;
-      font-size: 0.72rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
       cursor: pointer;
       transition: all 0.2s ease;
     }
@@ -389,12 +405,13 @@
     .filter-btn:hover, .filter-btn.active {
       color: var(--text);
       border-color: var(--accent);
-      background: rgba(245, 158, 11, 0.14);
+      background: rgba(163, 184, 153, 0.14);
     }
 
     /* Section Titles */
     .section-title {
-      font-size: 0.8rem;
+      font-size: 0.86rem;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.12em;
       color: var(--muted);
@@ -434,7 +451,7 @@
       inset: 0;
       z-index: 0;
       background-image:
-        linear-gradient(125deg, rgba(12, 12, 15, 0.95) 35%, rgba(18, 18, 22, 0.78) 100%),
+        linear-gradient(125deg, rgba(14, 14, 16, 0.95) 35%, rgba(20, 20, 22, 0.8) 100%),
         var(--bg-image, none);
       background-size: cover;
       background-position: center;
@@ -453,7 +470,7 @@
 
     .project-card.highlight-pulse {
       border-color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.35);
+      box-shadow: 0 0 0 2px rgba(163, 184, 153, 0.35);
     }
 
     .card-content {
@@ -480,16 +497,16 @@
     }
 
     .card-top h3 {
-      font-size: 1.2rem;
+      font-size: 1.32rem;
       font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 0.02em;
+      color: var(--text);
+      letter-spacing: 0.01em;
     }
 
     .card-subtitle {
-      font-size: 0.78rem;
-      color: var(--accent);
-      margin-top: 0.25rem;
+      font-size: 0.86rem;
+      color: var(--accent-warm);
+      margin-top: 0.2rem;
     }
 
     .badge-group {
@@ -498,40 +515,40 @@
       flex-wrap: wrap;
     }
 
-    /* Color-Coded Status Badges */
+    /* Pastel Earthy Status Badges */
     .badge {
-      font-size: 0.66rem;
+      font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      padding: 0.32rem 0.7rem;
+      padding: 0.28rem 0.7rem;
       border-radius: 6px;
       border: 1px solid currentColor;
       white-space: nowrap;
     }
 
-    .badge-worked   { color: var(--st-worked);   background: rgba(16, 185, 129, 0.12); }
-    .badge-untested { color: var(--st-untested); background: rgba(6, 182, 212, 0.12); }
-    .badge-progress { color: var(--st-progress); background: rgba(59, 130, 246, 0.14); }
-    .badge-redesign { color: var(--st-redesign); background: rgba(249, 115, 22, 0.12); }
-    .badge-failed   { color: var(--st-failed);   background: rgba(239, 68, 68, 0.12); }
-    .badge-concept  { color: var(--st-concept);  background: rgba(168, 85, 247, 0.12); }
+    .badge-worked   { color: var(--st-worked);   background: rgba(132, 169, 140, 0.13); }
+    .badge-untested { color: var(--st-untested); background: rgba(127, 179, 166, 0.13); }
+    .badge-progress { color: var(--st-progress); background: rgba(127, 158, 178, 0.14); }
+    .badge-redesign { color: var(--st-redesign); background: rgba(212, 154, 121, 0.14); }
+    .badge-failed   { color: var(--st-failed);   background: rgba(201, 123, 116, 0.14); }
+    .badge-concept  { color: var(--st-concept);  background: rgba(168, 153, 181, 0.14); }
 
     .card-desc {
-      color: #d4d4d8;
-      font-size: 0.86rem;
-      line-height: 1.75;
+      color: #d6d3d1;
+      font-size: 0.96rem;
+      line-height: 1.65;
       margin-bottom: 1.35rem;
     }
 
     /* Engineering Note Callout */
     .eng-note {
-      background: rgba(9, 9, 11, 0.65);
+      background: rgba(11, 11, 12, 0.68);
       border-left: 3px solid var(--accent);
       padding: 0.8rem 1rem;
       border-radius: 0 6px 6px 0;
-      font-size: 0.8rem;
-      line-height: 1.7;
+      font-size: 0.89rem;
+      line-height: 1.6;
       color: var(--muted);
       margin-bottom: 1.35rem;
     }
@@ -549,33 +566,34 @@
     }
 
     .spec-box {
-      background: rgba(9, 9, 11, 0.65);
+      background: rgba(11, 11, 12, 0.68);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 0.7rem 0.85rem;
+      padding: 0.68rem 0.85rem;
       min-width: 0;
       overflow-wrap: break-word;
     }
 
     .spec-box span {
       display: block;
-      font-size: 0.64rem;
+      font-family: 'Oxanium', sans-serif;
+      font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: var(--muted);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.2rem;
     }
 
     .spec-box strong {
-      font-size: 0.8rem;
+      font-size: 0.88rem;
       color: var(--text);
-      font-weight: 600;
+      font-weight: 500;
     }
 
     /* Collapsible Panels (State Machine & Photo Album) */
     details.panel-details {
       margin-top: 0.75rem;
-      background: rgba(7, 7, 9, 0.88);
+      background: rgba(9, 9, 10, 0.88);
       border: 1px solid var(--border);
       border-radius: 8px;
       overflow: hidden;
@@ -587,7 +605,9 @@
 
     details.panel-details summary {
       padding: 0.68rem 1rem;
-      font-size: 0.76rem;
+      font-family: 'Oxanium', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
       color: var(--accent);
       cursor: pointer;
       user-select: none;
@@ -600,14 +620,14 @@
     }
 
     details.panel-details summary:hover {
-      background: rgba(245, 158, 11, 0.07);
+      background: rgba(163, 184, 153, 0.08);
     }
 
     details.panel-details summary::-webkit-details-marker { display: none; }
 
     details.panel-details summary::after {
       content: "[ + Expand ]";
-      font-size: 0.68rem;
+      font-size: 0.74rem;
       color: var(--muted);
       white-space: nowrap;
     }
@@ -616,15 +636,13 @@
       content: "[ − Collapse ]";
     }
 
-    /* Keep ASCII state machine diagram in true fixed-width monospace so box lines align */
     pre.fsm-diagram {
       padding: 1rem 1.25rem;
       border-top: 1px solid var(--border);
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       font-size: 0.76rem;
       line-height: 1.45;
-      letter-spacing: 0;
-      color: #d4d4d8;
+      color: #d6d3d1;
       overflow-x: auto;
       white-space: pre;
     }
@@ -644,7 +662,7 @@
       border-radius: 6px;
       overflow: hidden;
       border: 1px solid var(--border);
-      background: #0c0c0f;
+      background: #141416;
       cursor: zoom-in;
     }
 
@@ -664,8 +682,8 @@
       position: absolute;
       inset: auto 0 0 0;
       padding: 0.35rem 0.5rem;
-      background: linear-gradient(transparent, rgba(9, 9, 11, 0.94));
-      font-size: 0.66rem;
+      background: linear-gradient(transparent, rgba(11, 11, 12, 0.94));
+      font-size: 0.72rem;
       color: var(--text);
       white-space: nowrap;
       overflow: hidden;
@@ -675,7 +693,7 @@
     .album-empty {
       padding: 1rem;
       border-top: 1px solid var(--border);
-      font-size: 0.72rem;
+      font-size: 0.8rem;
       color: var(--muted);
     }
 
@@ -693,7 +711,7 @@
       position: fixed;
       inset: 0;
       z-index: 999;
-      background: rgba(6, 6, 8, 0.95);
+      background: rgba(8, 8, 9, 0.95);
       backdrop-filter: blur(8px);
       display: flex;
       flex-direction: column;
@@ -714,7 +732,7 @@
 
     .lightbox-caption {
       margin-top: 0.85rem;
-      font-size: 0.8rem;
+      font-size: 0.88rem;
       color: var(--text);
       text-align: center;
     }
@@ -728,10 +746,10 @@
     }
 
     .lb-btn {
-      background: rgba(24, 24, 29, 0.88);
+      background: rgba(28, 27, 29, 0.88);
       border: 1px solid var(--border);
       color: var(--text);
-      font-size: 0.78rem;
+      font-size: 0.84rem;
       padding: 0.45rem 0.85rem;
       border-radius: 6px;
       cursor: pointer;
@@ -756,7 +774,7 @@
     /* Contact Panel & Footer */
     .contact-panel {
       margin-top: 4.5rem;
-      background: rgba(18, 18, 22, 0.82);
+      background: rgba(20, 20, 22, 0.84);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 1.75rem;
@@ -768,12 +786,12 @@
     }
 
     .contact-panel h2 {
-      font-size: 1.05rem;
-      margin-bottom: 0.35rem;
+      font-size: 1.15rem;
+      margin-bottom: 0.25rem;
     }
 
     .contact-panel p {
-      font-size: 0.82rem;
+      font-size: 0.9rem;
       color: var(--muted);
     }
 
@@ -786,7 +804,7 @@
       flex-wrap: wrap;
       gap: 1rem;
       color: var(--muted);
-      font-size: 0.75rem;
+      font-size: 0.84rem;
     }
   </style>
 </head>
