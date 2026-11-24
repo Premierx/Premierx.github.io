@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500;600;700;800&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-
       --page-bg-image: url('pictures/background.jpeg');
 
       /* Matte Carbon + Pastel Earthy Palette */
@@ -25,6 +24,7 @@
 
       /* Pastel Earthy Status Colors */
       --st-worked: #84a98c;      /* Sage Moss */
+      --st-partial: #d4b475;     /* Warm Ochre / Brass */
       --st-untested: #7fb3a6;    /* Lichen Teal */
       --st-progress: #7f9eb2;    /* Dusty Slate */
       --st-redesign: #d49a79;    /* Terracotta Clay */
@@ -63,7 +63,7 @@
       font-family: 'Oxanium', 'Ubuntu', sans-serif;
     }
 
-/* Full-Page Background Image + Warm Amber Glow + Subtle Sage Grid */
+    /* Full-Page Background Image + Warm Amber Glow + Subtle Sage Grid */
     body::before {
       content: "";
       position: fixed;
@@ -98,8 +98,8 @@
 
     /* Header */
     header {
-      margin-bottom: 2.25rem;
-      padding-bottom: 1.85rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.75rem;
       border-bottom: 1px solid var(--border);
     }
 
@@ -158,9 +158,57 @@
       transform: translateY(-1px);
     }
 
-    /* Featured Project Jumpers */
+    /* 1. Core Capabilities Strip (Directly Under Header) */
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.25rem;
+      scroll-margin-top: 1.5rem;
+    }
+
+    .cap-card {
+      background: rgba(20, 20, 22, 0.84);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.05rem 1.2rem;
+      min-width: 0;
+      overflow-wrap: break-word;
+    }
+
+    .cap-card h2 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 0.65rem;
+    }
+
+    .cap-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.84rem;
+      color: #d6d3d1;
+      line-height: 1.48;
+    }
+
+    .cap-list li strong {
+      color: var(--accent-warm);
+      font-family: 'Oxanium', sans-serif;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-bottom: 0.04rem;
+    }
+
+    /* 2. Featured Project Jumpers */
     .featured-section {
       margin-bottom: 2.5rem;
+      scroll-margin-top: 1.5rem;
     }
 
     .featured-header {
@@ -258,53 +306,7 @@
       color: var(--accent);
     }
 
-    /* 1. Core Capabilities Strip */
-    .capabilities-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .cap-card {
-      background: rgba(20, 20, 22, 0.84);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.15rem 1.25rem;
-      min-width: 0;
-      overflow-wrap: break-word;
-    }
-
-    .cap-card h2 {
-      font-size: 0.82rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      margin-bottom: 0.7rem;
-    }
-
-    .cap-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
-      font-size: 0.85rem;
-      color: #d6d3d1;
-      line-height: 1.5;
-    }
-
-    .cap-list li strong {
-      color: var(--accent-warm);
-      font-family: 'Oxanium', sans-serif;
-      font-size: 0.74rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      display: block;
-      margin-bottom: 0.05rem;
-    }
-
-    /* Development Status Tracker (Inside Featured Project Cards) */
+    /* Development Status Tracker (Inside Unfinished Project Cards) */
     .dev-tracker {
       background: rgba(11, 11, 12, 0.74);
       border: 1px solid var(--border);
@@ -383,6 +385,11 @@
     .tracker-step.active.rework .tracker-bar {
       background: var(--st-redesign);
       box-shadow: 0 0 8px rgba(212, 154, 121, 0.55);
+    }
+
+    .tracker-step.active.ready .tracker-bar {
+      background: var(--st-untested);
+      box-shadow: 0 0 8px rgba(127, 179, 166, 0.55);
     }
 
     .tracker-now {
@@ -550,6 +557,7 @@
     }
 
     .badge-worked   { color: var(--st-worked);   background: rgba(132, 169, 140, 0.13); }
+    .badge-partial  { color: var(--st-partial);  background: rgba(212, 180, 117, 0.14); }
     .badge-untested { color: var(--st-untested); background: rgba(127, 179, 166, 0.13); }
     .badge-progress { color: var(--st-progress); background: rgba(127, 158, 178, 0.14); }
     .badge-redesign { color: var(--st-redesign); background: rgba(212, 154, 121, 0.14); }
@@ -577,6 +585,7 @@
 
     .eng-note.warn { border-left-color: var(--st-failed); }
     .eng-note.amber { border-left-color: var(--st-redesign); }
+    .eng-note.partial { border-left-color: var(--st-partial); }
     .eng-note strong { color: var(--text); }
 
     /* Spec Grid */
@@ -733,6 +742,7 @@
       border-radius: 12px;
       padding: 1.35rem 1.5rem;
       margin-top: 3rem;
+      scroll-margin-top: 1.5rem;
     }
 
     .timeline-header {
@@ -905,6 +915,7 @@
     }
 
     .bar-worked   { background: var(--st-worked); }
+    .bar-partial  { background: var(--st-partial); }
     .bar-untested { background: var(--st-untested); }
     .bar-progress { background: var(--st-progress); }
     .bar-redesign { background: var(--st-redesign); }
@@ -1025,13 +1036,50 @@
         Cybernetics and Robotics student at CTU FEE. Member of Avionics and PR subsections of CTU Space Research. 3D modelling and 3D printer design.
       </p>
       <div class="header-links">
+        <a class="btn-link" href="#capabilities">Skills ↓</a>
         <a class="btn-link" href="#featured">Featured Builds ↓</a>
         <a class="btn-link" href="#timeline">Build Timeline ↓</a>
         <a class="btn-link" href="#contact">Contact ↓</a>
       </div>
     </header>
 
-    <!-- FEATURED PROJECT JUMPERS (TOP) -->
+    <!-- 1. CORE CAPABILITIES STRIP -->
+    <section id="capabilities" class="capabilities-grid" aria-label="Core engineering capabilities">
+      <div class="cap-card">
+        <h2>01 // CAD &amp; Additive Mfg.</h2>
+        <ul class="cap-list">
+          <li><strong>Design &amp; Mesh</strong>Fusion 360 (parts, enclosures, ducts) &amp; Blender</li>
+          <li><strong>Materials</strong>GF/CF engineering polymers &amp; high-temp filaments</li>
+          <li><strong>Production</strong>Additive optimization &amp; freelance small-batch runs</li>
+        </ul>
+      </div>
+      <div class="cap-card">
+        <h2>02 // Embedded &amp; Linux SBCs</h2>
+        <ul class="cap-list">
+          <li><strong>Platforms</strong>STM32, ESP32, Arduino &amp; Raspberry / Orange Pi</li>
+          <li><strong>Interfacing</strong>Closed-loop, analog &amp; digital sensors, displays</li>
+          <li><strong>Firmware</strong>Klipper kinematics, CAN/USB &amp; state machines</li>
+        </ul>
+      </div>
+      <div class="cap-card">
+        <h2>03 // PCBs &amp; Power Systems</h2>
+        <ul class="cap-list">
+          <li><strong>Custom Boards</strong>Active pressure regulation &amp; eFuse protection PCBs</li>
+          <li><strong>Power &amp; Test</strong>Custom PSUs, distribution boards &amp; protoboard rigs</li>
+          <li><strong>Focus</strong>Sensor conditioning &amp; iterative board layout</li>
+        </ul>
+      </div>
+      <div class="cap-card">
+        <h2>04 // Hands-On Fabrication</h2>
+        <ul class="cap-list">
+          <li><strong>Electronics</strong>Fine-pitch SMT soldering &amp; harness assembly</li>
+          <li><strong>Workshop</strong>Welding &amp; woodworking</li>
+          <li><strong>Next Up</strong>Composite layups &amp; manual lathe machining</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 2. FEATURED PROJECT JUMPERS -->
     <section id="featured" class="featured-section" aria-label="Featured active projects">
       <div class="featured-header">Featured Active Builds // Quick Jump</div>
       <div class="featured-grid">
@@ -1079,46 +1127,11 @@
       </div>
     </section>
 
-    <!-- CORE CAPABILITIES STRIP -->
-    <section class="capabilities-grid" aria-label="Core engineering capabilities">
-      <div class="cap-card">
-        <h2>01 // CAD &amp; Additive Mfg.</h2>
-        <ul class="cap-list">
-          <li><strong>Design &amp; Mesh</strong>Fusion 360 (parts, enclosures, ducts) &amp; Blender</li>
-          <li><strong>Materials</strong>GF/CF engineering polymers &amp; high-temp filaments</li>
-          <li><strong>Production</strong>Additive optimization &amp; freelance small-batch runs</li>
-        </ul>
-      </div>
-      <div class="cap-card">
-        <h2>02 // Embedded &amp; Linux SBCs</h2>
-        <ul class="cap-list">
-          <li><strong>Platforms</strong>STM32, ESP32, Arduino &amp; Raspberry / Orange Pi</li>
-          <li><strong>Interfacing</strong>Closed-loop, analog &amp; digital sensors, displays</li>
-          <li><strong>Firmware</strong>Klipper kinematics, CAN/USB &amp; state machines</li>
-        </ul>
-      </div>
-      <div class="cap-card">
-        <h2>03 // PCBs &amp; Power Systems</h2>
-        <ul class="cap-list">
-          <li><strong>Custom Boards</strong>Active pressure regulation &amp; eFuse protection PCBs</li>
-          <li><strong>Power &amp; Test</strong>Custom PSUs, distribution boards &amp; protoboard rigs</li>
-          <li><strong>Focus</strong>Sensor conditioning &amp; iterative board layout</li>
-        </ul>
-      </div>
-      <div class="cap-card">
-        <h2>04 // Hands-On Fabrication</h2>
-        <ul class="cap-list">
-          <li><strong>Electronics</strong>Fine-pitch SMT soldering &amp; harness assembly</li>
-          <li><strong>Workshop</strong>Welding &amp; woodworking</li>
-          <li><strong>Next Up</strong>Composite layups &amp; manual lathe machining</li>
-        </ul>
-      </div>
-    </section>
-
     <!-- Status Filter Buttons -->
     <div class="filter-bar" role="group" aria-label="Filter projects by status">
       <button class="filter-btn active" data-filter="all">All Projects</button>
       <button class="filter-btn" data-filter="worked">Built - Worked</button>
+      <button class="filter-btn" data-filter="partial">Partial Pass</button>
       <button class="filter-btn" data-filter="progress">Build in Progress</button>
       <button class="filter-btn" data-filter="redesign">Redesign</button>
       <button class="filter-btn" data-filter="untested">Built - Untested</button>
@@ -1131,7 +1144,7 @@
     <section class="projects-list">
 
       <!-- ===================================================================
-           FEATURED 01: X65 AETHER (MOVED FROM CONCEPTS TO ACTIVE)
+           FEATURED 01: X65 AETHER
            =================================================================== -->
       <article id="proj-aether" class="project-card"
                data-status="progress"
@@ -1194,8 +1207,6 @@
 
           <details class="panel-details">
             <summary>Photo Album (X65 Airfoil &amp; Fuselage Studies)</summary>
-            <!-- Replace src paths below with your actual uploaded filenames in pictures/ -->
-
             <div class="album-grid">
               <figure class="album-item">
                 <img src="pictures/X65/X65_wing_shape_2.png" alt="Wing shape concept profile view" loading="lazy">
@@ -1380,9 +1391,40 @@
           <p class="card-desc">
             ESP32-based data acquisition system built for CTU Space Research to log pressure and temperature transients during nitrous oxide (N₂O) decompression testing.
           </p>
-          <div class="eng-note amber">
-            <strong>Validation &amp; Next Revision:</strong> Successfully captured full decompression profiles during live runs, though raw sensor lines picked up noise requiring tighter signal conditioning—currently undergoing a redesign to integrate improved front-end hardware filtration.
+
+          <!-- Development Status Tracker -->
+          <div class="dev-tracker" aria-label="ESP32 N2O Logger development progress">
+            <div class="tracker-header">
+              <span class="tracker-title">Development Status Tracker</span>
+              <span class="tracker-stage-label">Stage 4 of 5 // v2 Front-End Filter Redesign</span>
+            </div>
+            <div class="tracker-steps">
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>01. v1 Prototype</span>
+              </div>
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>02. Live N₂O Test</span>
+              </div>
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>03. Noise Audit</span>
+              </div>
+              <div class="tracker-step active rework">
+                <div class="tracker-bar"></div>
+                <span>04. v2 Filter Rev</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>05. Re-Validation</span>
+              </div>
+            </div>
+            <div class="tracker-now">
+              <strong>Currently Working On:</strong> v1 captured full decompression profiles during live runs, but raw analog sensor lines picked up noise—redesigning the front-end hardware RC/active filtration for cleaner transient logging.
+            </div>
           </div>
+
           <div class="specs-grid">
             <div class="spec-box"><span>Affiliation</span><strong>CTU Space Research</strong></div>
             <div class="spec-box"><span>MCU</span><strong>ESP32</strong></div>
@@ -1413,14 +1455,46 @@
             </div>
             <div class="badge-group">
               <span class="badge badge-redesign">Redesign</span>
+              <span class="badge badge-progress">Build in Progress</span>
             </div>
           </div>
           <p class="card-desc">
             Extensive ground-up rebuild of a Sunlu T3 featuring a custom Y-axis linear rod system, X-axis linear rail, Z-axis frame bracing, a custom electronics chassis, and extreme part cooling driven by a 120mm 6,000 RPM Arctic auxiliary fan alongside a 40mm 12,000 RPM hotend fan.
           </p>
-          <div class="eng-note amber">
-            <strong>Current Phase:</strong> Previously fully operational; currently disassembled for a visual redesign, mechanical optimization, and control board migration (evaluating Mellow FLY D5 vs. BTT Pico alongside an Orange Pi Zero 2W).
+
+          <!-- Development Status Tracker -->
+          <div class="dev-tracker" aria-label="Sunlu T3 Overhaul development progress">
+            <div class="tracker-header">
+              <span class="tracker-title">Development Status Tracker</span>
+              <span class="tracker-stage-label">Stage 3 of 5 // Mechanical Rebuild &amp; MCU Migration</span>
+            </div>
+            <div class="tracker-steps">
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>01. v1 Operational</span>
+              </div>
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>02. v2 CAD Mod</span>
+              </div>
+              <div class="tracker-step active rework">
+                <div class="tracker-bar"></div>
+                <span>03. Rebuild &amp; MCU</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>04. Klipper Config</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>05. Input Shaper</span>
+              </div>
+            </div>
+            <div class="tracker-now">
+              <strong>Currently Working On:</strong> Disassembled for a visual redesign, mechanical optimization, and control board migration (evaluating Mellow FLY D5 vs. BTT Pico alongside an Orange Pi Zero 2W).
+            </div>
           </div>
+
           <div class="specs-grid">
             <div class="spec-box"><span>Extruder</span><strong>BIQU H2 V2S Lite</strong></div>
             <div class="spec-box"><span>Motion</span><strong>X Linear Rail / Custom Y Rods</strong></div>
@@ -1456,9 +1530,40 @@
           <p class="card-desc">
             Custom-built 5-inch FPV quadcopter outfitted with RS2205 brushless motors, 4S LiPo power system, and onboard GPS module for telemetry and return-to-home fail-safes.
           </p>
-          <div class="eng-note">
-            <strong>Bench Verification:</strong> Wiring, motor direction, receiver binding, and GPS satellite lock verified on the bench—awaiting weather and schedule window for maiden flight.
+
+          <!-- Development Status Tracker -->
+          <div class="dev-tracker" aria-label="5 inch FPV Quadcopter development progress">
+            <div class="tracker-header">
+              <span class="tracker-title">Development Status Tracker</span>
+              <span class="tracker-stage-label">Stage 4 of 5 // Bench Verified — Awaiting Maiden</span>
+            </div>
+            <div class="tracker-steps">
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>01. Frame &amp; Solder</span>
+              </div>
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>02. Betaflight Setup</span>
+              </div>
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>03. GPS &amp; Fail-Safe</span>
+              </div>
+              <div class="tracker-step active ready">
+                <div class="tracker-bar"></div>
+                <span>04. Maiden Window</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>05. PID Tuning</span>
+              </div>
+            </div>
+            <div class="tracker-now">
+              <strong>Currently Working On:</strong> Wiring, motor direction, receiver binding, and GPS satellite lock are all verified on the bench—waiting for a clear weather and schedule window for maiden flight.
+            </div>
           </div>
+
           <div class="specs-grid">
             <div class="spec-box"><span>Frame Class</span><strong>5-Inch FPV</strong></div>
             <div class="spec-box"><span>Propulsion</span><strong>RS2205 Brushless Motors</strong></div>
@@ -1477,7 +1582,7 @@
                 <img src="pictures/drone/drone2.jpeg" alt="Drone2" loading="lazy">
                 <figcaption class="album-caption">Drone2</figcaption>
               </figure>
-             </div>
+            </div>
           </details>
         </div>
       </article>
@@ -1579,34 +1684,34 @@
       </article>
 
       <!-- ===================================================================
-           PROJECT 8: CTU SPACE RESEARCH POWER / EFUSE PCB
+           PROJECT 8: CTU SPACE RESEARCH POWER / EFUSE PCB (PARTIAL PASS)
            =================================================================== -->
       <article id="proj-efuse" class="project-card"
-               data-status="failed"
+               data-status="partial"
                data-title="CTU eFuse Power PCB"
-               data-segments="2025-04:2025-07:bar-failed:Prototype &amp; Test"
+               data-segments="2025-04:2025-10:bar-partial:EuRoC Flight (Bypass)"
                style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
               <h3>CTU Space Research — Custom Power &amp; eFuse PCB</h3>
-              <div class="card-subtitle">Fault-Tolerant Power Distribution Prototype</div>
+              <div class="card-subtitle">Fault-Tolerant Power Distribution Board · Flown at EuRoC</div>
             </div>
             <div class="badge-group">
-              <span class="badge badge-failed">Built - Failed</span>
+              <span class="badge badge-partial">Partial Pass</span>
             </div>
           </div>
           <p class="card-desc">
-            Custom power-management PCB developed for CTU Space Research, integrating electronic fuse (eFuse) protection alongside an intentional hardware bypass jumper for test-bench resilience.
+            Custom power-management PCB developed for CTU Space Research, integrating electronic fuse (eFuse) overcurrent protection alongside an intentional hardware bypass jumper designed upfront as a flight-ready contingency.
           </p>
-          <div class="eng-note warn">
-            <strong>Post-Mortem &amp; Lesson Learned:</strong> Board functioned initially before the eFuse burned out—likely due to an improperly configured latch-off current threshold during transient load. Because a physical power jumper was designed into the board upfront, testing was able to proceed without scrapping the hardware. Retired without revision.
+          <div class="eng-note partial">
+            <strong>Flight Outcome &amp; Post-Mortem:</strong> Partial pass — the eFuse IC itself burned out during early testing due to an improperly configured latch-off current threshold under transient load, preventing active electronic protection. However, because a physical power bypass jumper was designed into the board from day one, power distribution remained fully operational and the board <strong>successfully flew on the EuRoC rocket</strong> running via the bypass path.
           </div>
           <div class="specs-grid">
             <div class="spec-box"><span>Affiliation</span><strong>CTU Space Research</strong></div>
-            <div class="spec-box"><span>Protection</span><strong>Integrated eFuse IC</strong></div>
-            <div class="spec-box"><span>Fallback</span><strong>Onboard Power Bypass Jumper</strong></div>
-            <div class="spec-box"><span>Disposition</span><strong>Retired (No Rev 2)</strong></div>
+            <div class="spec-box"><span>Protection Stage</span><strong>eFuse IC (Tripped / Burned)</strong></div>
+            <div class="spec-box"><span>Contingency</span><strong>Hardware Bypass Jumper</strong></div>
+            <div class="spec-box"><span>Flight Heritage</span><strong>Flown at EuRoC on Bypass</strong></div>
           </div>
 
           <details class="panel-details">
@@ -1666,7 +1771,7 @@
 
     </section>
 
-    <!-- MULTI-SEGMENT INTERACTIVE PROJECT TIMELINE (MOVED TO BOTTOM) -->
+    <!-- MULTI-SEGMENT INTERACTIVE PROJECT TIMELINE (BOTTOM) -->
     <section id="timeline" class="timeline-box" aria-label="Project timeline">
       <div class="timeline-header">
         <h2>Build Timeline // Active Phases &amp; Pauses</h2>
@@ -1727,7 +1832,6 @@
         const targetCard = document.getElementById(targetId);
         if (targetCard) {
           e.preventDefault();
-          // Ensure all filters are shown if the target card was hidden
           if (targetCard.classList.contains('hidden')) {
             document.querySelector('.filter-btn[data-filter="all"]')?.click();
           }
