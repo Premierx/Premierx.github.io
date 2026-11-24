@@ -403,6 +403,14 @@
       background: var(--st-worked);
     }
 
+    .tracker-step.warn {
+      color: var(--st-failed);
+    }
+
+    .tracker-step.warn .tracker-bar {
+      background: var(--st-failed);
+    }
+
     .tracker-step.active {
       color: var(--text);
     }
@@ -1007,7 +1015,6 @@
       <button class="filter-btn" data-filter="progress">Build in Progress</button>
       <button class="filter-btn" data-filter="redesign">Redesign</button>
       <button class="filter-btn" data-filter="untested">Built - Untested</button>
-      <button class="filter-btn" data-filter="failed">Built - Failed</button>
       <button class="filter-btn" data-filter="concept">Concepts</button>
     </div>
 
@@ -1110,7 +1117,7 @@
               <h3>Hexcore — Enclosed CoreXY 3D Printer</h3>
               <div class="card-meta-row">
                 <span class="card-subtitle">Featured Build · Custom Kinematics &amp; High-Temp Enclosure</span>
-                <span class="time-tag updated">Last Update: Nov 2026</span>
+                <span class="time-tag updated">Last Update: Jan 2026</span>
               </div>
             </div>
             <div class="badge-group">
@@ -1240,19 +1247,145 @@
           <!-- Uncomment when you add photos:
           <details class="panel-details">
             <summary>Photo Album (PCB Layout &amp; Bench)</summary>
-            <div class="album-grid">
-              <figure class="album-item">
-                <img src="pictures/apr/schematic.png" alt="APR Schematic" loading="lazy">
-                <figcaption class="album-caption">APR Schematic</figcaption>
-              </figure>
-            </div>
+            <div class="album-grid"></div>
           </details>
           -->
         </div>
       </article>
 
       <!-- ===================================================================
-           PROJECT 4: ESP32 N2O DECOMPRESSION DATA LOGGER
+           PROJECT 4: METRO EXPERIMENT PAYLOAD (EUROC -> DROP TOWER CONTINUATION)
+           =================================================================== -->
+      <article id="proj-euroc" class="project-card"
+               data-status="progress"
+               style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>METRO Experiment Payload — EuRoC Flight &amp; Drop-Tower Testing</h3>
+              <div class="card-meta-row">
+                <span class="card-subtitle">CTU Space Research &amp; CTU FME · Flight Electronics &amp; 50 Hz G-Sensing Firmware</span>
+                <span class="time-tag updated">EuRoC Oct 2026 · Active Drop-Tower Campaign</span>
+              </div>
+            </div>
+            <div class="badge-group">
+              <span class="badge badge-progress">Build in Progress</span>
+            </div>
+          </div>
+          <p class="card-desc">
+            Stepped in 4 days prior to the October 2026 European Rocketry Challenge (EuRoC) launch to complete the payload electronics and deterministic flight state machine for the METRO biological experiment demonstrator. Built around trajectory simulations, the firmware combines 50 Hz accelerometer thresholds (≥ 3.0 g launch trigger, &lt; 0.5 g microgravity entry) with simulation-derived forced timeout overrides (10 s and 25 s) to guarantee motor spin-up, Raspberry Pi imaging pulses, and CSV telemetry logging.
+          </p>
+
+          <!-- Development Status Tracker -->
+          <div class="dev-tracker" aria-label="METRO Experiment Payload development progress">
+            <div class="tracker-header">
+              <span class="tracker-title">Development Status Tracker</span>
+              <span class="tracker-stage-label">Stage 4 of 5 // CTU FME Drop-Tower Campaign</span>
+            </div>
+            <div class="tracker-steps">
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>01. 4-Day Integration</span>
+              </div>
+              <div class="tracker-step warn">
+                <div class="tracker-bar"></div>
+                <span>02. EuRoC Flight (Failed)</span>
+              </div>
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>03. Hardware Audit</span>
+              </div>
+              <div class="tracker-step active">
+                <div class="tracker-bar"></div>
+                <span>04. FME Drop Tower</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>05. Micro-G Validation</span>
+              </div>
+            </div>
+            <div class="tracker-now">
+              <strong>Currently Working On:</strong> Following the EuRoC flight failure, continuing development officially under the METRO experiment in collaboration with the <strong>CTU Faculty of Mechanical Engineering (FME)</strong> to execute ground-based microgravity drop-tower testing.
+            </div>
+          </div>
+
+          <div class="eng-note warn">
+            <strong>EuRoC Oct 2026 Flight Post-Mortem:</strong> Failed on EuRoC due to a hardware sensor failure that could not be repaired in time prior to launch, compounded by fluid leakage from the mechanical algae containment subsystem. Highlighted the need for modular sensor daughterboards and early integrated leak testing—lessons now being applied in the ground-based drop-tower test campaign.
+          </div>
+
+          <details class="panel-details">
+            <summary>View 50 Hz Flight State Machine Architecture</summary>
+            <pre class="fsm-diagram">        reset / setup()
+              │
+              ▼
+      ┌───────────────┐
+      │    WAITING    │  50 Hz sensing, no logging
+      └───────┬───────┘
+              │ |a| ≥ 3.0 g for 3 samples (60 ms)
+              │ / t=0, green LED on, strip on,
+              │   create LOGxxx.CSV, log TRIGGER
+              ▼
+      ┌───────────────┐
+      │    ACTIVE     │  logging @ 50 Hz
+      └───────┬───────┘
+              │ [t ≥ 5 s AND |a| &lt; 1.5 g for 3 samples]
+              │   OR [t ≥ 10 s]  &lt;-- sim-derived failsafe
+              │ / motor PWM = 63 (1/4 power), Pi pulse 1 s,
+              │   log MOTOR_ON_PI_PULSE
+              ▼
+      ┌───────────────┐
+      │ MOTOR_RUNNING │  logging @ 50 Hz
+      └───────┬───────┘
+              │ [t ≥ 2 s AND |a| &lt; 0.5 g for 3 samples]
+              │ / red LED on, log ZERO_G_DETECTED
+              │
+              │   ┌─ forced: t ≥ 25 s (sim-derived), from ACTIVE or MOTOR_RUNNING
+              │   │  / red LED on, log ZERO_G_FORCED_TIMEOUT
+              ▼   ▼
+      ┌──────────────────┐
+      │ ZERO_G_DETECTED  │  still logging, motor still on
+      └────────┬─────────┘
+               │ 100 s after entry
+               │ / log SYSTEM_SHUTDOWN, all outputs off, close file
+               ▼
+      ┌───────────────┐
+      │   INACTIVE    │  loop returns early; only power cycle exits.
+      └───────────────┘</pre>
+          </details>
+
+          <details class="panel-details">
+            <summary>Photo Album (EuRoC Payload Integration)</summary>
+            <div class="album-grid">
+              <figure class="album-item">
+                <img src="pictures/payload/closed.jpeg" alt="Closed payload" loading="lazy">
+                <figcaption class="album-caption">Closed payload</figcaption>
+              </figure>
+              <figure class="album-item">
+                <img src="pictures/payload/close_up.jpeg" alt="Disassembled payload" loading="lazy">
+                <figcaption class="album-caption">Disassembled payload</figcaption>
+              </figure>
+              <figure class="album-item">
+                <img src="pictures/payload/open.jpeg" alt="Running payload" loading="lazy">
+                <figcaption class="album-caption">Running payload</figcaption>
+              </figure>
+              <figure class="album-item">
+                <img src="pictures/payload/in_rocket.jpeg" alt="Payload mounted in rocket" loading="lazy">
+                <figcaption class="album-caption">Payload mounted in rocket</figcaption>
+              </figure>
+            </div>
+          </details>
+
+          <div class="specs-grid" style="margin-top: 1.25rem; margin-bottom: 0;">
+            <div class="spec-box"><span>Affiliations</span><strong>CTU Space Research &amp; CTU FME</strong></div>
+            <div class="spec-box"><span>Sample Rate</span><strong>50 Hz CSV Telemetry</strong></div>
+            <div class="spec-box"><span>Triggers</span><strong>3g Launch / &lt;0.5g Zero-G</strong></div>
+            <div class="spec-box"><span>Current Phase</span><strong>Drop-Tower Micro-G Testing</strong></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           PROJECT 5: ESP32 N2O DECOMPRESSION DATA LOGGER
            =================================================================== -->
       <article id="proj-esp32-daq" class="project-card"
                data-status="worked redesign"
@@ -1325,7 +1458,7 @@
       </article>
 
       <!-- ===================================================================
-           PROJECT 5: SUNLU T3 OVERHAUL
+           PROJECT 6: SUNLU T3 OVERHAUL
            =================================================================== -->
       <article id="proj-sunlu" class="project-card"
                data-status="redesign progress"
@@ -1336,7 +1469,7 @@
               <h3>Sunlu T3 — Heavy Mechanical &amp; Cooling Overhaul</h3>
               <div class="card-meta-row">
                 <span class="card-subtitle">Custom Motion System &amp; High-Static-Pressure Cooling</span>
-                <span class="time-tag updated">Last Update: Aug 2026</span>
+                <span class="time-tag updated">Last Update: Jul 2025</span>
               </div>
             </div>
             <div class="badge-group">
@@ -1398,7 +1531,7 @@
       </article>
 
       <!-- ===================================================================
-           PROJECT 6: 5" FPV DRONE
+           PROJECT 7: 5" FPV DRONE
            =================================================================== -->
       <article id="proj-fpv" class="project-card"
                data-status="untested"
@@ -1477,103 +1610,6 @@
       </article>
 
       <!-- ===================================================================
-           PROJECT 7: EUROC METRO PAYLOAD DEMONSTRATOR
-           =================================================================== -->
-      <article id="proj-euroc" class="project-card"
-               data-status="failed"
-               style="--bg-image: none;">
-        <div class="card-content">
-          <div class="card-top">
-            <div>
-              <h3>EuRoC METRO Experiment Demonstrator Payload</h3>
-              <div class="card-meta-row">
-                <span class="card-subtitle">CTU Space Research — Flight Electronics &amp; 50 Hz G-Sensing Firmware</span>
-                <span class="time-tag finished">Build Finished: Oct 2025</span>
-              </div>
-            </div>
-            <div class="badge-group">
-              <span class="badge badge-failed">Built - Failed</span>
-            </div>
-          </div>
-          <p class="card-desc">
-            Implemented the payload electronics and deterministic flight state machine for the METRO biological experiment demonstrator at the European Rocketry Challenge (EuRoC). Built around flight trajectory simulations provided by the team, the firmware combined 50 Hz accelerometer thresholds (≥ 3.0 g launch trigger, &lt; 0.5 g microgravity entry) with simulation-derived forced timeout overrides (10 s and 25 s) to guarantee motor spin-up, Raspberry Pi imaging pulses, and CSV telemetry logging even under degraded sensor data.
-          </p>
-
-          <details class="panel-details">
-            <summary>View 50 Hz Flight State Machine Architecture</summary>
-            <pre class="fsm-diagram">        reset / setup()
-              │
-              ▼
-      ┌───────────────┐
-      │    WAITING    │  50 Hz sensing, no logging
-      └───────┬───────┘
-              │ |a| ≥ 3.0 g for 3 samples (60 ms)
-              │ / t=0, green LED on, strip on,
-              │   create LOGxxx.CSV, log TRIGGER
-              ▼
-      ┌───────────────┐
-      │    ACTIVE     │  logging @ 50 Hz
-      └───────┬───────┘
-              │ [t ≥ 5 s AND |a| &lt; 1.5 g for 3 samples]
-              │   OR [t ≥ 10 s]  &lt;-- sim-derived failsafe
-              │ / motor PWM = 63 (1/4 power), Pi pulse 1 s,
-              │   log MOTOR_ON_PI_PULSE
-              ▼
-      ┌───────────────┐
-      │ MOTOR_RUNNING │  logging @ 50 Hz
-      └───────┬───────┘
-              │ [t ≥ 2 s AND |a| &lt; 0.5 g for 3 samples]
-              │ / red LED on, log ZERO_G_DETECTED
-              │
-              │   ┌─ forced: t ≥ 25 s (sim-derived), from ACTIVE or MOTOR_RUNNING
-              │   │  / red LED on, log ZERO_G_FORCED_TIMEOUT
-              ▼   ▼
-      ┌──────────────────┐
-      │ ZERO_G_DETECTED  │  still logging, motor still on
-      └────────┬─────────┘
-               │ 100 s after entry
-               │ / log SYSTEM_SHUTDOWN, all outputs off, close file
-               ▼
-      ┌───────────────┐
-      │   INACTIVE    │  loop returns early; only power cycle exits.
-      └───────────────┘</pre>
-          </details>
-
-          <details class="panel-details">
-            <summary>Photo Album (EuRoC Payload Integration)</summary>
-            <div class="album-grid">
-              <figure class="album-item">
-                <img src="pictures/payload/closed.jpeg" alt="Closed payload" loading="lazy">
-                <figcaption class="album-caption">Closed payload</figcaption>
-              </figure>
-              <figure class="album-item">
-                <img src="pictures/payload/close_up.jpeg" alt="Disassembled payload" loading="lazy">
-                <figcaption class="album-caption">Disassembled payload</figcaption>
-              </figure>
-              <figure class="album-item">
-                <img src="pictures/payload/open.jpeg" alt="Running payload" loading="lazy">
-                <figcaption class="album-caption">Running payload</figcaption>
-              </figure>
-              <figure class="album-item">
-                <img src="pictures/payload/in_rocket.jpeg" alt="Payload mounted in rocket" loading="lazy">
-                <figcaption class="album-caption">Payload mounted in rocket</figcaption>
-              </figure>
-            </div>
-          </details>
-
-          <div class="eng-note warn" style="margin-top: 1.25rem; margin-bottom: 1.25rem;">
-            <strong>Post-Mortem &amp; Root Cause:</strong> Payload failed due to a hardware sensor failure that could not be repaired in time prior to launch, compounded by fluid leakage from the mechanical algae containment subsystem. Highlighted the importance of modular, easily replaceable sensor daughterboards and early integrated leak testing.
-          </div>
-          <div class="specs-grid" style="margin-bottom: 0;">
-            <div class="spec-box"><span>Competition</span><strong>EuRoC (CTU Space Research)</strong></div>
-            <div class="spec-box"><span>Sample Rate</span><strong>50 Hz CSV Telemetry</strong></div>
-            <div class="spec-box"><span>Triggers</span><strong>3g Launch / &lt;0.5g Zero-G</strong></div>
-            <div class="spec-box"><span>Sim Guardrails</span><strong>10s &amp; 25s Forced Timeouts</strong></div>
-          </div>
-        </div>
-      </article>
-
-      <!-- ===================================================================
            PROJECT 8: CTU SPACE RESEARCH POWER / EFUSE PCB (PARTIAL PASS)
            =================================================================== -->
       <article id="proj-efuse" class="project-card"
@@ -1585,7 +1621,7 @@
               <h3>CTU Space Research — Custom Power &amp; eFuse PCB</h3>
               <div class="card-meta-row">
                 <span class="card-subtitle">Fault-Tolerant Power Distribution Board · Flown at EuRoC</span>
-                <span class="time-tag finished">Build Finished: Oct 2025</span>
+                <span class="time-tag finished">Built May 2026 · Flown Oct 2026</span>
               </div>
             </div>
             <div class="badge-group">
@@ -1593,16 +1629,16 @@
             </div>
           </div>
           <p class="card-desc">
-            Custom power-management PCB developed for CTU Space Research, integrating electronic fuse (eFuse) overcurrent protection alongside an intentional hardware bypass jumper designed upfront as a flight-ready contingency.
+            Custom power-management PCB built in May 2026 for CTU Space Research, integrating electronic fuse (eFuse) overcurrent protection alongside an intentional hardware bypass jumper designed upfront as a flight-ready contingency.
           </p>
           <div class="eng-note partial">
-            <strong>Flight Outcome &amp; Post-Mortem:</strong> Partial pass — the eFuse IC itself burned out during early testing due to an improperly configured latch-off current threshold under transient load, preventing active electronic protection. However, because a physical power bypass jumper was designed into the board from day one, power distribution remained fully operational and the board <strong>successfully flew on the EuRoC rocket</strong> running via the bypass path.
+            <strong>Flight Outcome &amp; Post-Mortem:</strong> Partial pass — the eFuse IC itself burned out during early testing due to an improperly configured latch-off current threshold under transient load, preventing active electronic protection. However, because a physical power bypass jumper was designed into the board from day one, power distribution remained fully operational and the board <strong>successfully flew on the EuRoC rocket in October 2026</strong> running via the bypass path.
           </div>
           <div class="specs-grid">
             <div class="spec-box"><span>Affiliation</span><strong>CTU Space Research</strong></div>
             <div class="spec-box"><span>Protection Stage</span><strong>eFuse IC (Tripped / Burned)</strong></div>
             <div class="spec-box"><span>Contingency</span><strong>Hardware Bypass Jumper</strong></div>
-            <div class="spec-box"><span>Flight Heritage</span><strong>Flown at EuRoC on Bypass</strong></div>
+            <div class="spec-box"><span>Flight Heritage</span><strong>Flown at EuRoC (Oct 2026)</strong></div>
           </div>
 
           <details class="panel-details">
