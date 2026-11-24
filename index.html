@@ -54,6 +54,9 @@
     h1,
     .eyebrow,
     .cap-card h2,
+    .featured-card h3,
+    .featured-cta,
+    .tracker-step,
     .timeline-header h2,
     .section-title,
     .card-top h3,
@@ -98,8 +101,8 @@
 
     /* Header */
     header {
-      margin-bottom: 2.5rem;
-      padding-bottom: 2rem;
+      margin-bottom: 2.25rem;
+      padding-bottom: 1.85rem;
       border-bottom: 1px solid var(--border);
     }
 
@@ -128,7 +131,7 @@
       font-size: 1.02rem;
       line-height: 1.7;
       max-width: 740px;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.35rem;
     }
 
     .header-links {
@@ -156,6 +159,106 @@
       border-color: var(--accent);
       color: var(--accent);
       transform: translateY(-1px);
+    }
+
+    /* Featured Project Jumpers */
+    .featured-section {
+      margin-bottom: 2.5rem;
+    }
+
+    .featured-header {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .featured-header::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .featured-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(155deg, rgba(24, 25, 26, 0.92), rgba(16, 16, 18, 0.95));
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.2rem 1.3rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .featured-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      box-shadow: 0 10px 26px -10px rgba(0, 0, 0, 0.75);
+    }
+
+    .featured-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .featured-index {
+      font-family: 'Oxanium', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--accent-warm);
+    }
+
+    .featured-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+
+    .featured-focus {
+      font-size: 0.85rem;
+      color: #d6d3d1;
+      line-height: 1.55;
+      margin-bottom: 1rem;
+    }
+
+    .featured-focus strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .featured-cta {
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: color 0.2s ease;
+    }
+
+    .featured-card:hover .featured-cta {
+      color: var(--accent);
     }
 
     /* 1. Core Capabilities Strip */
@@ -204,182 +307,104 @@
       margin-bottom: 0.05rem;
     }
 
-    /* 2. Multi-Segment Interactive Project Timeline */
-    .timeline-box {
-      background: rgba(20, 20, 22, 0.84);
+    /* Development Status Tracker (Inside Featured Project Cards) */
+    .dev-tracker {
+      background: rgba(11, 11, 12, 0.74);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.35rem 1.5rem;
-      margin-bottom: 2.25rem;
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      margin-bottom: 1.25rem;
     }
 
-    .timeline-header {
+    .tracker-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+      gap: 0.4rem;
+      margin-bottom: 0.7rem;
     }
 
-    .timeline-header h2 {
-      font-size: 0.88rem;
+    .tracker-title {
+      font-family: 'Oxanium', sans-serif;
+      font-size: 0.72rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.09em;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+
+    .tracker-stage-label {
+      font-family: 'Oxanium', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent-warm);
+    }
+
+    .tracker-steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.45rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .tracker-step {
+      display: flex;
+      flex-direction: column;
+      gap: 0.32rem;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--muted);
+    }
+
+    .tracker-bar {
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(231, 229, 228, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tracker-step.done {
+      color: var(--st-worked);
+    }
+
+    .tracker-step.done .tracker-bar {
+      background: var(--st-worked);
+    }
+
+    .tracker-step.active {
       color: var(--text);
     }
 
-    .timeline-legend {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      font-size: 0.76rem;
-      color: var(--muted);
+    .tracker-step.active .tracker-bar {
+      background: var(--st-progress);
+      box-shadow: 0 0 8px rgba(127, 158, 178, 0.55);
     }
 
-    .legend-paused {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
+    .tracker-step.active.rework .tracker-bar {
+      background: var(--st-redesign);
+      box-shadow: 0 0 8px rgba(212, 154, 121, 0.55);
     }
 
-    .legend-paused::before {
-      content: "";
-      display: inline-block;
-      width: 18px;
-      border-top: 2px dashed rgba(168, 162, 158, 0.5);
+    .tracker-now {
+      font-size: 0.86rem;
+      color: #d6d3d1;
+      line-height: 1.55;
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba(231, 229, 228, 0.07);
     }
 
-    .gantt-wrapper {
-      overflow-x: auto;
-      padding-bottom: 0.25rem;
+    .tracker-now strong {
+      color: var(--text);
     }
 
-    /* Custom Dark Sage Scrollbars */
-    html,
-    .gantt-wrapper,
-    pre.fsm-diagram {
-      scrollbar-width: thin;
-      scrollbar-color: rgba(163, 184, 153, 0.4) rgba(11, 11, 12, 0.9);
+    @media (max-width: 600px) {
+      .tracker-steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
-
-    html::-webkit-scrollbar,
-    .gantt-wrapper::-webkit-scrollbar,
-    pre.fsm-diagram::-webkit-scrollbar {
-      width: 8px;
-      height: 6px;
-    }
-
-    html::-webkit-scrollbar-track,
-    .gantt-wrapper::-webkit-scrollbar-track,
-    pre.fsm-diagram::-webkit-scrollbar-track {
-      background: rgba(11, 11, 12, 0.9);
-      border-radius: 999px;
-    }
-
-    html::-webkit-scrollbar-thumb,
-    .gantt-wrapper::-webkit-scrollbar-thumb,
-    pre.fsm-diagram::-webkit-scrollbar-thumb {
-      background: rgba(163, 184, 153, 0.4);
-      border-radius: 999px;
-    }
-
-    html::-webkit-scrollbar-thumb:hover,
-    .gantt-wrapper::-webkit-scrollbar-thumb:hover,
-    pre.fsm-diagram::-webkit-scrollbar-thumb:hover {
-      background: rgba(163, 184, 153, 0.7);
-    }
-
-    .gantt-chart {
-      min-width: 650px;
-    }
-
-    .gantt-axis {
-      display: grid;
-      grid-template-columns: 210px 1fr;
-      margin-bottom: 0.5rem;
-      font-family: 'Oxanium', sans-serif;
-      font-size: 0.74rem;
-      color: var(--muted);
-    }
-
-    .gantt-ticks {
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 0.35rem;
-    }
-
-    .gantt-row {
-      display: grid;
-      grid-template-columns: 210px 1fr;
-      align-items: center;
-      padding: 0.44rem 0;
-      border-bottom: 1px solid rgba(231, 229, 228, 0.06);
-      cursor: pointer;
-      border-radius: 4px;
-      transition: background 0.15s ease;
-    }
-
-    .gantt-row:hover {
-      background: rgba(163, 184, 153, 0.08);
-    }
-
-    .gantt-label {
-      font-size: 0.84rem;
-      font-weight: 500;
-      color: #e7e5e4;
-      padding-right: 0.75rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .gantt-track {
-      position: relative;
-      height: 20px;
-      background: rgba(11, 11, 12, 0.7);
-      border-radius: 4px;
-    }
-
-    .gantt-pause-line {
-      position: absolute;
-      top: 50%;
-      height: 0;
-      border-top: 2px dashed rgba(168, 162, 158, 0.38);
-      transform: translateY(-50%);
-      pointer-events: none;
-    }
-
-    .gantt-bar {
-      position: absolute;
-      top: 2px;
-      bottom: 2px;
-      border-radius: 4px;
-      display: block;
-      line-height: 16px;
-      padding: 0 0.45rem;
-      font-family: 'Ubuntu', sans-serif;
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: #141416;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      transition: filter 0.2s ease;
-    }
-
-    .gantt-row:hover .gantt-bar {
-      filter: brightness(1.1);
-    }
-
-    .bar-worked   { background: var(--st-worked); }
-    .bar-untested { background: var(--st-untested); }
-    .bar-progress { background: var(--st-progress); }
-    .bar-redesign { background: var(--st-redesign); }
-    .bar-failed   { background: var(--st-failed); }
-    .bar-concept  { background: var(--st-concept); }
 
     /* Filter Bar */
     .filter-bar {
@@ -704,6 +729,191 @@
       gap: 1.25rem;
     }
 
+    /* Multi-Segment Interactive Project Timeline (Bottom) */
+    .timeline-box {
+      background: rgba(20, 20, 22, 0.84);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.35rem 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .timeline-header h2 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--text);
+    }
+
+    .timeline-legend {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+
+    .legend-paused {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .legend-paused::before {
+      content: "";
+      display: inline-block;
+      width: 18px;
+      border-top: 2px dashed rgba(168, 162, 158, 0.5);
+    }
+
+    .gantt-wrapper {
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+    }
+
+    /* Custom Dark Sage Scrollbars */
+    html,
+    .gantt-wrapper,
+    pre.fsm-diagram {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(163, 184, 153, 0.4) rgba(11, 11, 12, 0.9);
+    }
+
+    html::-webkit-scrollbar,
+    .gantt-wrapper::-webkit-scrollbar,
+    pre.fsm-diagram::-webkit-scrollbar {
+      width: 8px;
+      height: 6px;
+    }
+
+    html::-webkit-scrollbar-track,
+    .gantt-wrapper::-webkit-scrollbar-track,
+    pre.fsm-diagram::-webkit-scrollbar-track {
+      background: rgba(11, 11, 12, 0.9);
+      border-radius: 999px;
+    }
+
+    html::-webkit-scrollbar-thumb,
+    .gantt-wrapper::-webkit-scrollbar-thumb,
+    pre.fsm-diagram::-webkit-scrollbar-thumb {
+      background: rgba(163, 184, 153, 0.4);
+      border-radius: 999px;
+    }
+
+    html::-webkit-scrollbar-thumb:hover,
+    .gantt-wrapper::-webkit-scrollbar-thumb:hover,
+    pre.fsm-diagram::-webkit-scrollbar-thumb:hover {
+      background: rgba(163, 184, 153, 0.7);
+    }
+
+    .gantt-chart {
+      min-width: 650px;
+    }
+
+    .gantt-axis {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      margin-bottom: 0.5rem;
+      font-family: 'Oxanium', sans-serif;
+      font-size: 0.74rem;
+      color: var(--muted);
+    }
+
+    .gantt-ticks {
+      position: relative;
+      height: 1.35rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .gantt-tick-label {
+      position: absolute;
+      top: 0;
+      transform: translateX(0);
+      padding-left: 4px;
+      border-left: 1px solid rgba(231, 229, 228, 0.14);
+      line-height: 1.1;
+    }
+
+    .gantt-row {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      align-items: center;
+      padding: 0.44rem 0;
+      border-bottom: 1px solid rgba(231, 229, 228, 0.06);
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.15s ease;
+    }
+
+    .gantt-row:hover {
+      background: rgba(163, 184, 153, 0.08);
+    }
+
+    .gantt-label {
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: #e7e5e4;
+      padding-right: 0.75rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .gantt-track {
+      position: relative;
+      height: 20px;
+      background: rgba(11, 11, 12, 0.7);
+      border-radius: 4px;
+    }
+
+    .gantt-pause-line {
+      position: absolute;
+      top: 50%;
+      height: 0;
+      border-top: 2px dashed rgba(168, 162, 158, 0.38);
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .gantt-bar {
+      position: absolute;
+      top: 2px;
+      bottom: 2px;
+      border-radius: 4px;
+      display: block;
+      line-height: 16px;
+      padding: 0 0.45rem;
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #141416;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: filter 0.2s ease;
+    }
+
+    .gantt-row:hover .gantt-bar {
+      filter: brightness(1.1);
+    }
+
+    .bar-worked   { background: var(--st-worked); }
+    .bar-untested { background: var(--st-untested); }
+    .bar-progress { background: var(--st-progress); }
+    .bar-redesign { background: var(--st-redesign); }
+    .bar-failed   { background: var(--st-failed); }
+    .bar-concept  { background: var(--st-concept); }
+
     .hidden { display: none !important; }
 
     /* Lightbox Modal */
@@ -773,7 +983,7 @@
 
     /* Contact Panel & Footer */
     .contact-panel {
-      margin-top: 4.5rem;
+      margin-top: 2.5rem;
       background: rgba(20, 20, 22, 0.84);
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -814,17 +1024,64 @@
       <div class="eyebrow">Prague, CZ // Hardware // Avionics // Embedded Systems</div>
       <h1>Natanael Čandík</h1>
       <p class="tagline">
-        Cybernetics and Robotics student at CTU FEE. Member of Avionics and PR subsections of CTU Space research. 3D modelling and 3D printer design.
+        Cybernetics and Robotics student at CTU FEE. Member of Avionics and PR subsections of CTU Space Research. 3D modelling and 3D printer design.
       </p>
       <div class="header-links">
-        <a class="btn-link" href="https://github.com/Premierx" target="_blank" rel="noopener">GitHub ↗</a>
-        <!-- Replace with your exact Printables profile URL -->
-        <a class="btn-link" href="https://www.printables.com/" target="_blank" rel="noopener">Printables ↗</a>
-        <a class="btn-link" href="#contact">Contact &amp; Links ↓</a>
+        <a class="btn-link" href="#featured">Featured Builds ↓</a>
+        <a class="btn-link" href="#timeline">Build Timeline ↓</a>
+        <a class="btn-link" href="#contact">Contact ↓</a>
       </div>
     </header>
 
-    <!-- 1. CORE CAPABILITIES STRIP -->
+    <!-- FEATURED PROJECT JUMPERS (TOP) -->
+    <section id="featured" class="featured-section" aria-label="Featured active projects">
+      <div class="featured-header">Featured Active Builds // Quick Jump</div>
+      <div class="featured-grid">
+        <a class="featured-card jumper-link" href="#proj-aether" data-target="proj-aether">
+          <div>
+            <div class="featured-top">
+              <span class="featured-index">01 // UAV &amp; AVIONICS</span>
+              <span class="badge badge-progress">In Design</span>
+            </div>
+            <h3>X65 Aether</h3>
+            <p class="featured-focus">
+              <strong>Now:</strong> Refining 2D fuselage &amp; wing airfoil shapes, integrating a 64mm EDF, and preparing STM32F401RET6 flight controller schematics.
+            </p>
+          </div>
+          <span class="featured-cta">Jump to build &amp; status ↓</span>
+        </a>
+
+        <a class="featured-card jumper-link" href="#proj-hexcore" data-target="proj-hexcore">
+          <div>
+            <div class="featured-top">
+              <span class="featured-index">02 // ADDITIVE SYSTEMS</span>
+              <span class="badge badge-progress">In Progress</span>
+            </div>
+            <h3>Hexcore CoreXY</h3>
+            <p class="featured-focus">
+              <strong>Now:</strong> Reprinting structural components in ABS-GF and redesigning the toolhead belt hold-down mechanism.
+            </p>
+          </div>
+          <span class="featured-cta">Jump to build &amp; status ↓</span>
+        </a>
+
+        <a class="featured-card jumper-link" href="#proj-pressure" data-target="proj-pressure">
+          <div>
+            <div class="featured-top">
+              <span class="featured-index">03 // CTU SPACE RESEARCH</span>
+              <span class="badge badge-progress">In Progress</span>
+            </div>
+            <h3>Active Pressure Reg. Board</h3>
+            <p class="featured-focus">
+              <strong>Now:</strong> Selecting pressure/thermal front-end components and drawing schematics for the multi-channel CAN/USB control PCB.
+            </p>
+          </div>
+          <span class="featured-cta">Jump to build &amp; status ↓</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- CORE CAPABILITIES STRIP -->
     <section class="capabilities-grid" aria-label="Core engineering capabilities">
       <div class="cap-card">
         <h2>01 // CAD &amp; Additive Mfg.</h2>
@@ -860,20 +1117,6 @@
       </div>
     </section>
 
-    <!-- 2. MULTI-SEGMENT INTERACTIVE PROJECT TIMELINE -->
-    <section class="timeline-box" aria-label="Project timeline">
-      <div class="timeline-header">
-        <h2>Build Timeline // Active Phases &amp; Pauses</h2>
-        <div class="timeline-legend">
-          <span class="legend-paused">Paused / On Hold</span>
-          <span>Hover bar for details · Click to jump ↓</span>
-        </div>
-      </div>
-      <div class="gantt-wrapper">
-        <div class="gantt-chart" id="gantt-chart"></div>
-      </div>
-    </section>
-
     <!-- Status Filter Buttons -->
     <div class="filter-bar" role="group" aria-label="Filter projects by status">
       <button class="filter-btn active" data-filter="all">All Projects</button>
@@ -890,29 +1133,133 @@
     <section class="projects-list">
 
       <!-- ===================================================================
-           PROJECT 1: HEXCORE
+           FEATURED 01: X65 AETHER (MOVED FROM CONCEPTS TO ACTIVE)
            =================================================================== -->
-      <article id="proj-hexcore" class="project-card"
-               data-status="progress redesign"
-               data-title="Hexcore CoreXY"
-               data-segments="2025-09:2026-02:bar-progress:Frame &amp; Gantry | 2026-07:2026-11:bar-progress:Toolhead &amp; Enclosure"
-               style="--bg-image: url('pictures/obrazek.png');">
+      <article id="proj-aether" class="project-card"
+               data-status="progress"
+               data-title="X65 Aether UAV"
+               data-segments="2026-08:2026-11:bar-progress:Airframe &amp; FC Design"
+               style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
-              <h3>Hexcore — Enclosed CoreXY 3D Printer</h3>
-              <div class="card-subtitle">Custom Kinematics &amp; High-Temp Enclosure</div>
+              <h3>X65 Aether — 65cm Tailless Flying-Wing UAV</h3>
+              <div class="card-subtitle">Featured Build · Custom STM32 Flight Controller &amp; 64mm EDF Airframe</div>
             </div>
             <div class="badge-group">
               <span class="badge badge-progress">Build in Progress</span>
             </div>
           </div>
           <p class="card-desc">
+            Compact 65cm wingspan tailless flying-wing UAV transitioned from initial concept into active airframe and avionics design. Powered by a selected <strong>64mm EDF</strong> propulsion unit paired with a custom <strong>STM32F401RET6</strong> flight controller and COTS ESC.
+          </p>
+
+          <!-- Development Status Tracker -->
+          <div class="dev-tracker" aria-label="X65 Aether development progress">
+            <div class="tracker-header">
+              <span class="tracker-title">Development Status Tracker</span>
+              <span class="tracker-stage-label">Stage 2 of 5 // Airframe CAD &amp; Schematics</span>
+            </div>
+            <div class="tracker-steps">
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>01. Concept</span>
+              </div>
+              <div class="tracker-step active">
+                <div class="tracker-bar"></div>
+                <span>02. CAD &amp; Schematics</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>03. Airframe &amp; PCB</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>04. Bench &amp; Thrust</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>05. Maiden Flight</span>
+              </div>
+            </div>
+            <div class="tracker-now">
+              <strong>Currently Working On:</strong> Tinkering with 2D fuselage and wing airfoil shapes in CAD, locking in packaging around the selected 64mm EDF, and starting schematic preparation for the STM32F401RET6 flight computer.
+            </div>
+          </div>
+
+          <div class="specs-grid">
+            <div class="spec-box"><span>Airframe</span><strong>65 cm Tailless Flying Wing</strong></div>
+            <div class="spec-box"><span>Propulsion</span><strong>64mm Electric Ducted Fan (EDF)</strong></div>
+            <div class="spec-box"><span>Flight Controller</span><strong>Custom STM32F401RET6 PCB</strong></div>
+            <div class="spec-box"><span>Current Focus</span><strong>2D Wing/Fuselage &amp; FC Schematics</strong></div>
+          </div>
+
+          <details class="panel-details">
+            <summary>Photo Album (X65 Airfoil &amp; Fuselage Studies)</summary>
+            <!-- Replace src paths below with your actual uploaded filenames in pictures/ -->
+            <div class="album-empty">
+              Ready for your X65 photos — upload your images to <code>pictures/x65/</code> and add <code>&lt;figure class="album-item"&gt;</code> entries here.
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           FEATURED 02: HEXCORE
+           =================================================================== -->
+      <article id="proj-hexcore" class="project-card"
+               data-status="progress redesign"
+               data-title="Hexcore CoreXY"
+               data-segments="2025-09:2026-02:bar-progress:Frame &amp; Gantry | 2026-07:2026-11:bar-progress:ABS-GF &amp; Toolhead"
+               style="--bg-image: url('pictures/obrazek.png');">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>Hexcore — Enclosed CoreXY 3D Printer</h3>
+              <div class="card-subtitle">Featured Build · Custom Kinematics &amp; High-Temp Enclosure</div>
+            </div>
+            <div class="badge-group">
+              <span class="badge badge-progress">Build in Progress</span>
+              <span class="badge badge-redesign">Redesign</span>
+            </div>
+          </div>
+          <p class="card-desc">
             A compact, enclosed 180×180mm CoreXY printer built for high-flow extrusion and engineering polymers. Features a carbon-filtered exhaust system, dual Meanwell power supplies, and triple independent Z-axis motors paired with a BTT Microprobe for automated tramming and bed leveling.
           </p>
-          <div class="eng-note amber">
-            <strong>Status &amp; Next Steps:</strong> Frame, XY gantry, and custom toolhead are assembled. Planning a structural redesign to address several early mechanical design choices—plus adding an active chamber heater—before final commissioning.
+
+          <!-- Development Status Tracker -->
+          <div class="dev-tracker" aria-label="Hexcore development progress">
+            <div class="tracker-header">
+              <span class="tracker-title">Development Status Tracker</span>
+              <span class="tracker-stage-label">Stage 3 of 5 // Material Upgrade &amp; Toolhead Rev</span>
+            </div>
+            <div class="tracker-steps">
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>01. Kinematics</span>
+              </div>
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>02. Frame Build</span>
+              </div>
+              <div class="tracker-step active rework">
+                <div class="tracker-bar"></div>
+                <span>03. ABS-GF &amp; Rev</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>04. Chamber &amp; Wiring</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>05. Calibration</span>
+              </div>
+            </div>
+            <div class="tracker-now">
+              <strong>Currently Working On:</strong> Reprinting key structural parts in glass-fiber ABS (ABS-GF) for higher thermal stiffness and redesigning the belt hold-down mechanism on the print head, alongside planning an active chamber heater before final commissioning.
+            </div>
           </div>
+
           <div class="specs-grid">
             <div class="spec-box"><span>Build Volume</span><strong>180 × 180 mm Enclosed</strong></div>
             <div class="spec-box"><span>Toolhead</span><strong>HGX-Lite + CR10 Cu Block</strong></div>
@@ -933,18 +1280,18 @@
       </article>
 
       <!-- ===================================================================
-           PROJECT 2: ACTIVE PRESSURE REGULATION BOARD
+           FEATURED 03: ACTIVE PRESSURE REGULATION BOARD
            =================================================================== -->
       <article id="proj-pressure" class="project-card"
                data-status="progress"
                data-title="Pressure Reg. PCB"
-               data-segments="2026-06:2026-11:bar-progress:In Progress"
+               data-segments="2026-06:2026-11:bar-progress:Parts &amp; Schematics"
                style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
               <h3>Active Pressure Regulation Board</h3>
-              <div class="card-subtitle">CTU Space Research — Multi-Sensor Embedded Control PCB</div>
+              <div class="card-subtitle">Featured Build · CTU Space Research Multi-Sensor Control PCB</div>
             </div>
             <div class="badge-group">
               <span class="badge badge-progress">Build in Progress</span>
@@ -953,6 +1300,40 @@
           <p class="card-desc">
             Custom embedded controller developed within CTU Space Research for real-time closed-loop pressure monitoring and regulation, integrating multi-channel sensor acquisition with industrial bus communication.
           </p>
+
+          <!-- Development Status Tracker -->
+          <div class="dev-tracker" aria-label="Active Pressure Regulation Board development progress">
+            <div class="tracker-header">
+              <span class="tracker-title">Development Status Tracker</span>
+              <span class="tracker-stage-label">Stage 2 of 5 // Component Selection &amp; Schematics</span>
+            </div>
+            <div class="tracker-steps">
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>01. Architecture</span>
+              </div>
+              <div class="tracker-step active">
+                <div class="tracker-bar"></div>
+                <span>02. Parts &amp; Schematics</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>03. PCB Layout</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>04. Assembly &amp; Bring-up</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>05. Closed-Loop Test</span>
+              </div>
+            </div>
+            <div class="tracker-now">
+              <strong>Currently Working On:</strong> Researching and qualifying components (transceiver front-ends, ADC/conditioning, and actuator drivers) and drawing the board schematics.
+            </div>
+          </div>
+
           <div class="specs-grid">
             <div class="spec-box"><span>Interfaces</span><strong>USB &amp; CAN Bus</strong></div>
             <div class="spec-box"><span>Pressure Inputs</span><strong>6× Pressure Transceivers</strong></div>
@@ -968,7 +1349,7 @@
       </article>
 
       <!-- ===================================================================
-           PROJECT 3: ESP32 N2O DECOMPRESSION DATA LOGGER
+           PROJECT 4: ESP32 N2O DECOMPRESSION DATA LOGGER
            =================================================================== -->
       <article id="proj-esp32-daq" class="project-card"
                data-status="worked redesign"
@@ -1007,7 +1388,7 @@
       </article>
 
       <!-- ===================================================================
-           PROJECT 4: SUNLU T3 OVERHAUL
+           PROJECT 5: SUNLU T3 OVERHAUL
            =================================================================== -->
       <article id="proj-sunlu" class="project-card"
                data-status="redesign progress"
@@ -1045,7 +1426,7 @@
       </article>
 
       <!-- ===================================================================
-           PROJECT 5: 5" FPV DRONE
+           PROJECT 6: 5" FPV DRONE
            =================================================================== -->
       <article id="proj-fpv" class="project-card"
                data-status="untested"
@@ -1083,7 +1464,7 @@
       </article>
 
       <!-- ===================================================================
-           PROJECT 6: EUROC METRO PAYLOAD DEMONSTRATOR
+           PROJECT 7: EUROC METRO PAYLOAD DEMONSTRATOR
            =================================================================== -->
       <article id="proj-euroc" class="project-card"
                data-status="failed"
@@ -1179,7 +1560,7 @@
       </article>
 
       <!-- ===================================================================
-           PROJECT 7: CTU SPACE RESEARCH POWER / EFUSE PCB
+           PROJECT 8: CTU SPACE RESEARCH POWER / EFUSE PCB
            =================================================================== -->
       <article id="proj-efuse" class="project-card"
                data-status="failed"
@@ -1223,36 +1604,7 @@
     <section class="concepts-grid">
 
       <!-- ===================================================================
-           CONCEPT 1: X65 AETHER
-           =================================================================== -->
-      <article id="proj-aether" class="project-card"
-               data-status="concept"
-               data-title="X65 Aether UAV"
-               data-segments="2026-08:2026-11:bar-concept:Airfoil Study"
-               style="--bg-image: none;">
-        <div class="card-content">
-          <div class="card-top">
-            <div>
-              <h3>X65 Aether</h3>
-              <div class="card-subtitle">65cm Tailless Flying-Wing UAV</div>
-            </div>
-            <div class="badge-group">
-              <span class="badge badge-concept">Concept</span>
-            </div>
-          </div>
-          <p class="card-desc">
-            Compact 65cm wingspan tailless UAV currently in early aerodynamic trade studies (airfoil selection). Planned architecture pairs a custom <strong>STM32F401RET6</strong> flight computer with a COTS ESC, exploring composite airframe construction and evaluating pusher-prop vs. EDF propulsion.
-          </p>
-
-          <details class="panel-details">
-            <summary>Photo Album (CAD / Airfoil Studies)</summary>
-            <div class="album-empty">No renders uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
-          </details>
-        </div>
-      </article>
-
-      <!-- ===================================================================
-           CONCEPT 2: LIQUID ROCKET MOTOR
+           CONCEPT 1: LIQUID ROCKET MOTOR
            =================================================================== -->
       <article id="proj-liquid" class="project-card"
                data-status="concept"
@@ -1282,23 +1634,35 @@
 
     </section>
 
-    <!-- 4. CONTACT & AFFILIATIONS PANEL -->
+    <!-- MULTI-SEGMENT INTERACTIVE PROJECT TIMELINE (MOVED TO BOTTOM) -->
+    <section id="timeline" class="timeline-box" aria-label="Project timeline">
+      <div class="timeline-header">
+        <h2>Build Timeline // Active Phases &amp; Pauses</h2>
+        <div class="timeline-legend">
+          <span class="legend-paused">Paused / On Hold</span>
+          <span>Hover bar for details · Click to jump ↑</span>
+        </div>
+      </div>
+      <div class="gantt-wrapper">
+        <div class="gantt-chart" id="gantt-chart"></div>
+      </div>
+    </section>
+
+    <!-- CONTACT & AFFILIATIONS PANEL -->
     <section id="contact" class="contact-panel">
       <div>
         <h2>Get in Touch</h2>
         <p>Cybernetics &amp; Robotics at CTU FEE · Avionics &amp; PR at CTU Space Research · Prague, CZ</p>
       </div>
       <div class="header-links">
-        <a class="btn-link" href="https://github.com/Premierx" target="_blank" rel="noopener">GitHub ↗</a>
-        <a class="btn-link" href="https://www.printables.com/" target="_blank" rel="noopener">Printables ↗</a>
         <!-- Replace with your real email / LinkedIn when ready -->
         <a class="btn-link" href="mailto:natanael@example.com">Email ↗</a>
       </div>
     </section>
 
     <footer>
-      <span>© 2026 Natanael Čandík (Premierx)</span>
-      <span>Built on GitHub Pages</span>
+      <span>© 2026 Natanael Čandík</span>
+      <span>Hardware · Avionics · Embedded Systems</span>
     </footer>
   </div>
 
@@ -1314,7 +1678,33 @@
   </div>
 
   <script>
-    // 1. Multi-Segment Dynamic Gantt Timeline Generator
+    // Helper: Smooth scroll & pulse highlight a target card
+    function jumpToProject(card) {
+      if (!card) return;
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.remove('highlight-pulse');
+      void card.offsetWidth;
+      card.classList.add('highlight-pulse');
+      setTimeout(() => card.classList.remove('highlight-pulse'), 1400);
+    }
+
+    // Featured Jumper Card Click Handler
+    document.querySelectorAll('.jumper-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const targetId = link.dataset.target;
+        const targetCard = document.getElementById(targetId);
+        if (targetCard) {
+          e.preventDefault();
+          // Ensure all filters are shown if the target card was hidden
+          if (targetCard.classList.contains('hidden')) {
+            document.querySelector('.filter-btn[data-filter="all"]')?.click();
+          }
+          jumpToProject(targetCard);
+        }
+      });
+    });
+
+    // 1. Multi-Segment Dynamic Gantt Timeline Generator (Proportional Year Ticks)
     (function buildTimeline() {
       const container = document.getElementById('gantt-chart');
       const cards = Array.from(document.querySelectorAll('.project-card[data-segments]'));
@@ -1346,14 +1736,16 @@
       const maxM = Math.max(...allEnds);
       const totalSpan = Math.max(maxM - minM, 1);
 
-      // Axis Header
+      // Proportional Year Axis Header
       const axis = document.createElement('div');
       axis.className = 'gantt-axis';
       const ticksHtml = [];
       const minYear = Math.floor(minM / 12);
       const maxYear = Math.floor((maxM - 1) / 12);
       for (let y = minYear; y <= maxYear; y++) {
-        ticksHtml.push(`<span>${y}</span>`);
+        const yearStartMonth = Math.max(y * 12, minM);
+        const leftPct = ((yearStartMonth - minM) / totalSpan) * 100;
+        ticksHtml.push(`<span class="gantt-tick-label" style="left: ${leftPct.toFixed(2)}%;">${y}</span>`);
       }
       axis.innerHTML = `<div>PROJECT</div><div class="gantt-ticks">${ticksHtml.join('')}</div>`;
       container.appendChild(axis);
@@ -1383,12 +1775,7 @@
           <div class="gantt-track">${trackInnerHtml}</div>
         `;
 
-        row.addEventListener('click', () => {
-          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          card.classList.add('highlight-pulse');
-          setTimeout(() => card.classList.remove('highlight-pulse'), 1400);
-        });
-
+        row.addEventListener('click', () => jumpToProject(card));
         container.appendChild(row);
       });
     })();
