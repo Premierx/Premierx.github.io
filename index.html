@@ -19,10 +19,10 @@
       --border-hover: rgba(163, 184, 153, 0.45);
       --text: #f5f5f4;
       --muted: #a8a29e;
-      --accent: #a3b899;         /* Pastel Sage */
+      --accent: #a3b899;         /* Pastel Sage (try #93b4c8 steel blue or #dfb16b warm brass) */
       --accent-warm: #d4a373;    /* Soft Sand / Clay */
 
-      /* Pastel Earthy Status Colors */
+      /* Status Colors */
       --st-worked: #84a98c;      /* Sage Moss */
       --st-partial: #d4b475;     /* Warm Ochre / Brass */
       --st-untested: #7fb3a6;    /* Lichen Teal */
@@ -53,9 +53,9 @@
     .featured-card h3,
     .featured-cta,
     .tracker-step,
-    .timeline-header h2,
     .section-title,
     .card-top h3,
+    .time-tag,
     .badge,
     .filter-btn,
     .contact-panel h2,
@@ -63,7 +63,7 @@
       font-family: 'Oxanium', 'Ubuntu', sans-serif;
     }
 
-    /* Full-Page Background Image + Warm Amber Glow + Subtle Sage Grid */
+    /* Full-Page Background Image + Warm Amber Glow + Subtle Grid */
     body::before {
       content: "";
       position: fixed;
@@ -88,6 +88,36 @@
         linear-gradient(90deg, rgba(163, 184, 153, 0.04) 1px, transparent 1px);
       background-size: 36px 36px;
       pointer-events: none;
+    }
+
+    /* Custom Dark Scrollbars */
+    html,
+    pre.fsm-diagram {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(163, 184, 153, 0.4) rgba(11, 11, 12, 0.9);
+    }
+
+    html::-webkit-scrollbar,
+    pre.fsm-diagram::-webkit-scrollbar {
+      width: 8px;
+      height: 6px;
+    }
+
+    html::-webkit-scrollbar-track,
+    pre.fsm-diagram::-webkit-scrollbar-track {
+      background: rgba(11, 11, 12, 0.9);
+      border-radius: 999px;
+    }
+
+    html::-webkit-scrollbar-thumb,
+    pre.fsm-diagram::-webkit-scrollbar-thumb {
+      background: rgba(163, 184, 153, 0.4);
+      border-radius: 999px;
+    }
+
+    html::-webkit-scrollbar-thumb:hover,
+    pre.fsm-diagram::-webkit-scrollbar-thumb:hover {
+      background: rgba(163, 184, 153, 0.7);
     }
 
     .container {
@@ -158,7 +188,7 @@
       transform: translateY(-1px);
     }
 
-    /* 1. Core Capabilities Strip (Directly Under Header) */
+    /* 1. Core Capabilities Strip */
     .capabilities-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -532,10 +562,42 @@
       letter-spacing: 0.01em;
     }
 
+    .card-meta-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0.3rem;
+    }
+
     .card-subtitle {
       font-size: 0.86rem;
       color: var(--accent-warm);
-      margin-top: 0.2rem;
+    }
+
+    .time-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.16rem 0.55rem;
+      border-radius: 4px;
+      background: rgba(231, 229, 228, 0.06);
+      border: 1px solid rgba(231, 229, 228, 0.14);
+      color: #d6d3d1;
+    }
+
+    .time-tag.finished {
+      border-color: rgba(132, 169, 140, 0.35);
+      color: var(--st-worked);
+    }
+
+    .time-tag.updated {
+      border-color: rgba(127, 158, 178, 0.35);
+      color: var(--st-progress);
     }
 
     .badge-group {
@@ -544,7 +606,7 @@
       flex-wrap: wrap;
     }
 
-    /* Pastel Earthy Status Badges */
+    /* Status Badges */
     .badge {
       font-size: 0.72rem;
       font-weight: 700;
@@ -594,6 +656,10 @@
       grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
       gap: 0.75rem;
       margin-bottom: 1.25rem;
+    }
+
+    .specs-grid:last-child {
+      margin-bottom: 0;
     }
 
     .spec-box {
@@ -721,206 +787,12 @@
       text-overflow: ellipsis;
     }
 
-    .album-empty {
-      padding: 1rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-
     /* Concepts Grid */
     .concepts-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1.25rem;
     }
-
-    /* Multi-Segment Interactive Project Timeline (Bottom) */
-    .timeline-box {
-      background: rgba(20, 20, 22, 0.84);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.35rem 1.5rem;
-      margin-top: 3rem;
-      scroll-margin-top: 1.5rem;
-    }
-
-    .timeline-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .timeline-header h2 {
-      font-size: 0.88rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: var(--text);
-    }
-
-    .timeline-legend {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      font-size: 0.76rem;
-      color: var(--muted);
-    }
-
-    .legend-paused {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .legend-paused::before {
-      content: "";
-      display: inline-block;
-      width: 18px;
-      border-top: 2px dashed rgba(168, 162, 158, 0.5);
-    }
-
-    .gantt-wrapper {
-      overflow-x: auto;
-      padding-bottom: 0.25rem;
-    }
-
-    /* Custom Dark Sage Scrollbars */
-    html,
-    .gantt-wrapper,
-    pre.fsm-diagram {
-      scrollbar-width: thin;
-      scrollbar-color: rgba(163, 184, 153, 0.4) rgba(11, 11, 12, 0.9);
-    }
-
-    html::-webkit-scrollbar,
-    .gantt-wrapper::-webkit-scrollbar,
-    pre.fsm-diagram::-webkit-scrollbar {
-      width: 8px;
-      height: 6px;
-    }
-
-    html::-webkit-scrollbar-track,
-    .gantt-wrapper::-webkit-scrollbar-track,
-    pre.fsm-diagram::-webkit-scrollbar-track {
-      background: rgba(11, 11, 12, 0.9);
-      border-radius: 999px;
-    }
-
-    html::-webkit-scrollbar-thumb,
-    .gantt-wrapper::-webkit-scrollbar-thumb,
-    pre.fsm-diagram::-webkit-scrollbar-thumb {
-      background: rgba(163, 184, 153, 0.4);
-      border-radius: 999px;
-    }
-
-    html::-webkit-scrollbar-thumb:hover,
-    .gantt-wrapper::-webkit-scrollbar-thumb:hover,
-    pre.fsm-diagram::-webkit-scrollbar-thumb:hover {
-      background: rgba(163, 184, 153, 0.7);
-    }
-
-    .gantt-chart {
-      min-width: 650px;
-    }
-
-    .gantt-axis {
-      display: grid;
-      grid-template-columns: 210px 1fr;
-      margin-bottom: 0.5rem;
-      font-family: 'Oxanium', sans-serif;
-      font-size: 0.74rem;
-      color: var(--muted);
-    }
-
-    .gantt-ticks {
-      position: relative;
-      height: 1.35rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .gantt-tick-label {
-      position: absolute;
-      top: 0;
-      transform: translateX(0);
-      padding-left: 4px;
-      border-left: 1px solid rgba(231, 229, 228, 0.14);
-      line-height: 1.1;
-    }
-
-    .gantt-row {
-      display: grid;
-      grid-template-columns: 210px 1fr;
-      align-items: center;
-      padding: 0.44rem 0;
-      border-bottom: 1px solid rgba(231, 229, 228, 0.06);
-      cursor: pointer;
-      border-radius: 4px;
-      transition: background 0.15s ease;
-    }
-
-    .gantt-row:hover {
-      background: rgba(163, 184, 153, 0.08);
-    }
-
-    .gantt-label {
-      font-size: 0.84rem;
-      font-weight: 500;
-      color: #e7e5e4;
-      padding-right: 0.75rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .gantt-track {
-      position: relative;
-      height: 20px;
-      background: rgba(11, 11, 12, 0.7);
-      border-radius: 4px;
-    }
-
-    .gantt-pause-line {
-      position: absolute;
-      top: 50%;
-      height: 0;
-      border-top: 2px dashed rgba(168, 162, 158, 0.38);
-      transform: translateY(-50%);
-      pointer-events: none;
-    }
-
-    .gantt-bar {
-      position: absolute;
-      top: 2px;
-      bottom: 2px;
-      border-radius: 4px;
-      display: block;
-      line-height: 16px;
-      padding: 0 0.45rem;
-      font-family: 'Ubuntu', sans-serif;
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: #141416;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      transition: filter 0.2s ease;
-    }
-
-    .gantt-row:hover .gantt-bar {
-      filter: brightness(1.1);
-    }
-
-    .bar-worked   { background: var(--st-worked); }
-    .bar-partial  { background: var(--st-partial); }
-    .bar-untested { background: var(--st-untested); }
-    .bar-progress { background: var(--st-progress); }
-    .bar-redesign { background: var(--st-redesign); }
-    .bar-failed   { background: var(--st-failed); }
-    .bar-concept  { background: var(--st-concept); }
 
     .hidden { display: none !important; }
 
@@ -991,7 +863,7 @@
 
     /* Contact Panel & Footer */
     .contact-panel {
-      margin-top: 2.5rem;
+      margin-top: 3rem;
       background: rgba(20, 20, 22, 0.84);
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -1001,6 +873,7 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 1.25rem;
+      scroll-margin-top: 1.5rem;
     }
 
     .contact-panel h2 {
@@ -1038,7 +911,6 @@
       <div class="header-links">
         <a class="btn-link" href="#capabilities">Skills ↓</a>
         <a class="btn-link" href="#featured">Featured Builds ↓</a>
-        <a class="btn-link" href="#timeline">Build Timeline ↓</a>
         <a class="btn-link" href="#contact">Contact ↓</a>
       </div>
     </header>
@@ -1148,14 +1020,15 @@
            =================================================================== -->
       <article id="proj-aether" class="project-card"
                data-status="progress"
-               data-title="X65 Aether UAV"
-               data-segments="2026-08:2026-11:bar-progress:Airframe &amp; FC Design"
                style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
               <h3>X65 Aether — 65cm Tailless Flying-Wing UAV</h3>
-              <div class="card-subtitle">Featured Build · Custom STM32 Flight Controller &amp; 64mm EDF Airframe</div>
+              <div class="card-meta-row">
+                <span class="card-subtitle">Featured Build · Custom STM32 Flight Controller &amp; 64mm EDF Airframe</span>
+                <span class="time-tag updated">Last Update: Nov 2026</span>
+              </div>
             </div>
             <div class="badge-group">
               <span class="badge badge-progress">Build in Progress</span>
@@ -1230,14 +1103,15 @@
            =================================================================== -->
       <article id="proj-hexcore" class="project-card"
                data-status="progress redesign"
-               data-title="Hexcore CoreXY"
-               data-segments="2025-09:2026-02:bar-progress:Frame &amp; Gantry | 2026-07:2026-11:bar-progress:ABS-GF &amp; Toolhead"
                style="--bg-image: url('pictures/obrazek.png');">
         <div class="card-content">
           <div class="card-top">
             <div>
               <h3>Hexcore — Enclosed CoreXY 3D Printer</h3>
-              <div class="card-subtitle">Featured Build · Custom Kinematics &amp; High-Temp Enclosure</div>
+              <div class="card-meta-row">
+                <span class="card-subtitle">Featured Build · Custom Kinematics &amp; High-Temp Enclosure</span>
+                <span class="time-tag updated">Last Update: Nov 2026</span>
+              </div>
             </div>
             <div class="badge-group">
               <span class="badge badge-progress">Build in Progress</span>
@@ -1292,7 +1166,7 @@
             <summary>Photo Album (Hexcore Build)</summary>
             <div class="album-grid">
               <figure class="album-item">
-                <img src="pictures/obrázek.png" alt="Hexcore Frame & Gantry" loading="lazy">
+                <img src="pictures/obrazek.png" alt="Hexcore Frame & Gantry" loading="lazy">
                 <figcaption class="album-caption">Hexcore Assembly</figcaption>
               </figure>
             </div>
@@ -1305,14 +1179,15 @@
            =================================================================== -->
       <article id="proj-pressure" class="project-card"
                data-status="progress"
-               data-title="Pressure Reg. PCB"
-               data-segments="2026-06:2026-11:bar-progress:Parts &amp; Schematics"
                style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
               <h3>Active Pressure Regulation Board</h3>
-              <div class="card-subtitle">Featured Build · CTU Space Research Multi-Sensor Control PCB</div>
+              <div class="card-meta-row">
+                <span class="card-subtitle">Featured Build · CTU Space Research Multi-Sensor Control PCB</span>
+                <span class="time-tag updated">Last Update: Nov 2026</span>
+              </div>
             </div>
             <div class="badge-group">
               <span class="badge badge-progress">Build in Progress</span>
@@ -1362,10 +1237,17 @@
             <div class="spec-box"><span>Feedback</span><strong>1× Position Sensor</strong></div>
           </div>
 
+          <!-- Uncomment when you add photos:
           <details class="panel-details">
             <summary>Photo Album (PCB Layout &amp; Bench)</summary>
-            <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
+            <div class="album-grid">
+              <figure class="album-item">
+                <img src="pictures/apr/schematic.png" alt="APR Schematic" loading="lazy">
+                <figcaption class="album-caption">APR Schematic</figcaption>
+              </figure>
+            </div>
           </details>
+          -->
         </div>
       </article>
 
@@ -1374,14 +1256,15 @@
            =================================================================== -->
       <article id="proj-esp32-daq" class="project-card"
                data-status="worked redesign"
-               data-title="ESP32 N₂O Logger"
-               data-segments="2026-01:2026-04:bar-worked:v1 Tested | 2026-08:2026-11:bar-redesign:v2 Filter Redesign"
                style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
               <h3>ESP32 Nitrous Oxide Decompression Data Logger</h3>
-              <div class="card-subtitle">CTU Space Research — Propulsion Test Instrumentation</div>
+              <div class="card-meta-row">
+                <span class="card-subtitle">CTU Space Research — Propulsion Test Instrumentation</span>
+                <span class="time-tag updated">v1 Tested Apr 2026 · v2 Update Aug 2026</span>
+              </div>
             </div>
             <div class="badge-group">
               <span class="badge badge-worked">Built - Worked</span>
@@ -1432,10 +1315,12 @@
             <div class="spec-box"><span>Application</span><strong>N₂O Decompression Testing</strong></div>
           </div>
 
+          <!-- Uncomment when you add photos:
           <details class="panel-details">
             <summary>Photo Album (DAQ Hardware &amp; Test Setup)</summary>
-            <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
+            <div class="album-grid"></div>
           </details>
+          -->
         </div>
       </article>
 
@@ -1444,14 +1329,15 @@
            =================================================================== -->
       <article id="proj-sunlu" class="project-card"
                data-status="redesign progress"
-               data-title="Sunlu T3 Overhaul"
-               data-segments="2023-01:2023-08:bar-worked:Small upgrades | 2023-11:2024-02:bar-worked:v1 Operational | 2025-05:2025-07:bar-redesign:v2 CAD Redesign | 2026-08:2026-11:bar-progress:Mechanical rebuild"
                style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
               <h3>Sunlu T3 — Heavy Mechanical &amp; Cooling Overhaul</h3>
-              <div class="card-subtitle">Custom Motion System &amp; High-Static-Pressure Cooling</div>
+              <div class="card-meta-row">
+                <span class="card-subtitle">Custom Motion System &amp; High-Static-Pressure Cooling</span>
+                <span class="time-tag updated">Last Update: Aug 2026</span>
+              </div>
             </div>
             <div class="badge-group">
               <span class="badge badge-redesign">Redesign</span>
@@ -1502,10 +1388,12 @@
             <div class="spec-box"><span>Host / MCU</span><strong>Orange Pi Zero 2W (Klipper)</strong></div>
           </div>
 
+          <!-- Uncomment when you add photos:
           <details class="panel-details">
             <summary>Photo Album (Sunlu T3 Mods)</summary>
-            <div class="album-empty">No photos uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
+            <div class="album-grid"></div>
           </details>
+          -->
         </div>
       </article>
 
@@ -1514,14 +1402,15 @@
            =================================================================== -->
       <article id="proj-fpv" class="project-card"
                data-status="untested"
-               data-title="5&quot; FPV Quadcopter"
-               data-segments="2025-03:2025-07:bar-untested:Bench Verified"
                style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
               <h3>5" Custom FPV Quadcopter</h3>
-              <div class="card-subtitle">4S Freestyle &amp; GPS-Equipped Airframe</div>
+              <div class="card-meta-row">
+                <span class="card-subtitle">4S Freestyle &amp; GPS-Equipped Airframe</span>
+                <span class="time-tag updated">Bench Verified · Jul 2025</span>
+              </div>
             </div>
             <div class="badge-group">
               <span class="badge badge-untested">Built - Untested</span>
@@ -1592,14 +1481,15 @@
            =================================================================== -->
       <article id="proj-euroc" class="project-card"
                data-status="failed"
-               data-title="EuRoC METRO Payload"
-               data-segments="2025-02:2025-10:bar-failed:EuRoC Campaign"
                style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
               <h3>EuRoC METRO Experiment Demonstrator Payload</h3>
-              <div class="card-subtitle">CTU Space Research — Flight Electronics &amp; 50 Hz G-Sensing Firmware</div>
+              <div class="card-meta-row">
+                <span class="card-subtitle">CTU Space Research — Flight Electronics &amp; 50 Hz G-Sensing Firmware</span>
+                <span class="time-tag finished">Build Finished: Oct 2025</span>
+              </div>
             </div>
             <div class="badge-group">
               <span class="badge badge-failed">Built - Failed</span>
@@ -1688,14 +1578,15 @@
            =================================================================== -->
       <article id="proj-efuse" class="project-card"
                data-status="partial"
-               data-title="CTU eFuse Power PCB"
-               data-segments="2025-04:2025-10:bar-partial:EuRoC Flight (Bypass)"
                style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
               <h3>CTU Space Research — Custom Power &amp; eFuse PCB</h3>
-              <div class="card-subtitle">Fault-Tolerant Power Distribution Board · Flown at EuRoC</div>
+              <div class="card-meta-row">
+                <span class="card-subtitle">Fault-Tolerant Power Distribution Board · Flown at EuRoC</span>
+                <span class="time-tag finished">Build Finished: Oct 2025</span>
+              </div>
             </div>
             <div class="badge-group">
               <span class="badge badge-partial">Partial Pass</span>
@@ -1745,14 +1636,15 @@
            =================================================================== -->
       <article id="proj-liquid" class="project-card"
                data-status="concept"
-               data-title="Liquid Rocket Motor"
-               data-segments="2026-10:2026-11:bar-concept:Exploratory"
                style="--bg-image: none;">
         <div class="card-content">
           <div class="card-top">
             <div>
               <h3>Liquid Rocket Propulsion</h3>
-              <div class="card-subtitle">Early Exploratory Study</div>
+              <div class="card-meta-row">
+                <span class="card-subtitle">Early Exploratory Study</span>
+                <span class="time-tag updated">Concept · Oct 2026</span>
+              </div>
             </div>
             <div class="badge-group">
               <span class="badge badge-concept">Concept</span>
@@ -1762,27 +1654,15 @@
             Long-term exploratory concept investigating small-scale liquid rocket motor thermodynamics, injector geometry, and propellant feed architectures. Currently in early theoretical consideration.
           </p>
 
+          <!-- Uncomment when you add photos:
           <details class="panel-details">
             <summary>Photo Album (Sketches / Schematics)</summary>
-            <div class="album-empty">No images uploaded yet — add &lt;figure class="album-item"&gt; blocks here when ready.</div>
+            <div class="album-grid"></div>
           </details>
+          -->
         </div>
       </article>
 
-    </section>
-
-    <!-- MULTI-SEGMENT INTERACTIVE PROJECT TIMELINE (BOTTOM) -->
-    <section id="timeline" class="timeline-box" aria-label="Project timeline">
-      <div class="timeline-header">
-        <h2>Build Timeline // Active Phases &amp; Pauses</h2>
-        <div class="timeline-legend">
-          <span class="legend-paused">Paused / On Hold</span>
-          <span>Hover bar for details · Click to jump ↑</span>
-        </div>
-      </div>
-      <div class="gantt-wrapper">
-        <div class="gantt-chart" id="gantt-chart"></div>
-      </div>
     </section>
 
     <!-- CONTACT & AFFILIATIONS PANEL -->
@@ -1792,8 +1672,7 @@
         <p>Cybernetics &amp; Robotics at CTU FEE · Avionics &amp; PR at CTU Space Research · Prague, CZ</p>
       </div>
       <div class="header-links">
-        <!-- Replace with your real email / LinkedIn when ready -->
-        <a class="btn-link" href="mailto:natanael@example.com">Email ↗</a>
+        <a class="btn-link" href="mailto:natanaelcandik@seznam.cz">natanaelcandik@seznam.cz ↗</a>
       </div>
     </section>
 
@@ -1840,83 +1719,7 @@
       });
     });
 
-    // 1. Multi-Segment Dynamic Gantt Timeline Generator (Proportional Year Ticks)
-    (function buildTimeline() {
-      const container = document.getElementById('gantt-chart');
-      const cards = Array.from(document.querySelectorAll('.project-card[data-segments]'));
-      if (!container || !cards.length) return;
-
-      const parseMonth = (str) => {
-        const [y, m] = str.trim().split('-').map(Number);
-        return y * 12 + (m - 1);
-      };
-
-      const parsedProjects = cards.map(card => {
-        const segments = card.dataset.segments.split('|').map(seg => {
-          const [startStr, endStr, barClass, label] = seg.split(':').map(s => s.trim());
-          return {
-            startStr,
-            endStr,
-            start: parseMonth(startStr),
-            end: parseMonth(endStr) + 1,
-            barClass: barClass || 'bar-progress',
-            label: label || ''
-          };
-        }).sort((a, b) => a.start - b.start);
-        return { card, segments };
-      });
-
-      const allStarts = parsedProjects.flatMap(p => p.segments.map(s => s.start));
-      const allEnds = parsedProjects.flatMap(p => p.segments.map(s => s.end));
-      const minM = Math.min(...allStarts);
-      const maxM = Math.max(...allEnds);
-      const totalSpan = Math.max(maxM - minM, 1);
-
-      // Proportional Year Axis Header
-      const axis = document.createElement('div');
-      axis.className = 'gantt-axis';
-      const ticksHtml = [];
-      const minYear = Math.floor(minM / 12);
-      const maxYear = Math.floor((maxM - 1) / 12);
-      for (let y = minYear; y <= maxYear; y++) {
-        const yearStartMonth = Math.max(y * 12, minM);
-        const leftPct = ((yearStartMonth - minM) / totalSpan) * 100;
-        ticksHtml.push(`<span class="gantt-tick-label" style="left: ${leftPct.toFixed(2)}%;">${y}</span>`);
-      }
-      axis.innerHTML = `<div>PROJECT</div><div class="gantt-ticks">${ticksHtml.join('')}</div>`;
-      container.appendChild(axis);
-
-      // Rows
-      parsedProjects.forEach(({ card, segments }) => {
-        const row = document.createElement('div');
-        row.className = 'gantt-row';
-        row.dataset.status = card.dataset.status;
-
-        let trackInnerHtml = '';
-        segments.forEach((seg, idx) => {
-          if (idx > 0 && seg.start > segments[idx - 1].end) {
-            const gapLeft = ((segments[idx - 1].end - minM) / totalSpan) * 100;
-            const gapWidth = ((seg.start - segments[idx - 1].end) / totalSpan) * 100;
-            trackInnerHtml += `<div class="gantt-pause-line" style="left: ${gapLeft.toFixed(2)}%; width: ${gapWidth.toFixed(2)}%;" title="Paused (${segments[idx - 1].endStr} → ${seg.startStr})"></div>`;
-          }
-          const leftPct = ((seg.start - minM) / totalSpan) * 100;
-          const widthPct = Math.max(((seg.end - seg.start) / totalSpan) * 100, 3.5);
-          const displayLabel = widthPct < 9 ? '' : seg.label;
-          const tooltip = `${seg.label} (${seg.startStr} – ${seg.endStr})`;
-          trackInnerHtml += `<div class="gantt-bar ${seg.barClass}" title="${tooltip}" style="left: ${leftPct.toFixed(2)}%; width: ${widthPct.toFixed(2)}%;">${displayLabel}</div>`;
-        });
-
-        row.innerHTML = `
-          <div class="gantt-label" title="${card.dataset.title}">${card.dataset.title}</div>
-          <div class="gantt-track">${trackInnerHtml}</div>
-        `;
-
-        row.addEventListener('click', () => jumpToProject(card));
-        container.appendChild(row);
-      });
-    })();
-
-    // 2. Status Filter Logic (Filters both Cards and Timeline Rows)
+    // Status Filter Logic
     const buttons = document.querySelectorAll('.filter-btn');
     const cards = document.querySelectorAll('.project-card');
 
@@ -1926,9 +1729,7 @@
         btn.classList.add('active');
 
         const filter = btn.dataset.filter;
-        const rows = document.querySelectorAll('.gantt-row');
-
-        [...cards, ...rows].forEach(el => {
+        cards.forEach(el => {
           const statuses = el.dataset.status.split(' ');
           if (filter === 'all' || statuses.includes(filter)) {
             el.classList.remove('hidden');
@@ -1939,7 +1740,7 @@
       });
     });
 
-    // 3. Photo Album Lightbox Logic (Scoped per project album)
+    // Photo Album Lightbox Logic (Scoped per project album)
     const lightbox = document.getElementById('lightbox');
     const lbImg = document.getElementById('lb-img');
     const lbCaption = document.getElementById('lb-caption');
