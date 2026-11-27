@@ -1,0 +1,2073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Natanael Čandík — Hardware, Avionics &amp; Embedded Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500;600;700;800&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --page-bg-image: url('pictures/background.jpeg');
+
+      /* Matte Carbon + Pastel Earthy Palette */
+      --bg: #0b0b0c;
+      --surface: rgba(20, 20, 22, 0.88);
+      --surface-solid: #141416;
+      --border: rgba(231, 229, 228, 0.11);
+      --border-hover: rgba(163, 184, 153, 0.45);
+      --text: #f5f5f4;
+      --muted: #a8a29e;
+      --accent: #a3b899;         /* Pastel Sage (try #93b4c8 steel blue or #dfb16b warm brass) */
+      --accent-warm: #d4a373;    /* Soft Sand / Clay */
+
+      /* Status Colors */
+      --st-worked: #84a98c;      /* Sage Moss */
+      --st-partial: #d4b475;     /* Warm Ochre / Brass */
+      --st-untested: #7fb3a6;    /* Lichen Teal */
+      --st-progress: #7f9eb2;    /* Dusty Slate */
+      --st-redesign: #d49a79;    /* Terracotta Clay */
+      --st-failed: #c97b74;      /* Muted Rust */
+      --st-concept: #a899b5;     /* Heather Stone */
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Engineered Display Font (Full Czech Diacritic Support) */
+    h1,
+    .eyebrow,
+    .cap-card h2,
+    .featured-card h3,
+    .featured-cta,
+    .sub-jumper,
+    .program-bar-label,
+    .tracker-step,
+    .section-title,
+    .card-top h3,
+    .time-tag,
+    .badge,
+    .filter-btn,
+    .contact-panel h2,
+    button {
+      font-family: 'Oxanium', 'Ubuntu', sans-serif;
+    }
+
+    /* Full-Page Background Image + Warm Amber Glow + Subtle Grid */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        radial-gradient(circle at 75% 18%, rgba(234, 179, 8, 0.11), transparent 55%),
+        linear-gradient(to bottom, rgba(16, 15, 13, 0.72), rgba(11, 11, 12, 0.91)),
+        var(--page-bg-image);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(163, 184, 153, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(163, 184, 153, 0.04) 1px, transparent 1px);
+      background-size: 36px 36px;
+      pointer-events: none;
+    }
+
+    /* Custom Dark Scrollbars */
+    html,
+    pre.fsm-diagram {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(163, 184, 153, 0.4) rgba(11, 11, 12, 0.9);
+    }
+
+    html::-webkit-scrollbar,
+    pre.fsm-diagram::-webkit-scrollbar {
+      width: 8px;
+      height: 6px;
+    }
+
+    html::-webkit-scrollbar-track,
+    pre.fsm-diagram::-webkit-scrollbar-track {
+      background: rgba(11, 11, 12, 0.9);
+      border-radius: 999px;
+    }
+
+    html::-webkit-scrollbar-thumb,
+    pre.fsm-diagram::-webkit-scrollbar-thumb {
+      background: rgba(163, 184, 153, 0.4);
+      border-radius: 999px;
+    }
+
+    html::-webkit-scrollbar-thumb:hover,
+    pre.fsm-diagram::-webkit-scrollbar-thumb:hover {
+      background: rgba(163, 184, 153, 0.7);
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 4.25rem 1.5rem 3rem;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 2rem;
+      padding-bottom: 1.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-warm);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-size: clamp(2.3rem, 5vw, 3.25rem);
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      line-height: 1.12;
+      margin-bottom: 0.85rem;
+      background: linear-gradient(135deg, #f5f5f4 35%, #d6d3d1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .tagline {
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.7;
+      max-width: 740px;
+      margin-bottom: 1.35rem;
+    }
+
+    .header-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.5rem 0.95rem;
+      border-radius: 6px;
+      background: rgba(28, 27, 29, 0.85);
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .btn-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    /* 1. Core Capabilities Strip */
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.25rem;
+      scroll-margin-top: 1.5rem;
+    }
+
+    .cap-card {
+      background: rgba(20, 20, 22, 0.84);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.05rem 1.2rem;
+      min-width: 0;
+      overflow-wrap: break-word;
+    }
+
+    .cap-card h2 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 0.65rem;
+    }
+
+    .cap-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.84rem;
+      color: #d6d3d1;
+      line-height: 1.48;
+    }
+
+    .cap-list li strong {
+      color: var(--accent-warm);
+      font-family: 'Oxanium', sans-serif;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-bottom: 0.04rem;
+    }
+
+    /* 2. Featured Project Jumpers */
+    .featured-section {
+      margin-bottom: 2.5rem;
+      scroll-margin-top: 1.5rem;
+    }
+
+    .featured-header {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .featured-header::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .featured-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(155deg, rgba(24, 25, 26, 0.92), rgba(16, 16, 18, 0.95));
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.2rem 1.3rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .featured-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      box-shadow: 0 10px 26px -10px rgba(0, 0, 0, 0.75);
+    }
+
+    .featured-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .featured-index {
+      font-family: 'Oxanium', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--accent-warm);
+    }
+
+    .featured-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+
+    .featured-focus {
+      font-size: 0.85rem;
+      color: #d6d3d1;
+      line-height: 1.55;
+      margin-bottom: 1rem;
+    }
+
+    .featured-focus strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .featured-cta {
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: color 0.2s ease;
+    }
+
+    .featured-card:hover .featured-cta {
+      color: var(--accent);
+    }
+
+    /* Multi-Jumper Grid inside X65 Featured Card & Program Strip */
+    .sub-jumper-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.42rem;
+      margin-top: 0.15rem;
+    }
+
+    .sub-jumper {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.35rem;
+      padding: 0.38rem 0.6rem;
+      border-radius: 6px;
+      background: rgba(11, 11, 12, 0.78);
+      border: 1px solid var(--border);
+      color: #d6d3d1;
+      text-decoration: none;
+      font-size: 0.71rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      transition: all 0.18s ease;
+    }
+
+    .sub-jumper:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(163, 184, 153, 0.12);
+    }
+
+    .sub-jumper.rd-jump:hover {
+      border-color: var(--st-concept);
+      color: var(--st-concept);
+      background: rgba(168, 153, 181, 0.12);
+    }
+
+    .program-jump-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(20, 20, 22, 0.78);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .program-bar-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-warm);
+      margin-right: 0.25rem;
+    }
+
+    .program-jump-bar .sub-jumper {
+      padding: 0.34rem 0.72rem;
+      font-size: 0.74rem;
+    }
+
+    /* Development Status Tracker (Inside Unfinished Project Cards) */
+    .dev-tracker {
+      background: rgba(11, 11, 12, 0.74);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .tracker-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .tracker-title {
+      font-family: 'Oxanium', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+
+    .tracker-stage-label {
+      font-family: 'Oxanium', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent-warm);
+    }
+
+    .tracker-steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.45rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .tracker-step {
+      display: flex;
+      flex-direction: column;
+      gap: 0.32rem;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--muted);
+    }
+
+    .tracker-bar {
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(231, 229, 228, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tracker-step.done {
+      color: var(--st-worked);
+    }
+
+    .tracker-step.done .tracker-bar {
+      background: var(--st-worked);
+    }
+
+    .tracker-step.warn {
+      color: var(--st-failed);
+    }
+
+    .tracker-step.warn .tracker-bar {
+      background: var(--st-failed);
+    }
+
+    .tracker-step.active {
+      color: var(--text);
+    }
+
+    .tracker-step.active .tracker-bar {
+      background: var(--st-progress);
+      box-shadow: 0 0 8px rgba(127, 158, 178, 0.55);
+    }
+
+    .tracker-step.active.rework .tracker-bar {
+      background: var(--st-redesign);
+      box-shadow: 0 0 8px rgba(212, 154, 121, 0.55);
+    }
+
+    .tracker-step.active.ready .tracker-bar {
+      background: var(--st-untested);
+      box-shadow: 0 0 8px rgba(127, 179, 166, 0.55);
+    }
+
+    .tracker-now {
+      font-size: 0.86rem;
+      color: #d6d3d1;
+      line-height: 1.55;
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba(231, 229, 228, 0.07);
+    }
+
+    .tracker-now strong {
+      color: var(--text);
+    }
+
+    @media (max-width: 600px) {
+      .tracker-steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .sub-jumper-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .filter-btn {
+      background: rgba(20, 20, 22, 0.84);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      color: var(--text);
+      border-color: var(--accent);
+      background: rgba(163, 184, 153, 0.14);
+    }
+
+    /* Section Titles */
+    .section-title {
+      font-size: 0.86rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin: 2.5rem 0 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Project Cards */
+    .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      position: relative;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background-color: var(--surface-solid);
+      scroll-margin-top: 2rem;
+      transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(125deg, rgba(14, 14, 16, 0.95) 35%, rgba(20, 20, 22, 0.8) 100%),
+        var(--bg-image, none);
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.4s ease;
+    }
+
+    .project-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.7);
+    }
+
+    .project-card:hover::before {
+      transform: scale(1.02);
+    }
+
+    .project-card.highlight-pulse {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(163, 184, 153, 0.35);
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 1;
+      padding: 1.85rem;
+      backdrop-filter: blur(4px);
+      min-width: 0;
+      overflow-wrap: break-word;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 0.95rem;
+    }
+
+    .card-top > div:first-child {
+      min-width: 0;
+      flex: 1 1 260px;
+    }
+
+    .card-top h3 {
+      font-size: 1.32rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+
+    .card-meta-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0.3rem;
+    }
+
+    .card-subtitle {
+      font-size: 0.86rem;
+      color: var(--accent-warm);
+    }
+
+    .time-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.16rem 0.55rem;
+      border-radius: 4px;
+      background: rgba(231, 229, 228, 0.06);
+      border: 1px solid rgba(231, 229, 228, 0.14);
+      color: #d6d3d1;
+    }
+
+    .time-tag.finished {
+      border-color: rgba(132, 169, 140, 0.35);
+      color: var(--st-worked);
+    }
+
+    .time-tag.updated {
+      border-color: rgba(127, 158, 178, 0.35);
+      color: var(--st-progress);
+    }
+
+    .badge-group {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
+    /* Status Badges */
+    .badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.7rem;
+      border-radius: 6px;
+      border: 1px solid currentColor;
+      white-space: nowrap;
+    }
+
+    .badge-worked   { color: var(--st-worked);   background: rgba(132, 169, 140, 0.13); }
+    .badge-partial  { color: var(--st-partial);  background: rgba(212, 180, 117, 0.14); }
+    .badge-untested { color: var(--st-untested); background: rgba(127, 179, 166, 0.13); }
+    .badge-progress { color: var(--st-progress); background: rgba(127, 158, 178, 0.14); }
+    .badge-redesign { color: var(--st-redesign); background: rgba(212, 154, 121, 0.14); }
+    .badge-failed   { color: var(--st-failed);   background: rgba(201, 123, 116, 0.14); }
+    .badge-concept  { color: var(--st-concept);  background: rgba(168, 153, 181, 0.14); }
+
+    .card-desc {
+      color: #d6d3d1;
+      font-size: 0.96rem;
+      line-height: 1.65;
+      margin-bottom: 1.35rem;
+    }
+
+    /* Engineering Note Callout */
+    .eng-note {
+      background: rgba(11, 11, 12, 0.68);
+      border-left: 3px solid var(--accent);
+      padding: 0.8rem 1rem;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.89rem;
+      line-height: 1.6;
+      color: var(--muted);
+      margin-bottom: 1.35rem;
+    }
+
+    .eng-note.warn { border-left-color: var(--st-failed); }
+    .eng-note.amber { border-left-color: var(--st-redesign); }
+    .eng-note.partial { border-left-color: var(--st-partial); }
+    .eng-note.concept { border-left-color: var(--st-concept); }
+    .eng-note strong { color: var(--text); }
+
+    /* Spec Grid */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .specs-grid:last-child {
+      margin-bottom: 0;
+    }
+
+    .spec-box {
+      background: rgba(11, 11, 12, 0.68);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.68rem 0.85rem;
+      min-width: 0;
+      overflow-wrap: break-word;
+    }
+
+    .spec-box span {
+      display: block;
+      font-family: 'Oxanium', sans-serif;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .spec-box strong {
+      font-size: 0.88rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Collapsible Panels (State Machine & Photo Album) */
+    details.panel-details {
+      margin-top: 0.75rem;
+      background: rgba(9, 9, 10, 0.88);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    details.panel-details:last-child {
+      margin-bottom: 0;
+    }
+
+    details.panel-details summary {
+      padding: 0.68rem 1rem;
+      font-family: 'Oxanium', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent);
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      transition: background 0.15s ease;
+    }
+
+    details.panel-details summary:hover {
+      background: rgba(163, 184, 153, 0.08);
+    }
+
+    details.panel-details summary::-webkit-details-marker { display: none; }
+
+    details.panel-details summary::after {
+      content: "[ + Expand ]";
+      font-size: 0.74rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    details.panel-details[open] summary::after {
+      content: "[ − Collapse ]";
+    }
+
+    pre.fsm-diagram {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.76rem;
+      line-height: 1.45;
+      color: #d6d3d1;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    /* Photo Album Grid */
+    .album-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0.75rem;
+      padding: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .album-item {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #141416;
+      cursor: zoom-in;
+    }
+
+    .album-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.25s ease;
+    }
+
+    .album-item:hover img {
+      transform: scale(1.06);
+    }
+
+    .album-caption {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 0.35rem 0.5rem;
+      background: linear-gradient(transparent, rgba(11, 11, 12, 0.94));
+      font-size: 0.72rem;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Concepts Grid */
+    .concepts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .hidden { display: none !important; }
+
+    /* Lightbox Modal */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(8, 8, 9, 0.95);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .lightbox.hidden { display: none; }
+
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 78vh;
+      border-radius: 8px;
+      border: 1px solid var(--border-hover);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+    }
+
+    .lightbox-caption {
+      margin-top: 0.85rem;
+      font-size: 0.88rem;
+      color: var(--text);
+      text-align: center;
+    }
+
+    .lightbox-controls {
+      position: fixed;
+      top: 1.25rem;
+      right: 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .lb-btn {
+      background: rgba(28, 27, 29, 0.88);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.84rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .lb-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .lb-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.25rem;
+      padding: 0.75rem 1rem;
+    }
+
+    .lb-prev { left: 1rem; }
+    .lb-next { right: 1rem; }
+
+    /* Contact Panel & Footer */
+    .contact-panel {
+      margin-top: 3rem;
+      background: rgba(20, 20, 22, 0.84);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      scroll-margin-top: 1.5rem;
+    }
+
+    .contact-panel h2 {
+      font-size: 1.15rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-panel p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 1.75rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="eyebrow">Prague, CZ // Hardware // Avionics // Embedded Systems</div>
+      <h1>Natanael Čandík</h1>
+      <p class="tagline">
+        Cybernetics and Robotics student at CTU FEE. Member of Avionics and PR subsections of CTU Space Research. 3D modelling and 3D printer design.
+      </p>
+      <div class="header-links">
+        <a class="btn-link" href="#capabilities">Skills ↓</a>
+        <a class="btn-link" href="#featured">Featured Builds ↓</a>
+        <a class="btn-link" href="#contact">Contact ↓</a>
+      </div>
+    </header>
+
+    <!-- 1. CORE CAPABILITIES STRIP -->
+    <section id="capabilities" class="capabilities-grid" aria-label="Core engineering capabilities">
+      <div class="cap-card">
+        <h2>01 // CAD &amp; Additive Mfg.</h2>
+        <ul class="cap-list">
+          <li><strong>Design &amp; Mesh</strong>Fusion 360 (parts, enclosures, ducts) &amp; Blender</li>
+          <li><strong>Materials</strong>GF/CF engineering polymers &amp; high-temp filaments</li>
+          <li><strong>Production</strong>Additive optimization &amp; freelance small-batch runs</li>
+        </ul>
+      </div>
+      <div class="cap-card">
+        <h2>02 // Embedded &amp; Linux SBCs</h2>
+        <ul class="cap-list">
+          <li><strong>Platforms</strong>STM32, ESP32, Arduino &amp; Raspberry / Orange Pi</li>
+          <li><strong>Interfacing</strong>Closed-loop, analog &amp; digital sensors, displays</li>
+          <li><strong>Firmware</strong>Klipper kinematics, CAN/USB &amp; state machines</li>
+        </ul>
+      </div>
+      <div class="cap-card">
+        <h2>03 // PCBs &amp; Power Systems</h2>
+        <ul class="cap-list">
+          <li><strong>Custom Boards</strong>Active pressure regulation &amp; eFuse protection PCBs</li>
+          <li><strong>Power &amp; Test</strong>Custom PSUs, distribution boards &amp; protoboard rigs</li>
+          <li><strong>Focus</strong>Sensor conditioning &amp; iterative board layout</li>
+        </ul>
+      </div>
+      <div class="cap-card">
+        <h2>04 // Hands-On Fabrication</h2>
+        <ul class="cap-list">
+          <li><strong>Electronics</strong>Fine-pitch SMT soldering &amp; harness assembly</li>
+          <li><strong>Workshop</strong>Welding &amp; woodworking</li>
+          <li><strong>Next Up</strong>Composite layups &amp; manual lathe machining</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 2. FEATURED PROJECT JUMPERS -->
+    <section id="featured" class="featured-section" aria-label="Featured active projects">
+      <div class="featured-header">Featured Active Builds // Quick Jump</div>
+      <div class="featured-grid">
+        <div class="featured-card">
+          <div>
+            <div class="featured-top">
+              <span class="featured-index">01 // X65 AETHER UAV PROGRAM</span>
+              <span class="badge badge-progress">4 Subsystems</span>
+            </div>
+            <h3>X65 Aether</h3>
+            <p class="featured-focus">
+              <strong>Now:</strong> Designing the <strong>Cephalon v1</strong> flight controller, iterating wing planforms with active canards, and researching a 5.8 GHz FMCW radar payload.
+            </p>
+          </div>
+          <div class="sub-jumper-grid" aria-label="X65 Aether subsystem quick jumpers">
+            <a class="sub-jumper jumper-link" href="#proj-aether-airframe" data-target="proj-aether-airframe">
+              <span>01. Airframe &amp; Canards</span><span>↓</span>
+            </a>
+            <a class="sub-jumper jumper-link" href="#proj-aether-fc" data-target="proj-aether-fc">
+              <span>02. Cephalon v1 FC</span><span>↓</span>
+            </a>
+            <a class="sub-jumper jumper-link" href="#proj-aether-fw" data-target="proj-aether-fw">
+              <span>03. Flight Firmware</span><span>↓</span>
+            </a>
+            <a class="sub-jumper rd-jump jumper-link" href="#proj-aether-radar" data-target="proj-aether-radar">
+              <span>04. 5.8 GHz Radar R&amp;D</span><span>↓</span>
+            </a>
+          </div>
+        </div>
+
+        <a class="featured-card jumper-link" href="#proj-hexcore" data-target="proj-hexcore">
+          <div>
+            <div class="featured-top">
+              <span class="featured-index">02 // ADDITIVE SYSTEMS</span>
+              <span class="badge badge-progress">In Progress</span>
+            </div>
+            <h3>Hexcore CoreXY</h3>
+            <p class="featured-focus">
+              <strong>Now:</strong> Reprinting structural components in ABS-GF and redesigning the toolhead belt hold-down mechanism.
+            </p>
+          </div>
+          <span class="featured-cta">Jump to build &amp; status ↓</span>
+        </a>
+
+        <a class="featured-card jumper-link" href="#proj-pressure" data-target="proj-pressure">
+          <div>
+            <div class="featured-top">
+              <span class="featured-index">03 // CTU SPACE RESEARCH</span>
+              <span class="badge badge-progress">In Progress</span>
+            </div>
+            <h3>Active Pressure Reg. Board</h3>
+            <p class="featured-focus">
+              <strong>Now:</strong> Selecting pressure/thermal front-end components and drawing schematics for the multi-channel CAN/USB control PCB.
+            </p>
+          </div>
+          <span class="featured-cta">Jump to build &amp; status ↓</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Status Filter Buttons -->
+    <div class="filter-bar" role="group" aria-label="Filter projects by status">
+      <button class="filter-btn active" data-filter="all">All Projects</button>
+      <button class="filter-btn" data-filter="worked">Built - Worked</button>
+      <button class="filter-btn" data-filter="partial">Partial Pass</button>
+      <button class="filter-btn" data-filter="progress">Build in Progress</button>
+      <button class="filter-btn" data-filter="redesign">Redesign</button>
+      <button class="filter-btn" data-filter="untested">Built - Untested</button>
+      <button class="filter-btn" data-filter="concept">Concepts</button>
+    </div>
+
+    <!-- ===================================================================
+         X65 AETHER PROGRAM — SPLIT SUBSYSTEM PROJECTS
+         =================================================================== -->
+    <div class="section-title" data-section-group="x65">X65 Aether UAV Program // Split Subsystems</div>
+
+    <div class="program-jump-bar" data-section-group="x65" aria-label="X65 Aether subsystem navigation">
+      <span class="program-bar-label">X65 Jumpers:</span>
+      <a class="sub-jumper jumper-link" href="#proj-aether-airframe" data-target="proj-aether-airframe">01. Airframe &amp; Canards ↓</a>
+      <a class="sub-jumper jumper-link" href="#proj-aether-fc" data-target="proj-aether-fc">02. Cephalon v1 FC ↓</a>
+      <a class="sub-jumper jumper-link" href="#proj-aether-fw" data-target="proj-aether-fw">03. Flight Firmware ↓</a>
+      <a class="sub-jumper rd-jump jumper-link" href="#proj-aether-radar" data-target="proj-aether-radar">04. 5.8 GHz Radar R&amp;D ↓</a>
+    </div>
+
+    <section class="projects-list" data-section-group="x65">
+
+      <!-- ===================================================================
+           X65 SUBPROJECT 01: AIRFRAME, FUSELAGE & ACTIVE CANARDS
+           =================================================================== -->
+      <article id="proj-aether-airframe" class="project-card"
+               data-status="progress"
+               style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>X65 Aether — Airframe, Fuselage &amp; Active Canards</h3>
+              <div class="card-meta-row">
+                <span class="card-subtitle">X65 Subsystem 01 · 65cm Flying Wing, Active Canards &amp; 64mm EDF Packaging</span>
+                <span class="time-tag updated">Last Update: Nov 2026</span>
+              </div>
+            </div>
+            <div class="badge-group">
+              <span class="badge badge-progress">Build in Progress</span>
+            </div>
+          </div>
+          <p class="card-desc">
+            Aerodynamic and structural CAD design of the compact 65cm wingspan X65 Aether UAV, powered via the <strong>Cephalon v1</strong> flight controller. Currently evaluating wing planforms and airfoil profiles, integrating newly added <strong>active canards</strong> for pitch and maneuver authority, and shaping the central fuselage around the selected <strong>64mm EDF</strong> ducting while reserving nose volume for a potential front-end radar payload.
+          </p>
+
+          <!-- Development Status Tracker -->
+          <div class="dev-tracker" aria-label="X65 Airframe development progress">
+            <div class="tracker-header">
+              <span class="tracker-title">Development Status Tracker</span>
+              <span class="tracker-stage-label">Stage 2 of 5 // Wing Planform &amp; Fuselage CAD</span>
+            </div>
+            <div class="tracker-steps">
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>01. Concept</span>
+              </div>
+              <div class="tracker-step active">
+                <div class="tracker-bar"></div>
+                <span>02. Wing &amp; Canard CAD</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>03. Airframe Print</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>04. Static &amp; Thrust</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>05. Maiden Flight</span>
+              </div>
+            </div>
+            <div class="tracker-now">
+              <strong>Currently Working On:</strong> Comparing candidate wing shapes and airfoil sections in CAD, integrating active canard pivot/linkage geometry, and packaging the 64mm EDF alongside reserved nose space for a possible radar front-end.
+            </div>
+          </div>
+
+          <div class="specs-grid">
+            <div class="spec-box"><span>Airframe</span><strong>65 cm Wing + Active Canards</strong></div>
+            <div class="spec-box"><span>Propulsion</span><strong>64mm Electric Ducted Fan (EDF)</strong></div>
+            <div class="spec-box"><span>Avionics Core</span><strong>Cephalon v1 Flight Controller</strong></div>
+            <div class="spec-box"><span>Fuselage Packaging</span><strong>EDF Duct + Nose Radar Bay</strong></div>
+          </div>
+
+          <details class="panel-details">
+            <summary>Photo Album (X65 Airfoil &amp; Fuselage Studies)</summary>
+            <div class="album-grid">
+              <figure class="album-item">
+                <img src="pictures/X65/X65_wing_shape_2.png" alt="Wing shape concept profile view" loading="lazy">
+                <figcaption class="album-caption">Wing shape concept profile view</figcaption>
+              </figure>
+              <figure class="album-item">
+                <img src="pictures/X65/X65_wing_shape_1.png" alt="Wing shape concept back view" loading="lazy">
+                <figcaption class="album-caption">Wing shape concept back view</figcaption>
+              </figure>
+              <figure class="album-item">
+                <img src="pictures/X65/X65_fuselage_concept.png" alt="Fuselage concept" loading="lazy">
+                <figcaption class="album-caption">Fuselage concept</figcaption>
+              </figure>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           X65 SUBPROJECT 02: CEPHALON V1 FLIGHT CONTROLLER
+           =================================================================== -->
+      <article id="proj-aether-fc" class="project-card"
+               data-status="progress"
+               style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>X65 Aether — Cephalon v1 Flight Controller</h3>
+              <div class="card-meta-row">
+                <span class="card-subtitle">X65 Subsystem 02 · Custom STM32F401 Avionics PCB &amp; Navigation Sensor Suite</span>
+                <span class="time-tag updated">Last Update: Nov 2026</span>
+              </div>
+            </div>
+            <div class="badge-group">
+              <span class="badge badge-progress">Build in Progress</span>
+            </div>
+          </div>
+          <p class="card-desc">
+            <strong>Cephalon v1</strong> is the custom flight controller PCB designed around the <strong>STM32F401RET6</strong> microcontroller to serve as the primary avionics head for X65 Aether. Integrates an onboard <strong>BMI270</strong> 6-axis IMU, <strong>BMP180</strong> barometric pressure sensor, <strong>QMC5883L</strong> 3-axis magnetometer, and dedicated UART/power interfacing for a <strong>u-blox GPS</strong> module, plus PWM outputs for the COTS EDF ESC, elevons, and active canard servos.
+          </p>
+
+          <!-- Development Status Tracker -->
+          <div class="dev-tracker" aria-label="Cephalon v1 development progress">
+            <div class="tracker-header">
+              <span class="tracker-title">Development Status Tracker</span>
+              <span class="tracker-stage-label">Stage 2 of 5 // Schematic Capture &amp; PCB Layout</span>
+            </div>
+            <div class="tracker-steps">
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>01. MCU &amp; Sensor Spec</span>
+              </div>
+              <div class="tracker-step active">
+                <div class="tracker-bar"></div>
+                <span>02. Schematics &amp; PCB</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>03. Board Fab &amp; SMT</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>04. Sensor Bring-Up</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>05. Airframe Integration</span>
+              </div>
+            </div>
+            <div class="tracker-now">
+              <strong>Currently Working On:</strong> Drawing schematics and laying out the Cephalon v1 PCB, routing low-noise SPI/I²C buses for the BMI270, BMP180, and QMC5883L, and provisioning connector footprints for the u-blox GPS and canard/elevon actuators.
+            </div>
+          </div>
+
+          <div class="specs-grid">
+            <div class="spec-box"><span>MCU</span><strong>STM32F401RET6 (ARM Cortex-M4)</strong></div>
+            <div class="spec-box"><span>Inertial &amp; Baro</span><strong>BMI270 IMU + BMP180 Barometer</strong></div>
+            <div class="spec-box"><span>Heading &amp; GNSS</span><strong>QMC5883L Mag + u-blox GPS</strong></div>
+            <div class="spec-box"><span>Control Outputs</span><strong>64mm EDF ESC + Canards/Elevons</strong></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           X65 SUBPROJECT 03: FLIGHT FIRMWARE & CONTROL MIXING
+           =================================================================== -->
+      <article id="proj-aether-fw" class="project-card"
+               data-status="concept"
+               style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>X65 Aether — Flight Firmware &amp; Active Canard Mixing</h3>
+              <div class="card-meta-row">
+                <span class="card-subtitle">X65 Subsystem 03 · Embedded Control Loops &amp; Sensor Fusion for Cephalon v1</span>
+                <span class="time-tag updated">Planned Architecture · Nov 2026</span>
+              </div>
+            </div>
+            <div class="badge-group">
+              <span class="badge badge-concept">Concept</span>
+            </div>
+          </div>
+          <p class="card-desc">
+            Planned embedded flight software stack targeting the <strong>Cephalon v1</strong> (STM32F401RET6) flight controller. Focused on high-rate IMU sampling (BMI270), attitude and altitude sensor fusion (QMC5883L + BMP180 + u-blox GNSS), and coupled control surface mixing across the flying-wing elevons and active canards.
+          </p>
+
+          <div class="specs-grid">
+            <div class="spec-box"><span>Target Hardware</span><strong>Cephalon v1 (STM32F401RET6)</strong></div>
+            <div class="spec-box"><span>Sensor Fusion</span><strong>BMI270 · BMP180 · QMC5883L · u-blox</strong></div>
+            <div class="spec-box"><span>Control Surfaces</span><strong>Active Canard + Elevon Mixing</strong></div>
+            <div class="spec-box"><span>Current Phase</span><strong>Architecture &amp; Pinout Mapping</strong></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           X65 SUBPROJECT 04: 5.8 GHZ FMCW RADAR FEASIBILITY R&D
+           =================================================================== -->
+      <article id="proj-aether-radar" class="project-card"
+               data-status="concept"
+               style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>X65 Aether — 5.8 GHz FMCW Radar Feasibility Study</h3>
+              <div class="card-meta-row">
+                <span class="card-subtitle">X65 Subsystem 04 · Exploratory Obstacle Avoidance &amp; Terrain Following</span>
+                <span class="time-tag updated">Research Phase · Nov 2026</span>
+              </div>
+            </div>
+            <div class="badge-group">
+              <span class="badge badge-concept">Concept</span>
+            </div>
+          </div>
+          <p class="card-desc">
+            Exploratory RF and signal-processing research investigating the feasibility of designing a custom <strong>5.8 GHz FMCW (Frequency-Modulated Continuous-Wave) radar</strong> for forward obstacle avoidance and terrain following on X65 Aether.
+          </p>
+
+          <div class="eng-note concept">
+            <strong>Trade-Off &amp; Feasibility Focus:</strong> Designing an RF radar transceiver and chirp-processing pipeline from scratch is complex and tightly constrained by size, weight, power (SWaP), and antenna aperture on a 65cm airframe. Current work focuses on evaluating whether building a custom 5.8 GHz unit is worth the complexity—while proactively designing the X65 fuselage nose around its envelope so it can be integrated with Cephalon v1 if viable.
+          </div>
+
+          <div class="specs-grid">
+            <div class="spec-box"><span>Radar Architecture</span><strong>5.8 GHz FMCW (ISM Band)</strong></div>
+            <div class="spec-box"><span>Target Roles</span><strong>Obstacle Avoidance &amp; Terrain Following</strong></div>
+            <div class="spec-box"><span>Airframe Provision</span><strong>Fuselage Nose Volume Reserved</strong></div>
+            <div class="spec-box"><span>Current Phase</span><strong>Feasibility &amp; SWaP Evaluation</strong></div>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <div class="section-title" data-section-group="other-builds">Other Hardware, Avionics &amp; Embedded Builds</div>
+
+    <section class="projects-list" data-section-group="other-builds">
+
+      <!-- ===================================================================
+           FEATURED 02: HEXCORE
+           =================================================================== -->
+      <article id="proj-hexcore" class="project-card"
+               data-status="progress redesign"
+               style="--bg-image: url('pictures/obrazek.png');">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>Hexcore — Enclosed CoreXY 3D Printer</h3>
+              <div class="card-meta-row">
+                <span class="card-subtitle">Featured Build · Custom Kinematics &amp; High-Temp Enclosure</span>
+                <span class="time-tag updated">Last Update: Jan 2026</span>
+              </div>
+            </div>
+            <div class="badge-group">
+              <span class="badge badge-progress">Build in Progress</span>
+              <span class="badge badge-redesign">Redesign</span>
+            </div>
+          </div>
+          <p class="card-desc">
+            A compact, enclosed 180×180mm CoreXY printer built for high-flow extrusion and engineering polymers. Features a carbon-filtered exhaust system, dual Meanwell power supplies, and triple independent Z-axis motors paired with a BTT Microprobe for automated tramming and bed leveling.
+          </p>
+
+          <!-- Development Status Tracker -->
+          <div class="dev-tracker" aria-label="Hexcore development progress">
+            <div class="tracker-header">
+              <span class="tracker-title">Development Status Tracker</span>
+              <span class="tracker-stage-label">Stage 3 of 5 // Material Upgrade &amp; Toolhead Rev</span>
+            </div>
+            <div class="tracker-steps">
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>01. Kinematics</span>
+              </div>
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>02. Frame Build</span>
+              </div>
+              <div class="tracker-step active rework">
+                <div class="tracker-bar"></div>
+                <span>03. ABS-GF &amp; Rev</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>04. Chamber &amp; Wiring</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>05. Calibration</span>
+              </div>
+            </div>
+            <div class="tracker-now">
+              <strong>Currently Working On:</strong> Reprinting key structural parts in glass-fiber ABS (ABS-GF) for higher thermal stiffness and redesigning the belt hold-down mechanism on the print head, alongside planning an active chamber heater before final commissioning.
+            </div>
+          </div>
+
+          <div class="specs-grid">
+            <div class="spec-box"><span>Build Volume</span><strong>180 × 180 mm Enclosed</strong></div>
+            <div class="spec-box"><span>Toolhead</span><strong>HGX-Lite + CR10 Cu Block</strong></div>
+            <div class="spec-box"><span>Electronics</span><strong>Mellow FLY D7 + Orange Pi</strong></div>
+            <div class="spec-box"><span>Z &amp; Probing</span><strong>Triple Z + BTT Microprobe</strong></div>
+          </div>
+
+          <details class="panel-details">
+            <summary>Photo Album (Hexcore Build)</summary>
+            <div class="album-grid">
+              <figure class="album-item">
+                <img src="pictures/obrazek.png" alt="Hexcore Frame & Gantry" loading="lazy">
+                <figcaption class="album-caption">Hexcore Assembly</figcaption>
+              </figure>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           FEATURED 03: ACTIVE PRESSURE REGULATION BOARD
+           =================================================================== -->
+      <article id="proj-pressure" class="project-card"
+               data-status="progress"
+               style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>Active Pressure Regulation Board</h3>
+              <div class="card-meta-row">
+                <span class="card-subtitle">Featured Build · CTU Space Research Multi-Sensor Control PCB</span>
+                <span class="time-tag updated">Last Update: Nov 2026</span>
+              </div>
+            </div>
+            <div class="badge-group">
+              <span class="badge badge-progress">Build in Progress</span>
+            </div>
+          </div>
+          <p class="card-desc">
+            Custom embedded controller developed within CTU Space Research for real-time closed-loop pressure monitoring and regulation, integrating multi-channel sensor acquisition with industrial bus communication.
+          </p>
+
+          <!-- Development Status Tracker -->
+          <div class="dev-tracker" aria-label="Active Pressure Regulation Board development progress">
+            <div class="tracker-header">
+              <span class="tracker-title">Development Status Tracker</span>
+              <span class="tracker-stage-label">Stage 2 of 5 // Component Selection &amp; Schematics</span>
+            </div>
+            <div class="tracker-steps">
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>01. Architecture</span>
+              </div>
+              <div class="tracker-step active">
+                <div class="tracker-bar"></div>
+                <span>02. Parts &amp; Schematics</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>03. PCB Layout</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>04. Assembly &amp; Bring-up</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>05. Closed-Loop Test</span>
+              </div>
+            </div>
+            <div class="tracker-now">
+              <strong>Currently Working On:</strong> Researching and qualifying components (transceiver front-ends, ADC/conditioning, and actuator drivers) and drawing the board schematics.
+            </div>
+          </div>
+
+          <div class="specs-grid">
+            <div class="spec-box"><span>Interfaces</span><strong>USB &amp; CAN Bus</strong></div>
+            <div class="spec-box"><span>Pressure Inputs</span><strong>6× Pressure Transceivers</strong></div>
+            <div class="spec-box"><span>Thermal</span><strong>2× Temperature Sensors</strong></div>
+            <div class="spec-box"><span>Feedback</span><strong>1× Position Sensor</strong></div>
+          </div>
+
+          <!-- Uncomment when you add photos:
+          <details class="panel-details">
+            <summary>Photo Album (PCB Layout &amp; Bench)</summary>
+            <div class="album-grid"></div>
+          </details>
+          -->
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           PROJECT 4: METRO EXPERIMENT PAYLOAD (EUROC -> DROP TOWER CONTINUATION)
+           =================================================================== -->
+      <article id="proj-euroc" class="project-card"
+               data-status="progress"
+               style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>METRO Experiment Payload — EuRoC Flight &amp; Drop-Tower Testing</h3>
+              <div class="card-meta-row">
+                <span class="card-subtitle">CTU Space Research &amp; CTU FME · Flight Electronics &amp; 50 Hz G-Sensing Firmware</span>
+                <span class="time-tag updated">EuRoC Oct 2026 · Active Drop-Tower Campaign</span>
+              </div>
+            </div>
+            <div class="badge-group">
+              <span class="badge badge-progress">Build in Progress</span>
+            </div>
+          </div>
+          <p class="card-desc">
+            Stepped in 4 days prior to the October 2026 European Rocketry Challenge (EuRoC) launch to complete the payload electronics and deterministic flight state machine for the METRO biological experiment demonstrator. Built around trajectory simulations, the firmware combines 50 Hz accelerometer thresholds (≥ 3.0 g launch trigger, &lt; 0.5 g microgravity entry) with simulation-derived forced timeout overrides (10 s and 25 s) to guarantee motor spin-up, Raspberry Pi imaging pulses, and CSV telemetry logging.
+          </p>
+
+          <!-- Development Status Tracker -->
+          <div class="dev-tracker" aria-label="METRO Experiment Payload development progress">
+            <div class="tracker-header">
+              <span class="tracker-title">Development Status Tracker</span>
+              <span class="tracker-stage-label">Stage 4 of 5 // CTU FME Drop-Tower Campaign</span>
+            </div>
+            <div class="tracker-steps">
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>01. 4-Day Integration</span>
+              </div>
+              <div class="tracker-step warn">
+                <div class="tracker-bar"></div>
+                <span>02. EuRoC Flight (Failed)</span>
+              </div>
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>03. Hardware Audit</span>
+              </div>
+              <div class="tracker-step active">
+                <div class="tracker-bar"></div>
+                <span>04. FME Drop Tower</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>05. Micro-G Validation</span>
+              </div>
+            </div>
+            <div class="tracker-now">
+              <strong>Currently Working On:</strong> Following the EuRoC flight failure, continuing development officially under the METRO experiment in collaboration with the <strong>CTU Faculty of Mechanical Engineering (FME)</strong> to execute ground-based microgravity drop-tower testing.
+            </div>
+          </div>
+
+          <div class="eng-note warn">
+            <strong>EuRoC Oct 2026 Flight Post-Mortem:</strong> Failed on EuRoC due to a hardware sensor failure that could not be repaired in time prior to launch, compounded by fluid leakage from the mechanical algae containment subsystem. Highlighted the need for modular sensor daughterboards and early integrated leak testing—lessons now being applied in the ground-based drop-tower test campaign.
+          </div>
+
+          <details class="panel-details">
+            <summary>View 50 Hz Flight State Machine Architecture</summary>
+            <pre class="fsm-diagram">        reset / setup()
+              │
+              ▼
+      ┌───────────────┐
+      │    WAITING    │  50 Hz sensing, no logging
+      └───────┬───────┘
+              │ |a| ≥ 3.0 g for 3 samples (60 ms)
+              │ / t=0, green LED on, strip on,
+              │   create LOGxxx.CSV, log TRIGGER
+              ▼
+      ┌───────────────┐
+      │    ACTIVE     │  logging @ 50 Hz
+      └───────┬───────┘
+              │ [t ≥ 5 s AND |a| &lt; 1.5 g for 3 samples]
+              │   OR [t ≥ 10 s]  &lt;-- sim-derived failsafe
+              │ / motor PWM = 63 (1/4 power), Pi pulse 1 s,
+              │   log MOTOR_ON_PI_PULSE
+              ▼
+      ┌───────────────┐
+      │ MOTOR_RUNNING │  logging @ 50 Hz
+      └───────┬───────┘
+              │ [t ≥ 2 s AND |a| &lt; 0.5 g for 3 samples]
+              │ / red LED on, log ZERO_G_DETECTED
+              │
+              │   ┌─ forced: t ≥ 25 s (sim-derived), from ACTIVE or MOTOR_RUNNING
+              │   │  / red LED on, log ZERO_G_FORCED_TIMEOUT
+              ▼   ▼
+      ┌──────────────────┐
+      │ ZERO_G_DETECTED  │  still logging, motor still on
+      └────────┬─────────┘
+               │ 100 s after entry
+               │ / log SYSTEM_SHUTDOWN, all outputs off, close file
+               ▼
+      ┌───────────────┐
+      │   INACTIVE    │  loop returns early; only power cycle exits.
+      └───────────────┘</pre>
+          </details>
+
+          <details class="panel-details">
+            <summary>Photo Album (EuRoC Payload Integration)</summary>
+            <div class="album-grid">
+              <figure class="album-item">
+                <img src="pictures/payload/closed.jpeg" alt="Closed payload" loading="lazy">
+                <figcaption class="album-caption">Closed payload</figcaption>
+              </figure>
+              <figure class="album-item">
+                <img src="pictures/payload/close_up.jpeg" alt="Disassembled payload" loading="lazy">
+                <figcaption class="album-caption">Disassembled payload</figcaption>
+              </figure>
+              <figure class="album-item">
+                <img src="pictures/payload/open.jpeg" alt="Running payload" loading="lazy">
+                <figcaption class="album-caption">Running payload</figcaption>
+              </figure>
+              <figure class="album-item">
+                <img src="pictures/payload/in_rocket.jpeg" alt="Payload mounted in rocket" loading="lazy">
+                <figcaption class="album-caption">Payload mounted in rocket</figcaption>
+              </figure>
+            </div>
+          </details>
+
+          <div class="specs-grid" style="margin-top: 1.25rem; margin-bottom: 0;">
+            <div class="spec-box"><span>Affiliations</span><strong>CTU Space Research &amp; CTU FME</strong></div>
+            <div class="spec-box"><span>Sample Rate</span><strong>50 Hz CSV Telemetry</strong></div>
+            <div class="spec-box"><span>Triggers</span><strong>3g Launch / &lt;0.5g Zero-G</strong></div>
+            <div class="spec-box"><span>Current Phase</span><strong>Drop-Tower Micro-G Testing</strong></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           PROJECT 5: ESP32 N2O DECOMPRESSION DATA LOGGER
+           =================================================================== -->
+      <article id="proj-esp32-daq" class="project-card"
+               data-status="worked redesign"
+               style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>ESP32 Nitrous Oxide Decompression Data Logger</h3>
+              <div class="card-meta-row">
+                <span class="card-subtitle">CTU Space Research — Propulsion Test Instrumentation</span>
+                <span class="time-tag updated">v1 Tested Apr 2026 · v2 Update Aug 2026</span>
+              </div>
+            </div>
+            <div class="badge-group">
+              <span class="badge badge-worked">Built - Worked</span>
+              <span class="badge badge-redesign">Redesign</span>
+            </div>
+          </div>
+          <p class="card-desc">
+            ESP32-based data acquisition system built for CTU Space Research to log pressure and temperature transients during nitrous oxide (N₂O) decompression testing.
+          </p>
+
+          <!-- Development Status Tracker -->
+          <div class="dev-tracker" aria-label="ESP32 N2O Logger development progress">
+            <div class="tracker-header">
+              <span class="tracker-title">Development Status Tracker</span>
+              <span class="tracker-stage-label">Stage 4 of 5 // v2 Front-End Filter Redesign</span>
+            </div>
+            <div class="tracker-steps">
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>01. v1 Prototype</span>
+              </div>
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>02. Live N₂O Test</span>
+              </div>
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>03. Noise Audit</span>
+              </div>
+              <div class="tracker-step active rework">
+                <div class="tracker-bar"></div>
+                <span>04. v2 Filter Rev</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>05. Re-Validation</span>
+              </div>
+            </div>
+            <div class="tracker-now">
+              <strong>Currently Working On:</strong> v1 captured full decompression profiles during live runs, but raw analog sensor lines picked up noise—redesigning the front-end hardware RC/active filtration for cleaner transient logging.
+            </div>
+          </div>
+
+          <div class="specs-grid">
+            <div class="spec-box"><span>Affiliation</span><strong>CTU Space Research</strong></div>
+            <div class="spec-box"><span>MCU</span><strong>ESP32</strong></div>
+            <div class="spec-box"><span>Sensors</span><strong>Pressure &amp; Temperature</strong></div>
+            <div class="spec-box"><span>Application</span><strong>N₂O Decompression Testing</strong></div>
+          </div>
+
+          <!-- Uncomment when you add photos:
+          <details class="panel-details">
+            <summary>Photo Album (DAQ Hardware &amp; Test Setup)</summary>
+            <div class="album-grid"></div>
+          </details>
+          -->
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           PROJECT 6: SUNLU T3 OVERHAUL
+           =================================================================== -->
+      <article id="proj-sunlu" class="project-card"
+               data-status="redesign progress"
+               style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>Sunlu T3 — Heavy Mechanical &amp; Cooling Overhaul</h3>
+              <div class="card-meta-row">
+                <span class="card-subtitle">Custom Motion System &amp; High-Static-Pressure Cooling</span>
+                <span class="time-tag updated">Last Update: Jul 2025</span>
+              </div>
+            </div>
+            <div class="badge-group">
+              <span class="badge badge-redesign">Redesign</span>
+              <span class="badge badge-progress">Build in Progress</span>
+            </div>
+          </div>
+          <p class="card-desc">
+            Extensive ground-up rebuild of a Sunlu T3 featuring a custom Y-axis linear rod system, X-axis linear rail, Z-axis frame bracing, a custom electronics chassis, and extreme part cooling driven by a 120mm 6,000 RPM Arctic auxiliary fan alongside a 40mm 12,000 RPM hotend fan.
+          </p>
+
+          <!-- Development Status Tracker -->
+          <div class="dev-tracker" aria-label="Sunlu T3 Overhaul development progress">
+            <div class="tracker-header">
+              <span class="tracker-title">Development Status Tracker</span>
+              <span class="tracker-stage-label">Stage 3 of 5 // Mechanical Rebuild &amp; MCU Migration</span>
+            </div>
+            <div class="tracker-steps">
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>01. v1 Operational</span>
+              </div>
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>02. v2 CAD Mod</span>
+              </div>
+              <div class="tracker-step active rework">
+                <div class="tracker-bar"></div>
+                <span>03. Rebuild &amp; MCU</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>04. Klipper Config</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>05. Input Shaper</span>
+              </div>
+            </div>
+            <div class="tracker-now">
+              <strong>Currently Working On:</strong> Disassembled for a visual redesign, mechanical optimization, and control board migration (evaluating Mellow FLY D5 vs. BTT Pico alongside an Orange Pi Zero 2W).
+            </div>
+          </div>
+
+          <div class="specs-grid">
+            <div class="spec-box"><span>Extruder</span><strong>BIQU H2 V2S Lite</strong></div>
+            <div class="spec-box"><span>Motion</span><strong>X Linear Rail / Custom Y Rods</strong></div>
+            <div class="spec-box"><span>Cooling</span><strong>120mm 6k RPM + 40mm 12k RPM</strong></div>
+            <div class="spec-box"><span>Host / MCU</span><strong>Orange Pi Zero 2W (Klipper)</strong></div>
+          </div>
+
+          <!-- Uncomment when you add photos:
+          <details class="panel-details">
+            <summary>Photo Album (Sunlu T3 Mods)</summary>
+            <div class="album-grid"></div>
+          </details>
+          -->
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           PROJECT 7: 5" FPV DRONE
+           =================================================================== -->
+      <article id="proj-fpv" class="project-card"
+               data-status="untested"
+               style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>5" Custom FPV Quadcopter</h3>
+              <div class="card-meta-row">
+                <span class="card-subtitle">4S Freestyle &amp; GPS-Equipped Airframe</span>
+                <span class="time-tag updated">Bench Verified · Jul 2025</span>
+              </div>
+            </div>
+            <div class="badge-group">
+              <span class="badge badge-untested">Built - Untested</span>
+            </div>
+          </div>
+          <p class="card-desc">
+            Custom-built 5-inch FPV quadcopter outfitted with RS2205 brushless motors, 4S LiPo power system, and onboard GPS module for telemetry and return-to-home fail-safes.
+          </p>
+
+          <!-- Development Status Tracker -->
+          <div class="dev-tracker" aria-label="5 inch FPV Quadcopter development progress">
+            <div class="tracker-header">
+              <span class="tracker-title">Development Status Tracker</span>
+              <span class="tracker-stage-label">Stage 4 of 5 // Bench Verified — Awaiting Maiden</span>
+            </div>
+            <div class="tracker-steps">
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>01. Frame &amp; Solder</span>
+              </div>
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>02. Betaflight Setup</span>
+              </div>
+              <div class="tracker-step done">
+                <div class="tracker-bar"></div>
+                <span>03. GPS &amp; Fail-Safe</span>
+              </div>
+              <div class="tracker-step active ready">
+                <div class="tracker-bar"></div>
+                <span>04. Maiden Window</span>
+              </div>
+              <div class="tracker-step">
+                <div class="tracker-bar"></div>
+                <span>05. PID Tuning</span>
+              </div>
+            </div>
+            <div class="tracker-now">
+              <strong>Currently Working On:</strong> Wiring, motor direction, receiver binding, and GPS satellite lock are all verified on the bench—waiting for a clear weather and schedule window for maiden flight.
+            </div>
+          </div>
+
+          <div class="specs-grid">
+            <div class="spec-box"><span>Frame Class</span><strong>5-Inch FPV</strong></div>
+            <div class="spec-box"><span>Propulsion</span><strong>RS2205 Brushless Motors</strong></div>
+            <div class="spec-box"><span>Battery</span><strong>4S LiPo</strong></div>
+            <div class="spec-box"><span>Navigation</span><strong>Onboard GPS Telemetry</strong></div>
+          </div>
+
+          <details class="panel-details">
+            <summary>Photo Album (5" Quad Build)</summary>
+            <div class="album-grid">
+              <figure class="album-item">
+                <img src="pictures/drone/drone1.jpeg" alt="Drone1" loading="lazy">
+                <figcaption class="album-caption">Drone1</figcaption>
+              </figure>
+              <figure class="album-item">
+                <img src="pictures/drone/drone2.jpeg" alt="Drone2" loading="lazy">
+                <figcaption class="album-caption">Drone2</figcaption>
+              </figure>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- ===================================================================
+           PROJECT 8: CTU SPACE RESEARCH POWER / EFUSE PCB (PARTIAL PASS)
+           =================================================================== -->
+      <article id="proj-efuse" class="project-card"
+               data-status="partial"
+               style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>CTU Space Research — Custom Power &amp; eFuse PCB</h3>
+              <div class="card-meta-row">
+                <span class="card-subtitle">Fault-Tolerant Power Distribution Board · Flown at EuRoC</span>
+                <span class="time-tag finished">Built May 2026 · Flown Oct 2026</span>
+              </div>
+            </div>
+            <div class="badge-group">
+              <span class="badge badge-partial">Partial Pass</span>
+            </div>
+          </div>
+          <p class="card-desc">
+            Custom power-management PCB built in May 2026 for CTU Space Research, integrating electronic fuse (eFuse) overcurrent protection alongside an intentional hardware bypass jumper designed upfront as a flight-ready contingency.
+          </p>
+          <div class="eng-note partial">
+            <strong>Flight Outcome &amp; Post-Mortem:</strong> Partial pass — the eFuse IC itself burned out during early testing due to an improperly configured latch-off current threshold under transient load, preventing active electronic protection. However, because a physical power bypass jumper was designed into the board from day one, power distribution remained fully operational and the board <strong>successfully flew on the EuRoC rocket in October 2026</strong> running via the bypass path.
+          </div>
+          <div class="specs-grid">
+            <div class="spec-box"><span>Affiliation</span><strong>CTU Space Research</strong></div>
+            <div class="spec-box"><span>Protection Stage</span><strong>eFuse IC (Tripped / Burned)</strong></div>
+            <div class="spec-box"><span>Contingency</span><strong>Hardware Bypass Jumper</strong></div>
+            <div class="spec-box"><span>Flight Heritage</span><strong>Flown at EuRoC (Oct 2026)</strong></div>
+          </div>
+
+          <details class="panel-details">
+            <summary>Photo Album (Power / eFuse PCB)</summary>
+            <div class="album-grid">
+              <figure class="album-item">
+                <img src="pictures/UBB/UAB.png" alt="USB-GX12 sister board" loading="lazy">
+                <figcaption class="album-caption">USB-GX12 sister board</figcaption>
+              </figure>
+              <figure class="album-item">
+                <img src="pictures/UBB/UBB_back.png" alt="UBB back side" loading="lazy">
+                <figcaption class="album-caption">UBB back side</figcaption>
+              </figure>
+              <figure class="album-item">
+                <img src="pictures/UBB/UBB_front.png" alt="UBB front side" loading="lazy">
+                <figcaption class="album-caption">UBB front side</figcaption>
+              </figure>
+            </div>
+          </details>
+        </div>
+      </article>
+
+    </section>
+
+    <div class="section-title" data-section-group="concepts">Conceptual R&amp;D // On the Drawing Board</div>
+
+    <section class="concepts-grid" data-section-group="concepts">
+
+      <!-- ===================================================================
+           CONCEPT 1: LIQUID ROCKET MOTOR
+           =================================================================== -->
+      <article id="proj-liquid" class="project-card"
+               data-status="concept"
+               style="--bg-image: none;">
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>Liquid Rocket Propulsion</h3>
+              <div class="card-meta-row">
+                <span class="card-subtitle">Early Exploratory Study</span>
+                <span class="time-tag updated">Concept · Oct 2026</span>
+              </div>
+            </div>
+            <div class="badge-group">
+              <span class="badge badge-concept">Concept</span>
+            </div>
+          </div>
+          <p class="card-desc">
+            Long-term exploratory concept investigating small-scale liquid rocket motor thermodynamics, injector geometry, and propellant feed architectures. Currently in early theoretical consideration.
+          </p>
+
+          <!-- Uncomment when you add photos:
+          <details class="panel-details">
+            <summary>Photo Album (Sketches / Schematics)</summary>
+            <div class="album-grid"></div>
+          </details>
+          -->
+        </div>
+      </article>
+
+    </section>
+
+    <!-- CONTACT & AFFILIATIONS PANEL -->
+    <section id="contact" class="contact-panel">
+      <div>
+        <h2>Get in Touch</h2>
+        <p>Cybernetics &amp; Robotics at CTU FEE · Avionics &amp; PR at CTU Space Research · Prague, CZ</p>
+      </div>
+      <div class="header-links">
+        <a class="btn-link" href="mailto:natanaelcandik@seznam.cz">natanaelcandik@seznam.cz ↗</a>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 Natanael Čandík</span>
+      <span>Hardware · Avionics · Embedded Systems</span>
+    </footer>
+  </div>
+
+  <!-- Fullscreen Photo Lightbox -->
+  <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <div class="lightbox-controls">
+      <button class="lb-btn" id="lb-close">ESC / Close ✕</button>
+    </div>
+    <button class="lb-btn lb-nav lb-prev" id="lb-prev" aria-label="Previous photo">‹</button>
+    <img id="lb-img" src="" alt="">
+    <div id="lb-caption" class="lightbox-caption"></div>
+    <button class="lb-btn lb-nav lb-next" id="lb-next" aria-label="Next photo">›</button>
+  </div>
+
+  <script>
+    // Helper: Smooth scroll & pulse highlight a target card
+    function jumpToProject(card) {
+      if (!card) return;
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.remove('highlight-pulse');
+      void card.offsetWidth;
+      card.classList.add('highlight-pulse');
+      setTimeout(() => card.classList.remove('highlight-pulse'), 1400);
+    }
+
+    // Featured & Program Jumper Link Click Handler
+    document.querySelectorAll('.jumper-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const targetId = link.dataset.target;
+        const targetCard = document.getElementById(targetId);
+        if (targetCard) {
+          e.preventDefault();
+          if (targetCard.classList.contains('hidden')) {
+            document.querySelector('.filter-btn[data-filter="all"]')?.click();
+          }
+          jumpToProject(targetCard);
+        }
+      });
+    });
+
+    // Status Filter Logic (Also hides section headers if all cards in that group are filtered out)
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.project-card');
+    const sectionGroups = ['x65', 'other-builds', 'concepts'];
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        cards.forEach(el => {
+          const statuses = el.dataset.status.split(' ');
+          if (filter === 'all' || statuses.includes(filter)) {
+            el.classList.remove('hidden');
+          } else {
+            el.classList.add('hidden');
+          }
+        });
+
+        sectionGroups.forEach(group => {
+          const groupContainer = document.querySelector(`section[data-section-group="${group}"]`);
+          const groupChrome = document.querySelectorAll(`.section-title[data-section-group="${group}"], .program-jump-bar[data-section-group="${group}"]`);
+          if (groupContainer) {
+            const hasVisibleCards = groupContainer.querySelectorAll('.project-card:not(.hidden)').length > 0;
+            groupChrome.forEach(el => el.classList.toggle('hidden', !hasVisibleCards));
+          }
+        });
+      });
+    });
+
+    // Photo Album Lightbox Logic (Scoped per project album)
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbCaption = document.getElementById('lb-caption');
+    let currentAlbumImages = [];
+    let currentIndex = 0;
+
+    function openLightbox(images, index) {
+      currentAlbumImages = images;
+      currentIndex = index;
+      updateLightbox();
+      lightbox.classList.remove('hidden');
+    }
+
+    function updateLightbox() {
+      const img = currentAlbumImages[currentIndex];
+      lbImg.src = img.src;
+      lbImg.alt = img.alt || '';
+      const captionText = img.closest('figure')?.querySelector('figcaption')?.textContent || img.alt || '';
+      lbCaption.textContent = `${captionText} (${currentIndex + 1} / ${currentAlbumImages.length})`;
+    }
+
+    document.addEventListener('click', (e) => {
+      const item = e.target.closest('.album-item');
+      if (item) {
+        const grid = item.closest('.album-grid');
+        const imgs = Array.from(grid.querySelectorAll('img'));
+        const clickedImg = item.querySelector('img');
+        openLightbox(imgs, imgs.indexOf(clickedImg));
+      }
+    });
+
+    document.getElementById('lb-close').addEventListener('click', () => lightbox.classList.add('hidden'));
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.add('hidden'); });
+
+    document.getElementById('lb-prev').addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + currentAlbumImages.length) % currentAlbumImages.length;
+      updateLightbox();
+    });
+
+    document.getElementById('lb-next').addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % currentAlbumImages.length;
+      updateLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.classList.contains('hidden')) return;
+      if (e.key === 'Escape') lightbox.classList.add('hidden');
+      if (e.key === 'ArrowLeft') document.getElementById('lb-prev').click();
+      if (e.key === 'ArrowRight') document.getElementById('lb-next').click();
+    });
+  </script>
+</body>
+</html>
